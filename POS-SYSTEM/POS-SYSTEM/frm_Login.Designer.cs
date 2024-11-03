@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Login));
             this.panel_logo = new System.Windows.Forms.Panel();
             this.panel_log = new System.Windows.Forms.Panel();
+            this.txt_password = new System.Windows.Forms.TextBox();
+            this.txt_username = new System.Windows.Forms.TextBox();
             this.login_logo = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.btn_login = new System.Windows.Forms.Button();
@@ -38,8 +40,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.password_icon = new System.Windows.Forms.Panel();
             this.user_icon = new System.Windows.Forms.Panel();
-            this.txt_username = new System.Windows.Forms.TextBox();
-            this.txt_password = new System.Windows.Forms.TextBox();
             this.panel_log.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +71,26 @@
             this.panel_log.Name = "panel_log";
             this.panel_log.Size = new System.Drawing.Size(564, 673);
             this.panel_log.TabIndex = 1;
+            // 
+            // txt_password
+            // 
+            this.txt_password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txt_password.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_password.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.txt_password.Location = new System.Drawing.Point(154, 431);
+            this.txt_password.Name = "txt_password";
+            this.txt_password.Size = new System.Drawing.Size(328, 34);
+            this.txt_password.TabIndex = 13;
+            // 
+            // txt_username
+            // 
+            this.txt_username.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txt_username.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_username.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.txt_username.Location = new System.Drawing.Point(154, 320);
+            this.txt_username.Name = "txt_username";
+            this.txt_username.Size = new System.Drawing.Size(328, 34);
+            this.txt_username.TabIndex = 12;
             // 
             // login_logo
             // 
@@ -148,26 +168,6 @@
             this.user_icon.Size = new System.Drawing.Size(53, 41);
             this.user_icon.TabIndex = 3;
             // 
-            // txt_username
-            // 
-            this.txt_username.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txt_username.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_username.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.txt_username.Location = new System.Drawing.Point(154, 320);
-            this.txt_username.Name = "txt_username";
-            this.txt_username.Size = new System.Drawing.Size(328, 34);
-            this.txt_username.TabIndex = 12;
-            // 
-            // txt_password
-            // 
-            this.txt_password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.txt_password.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_password.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.txt_password.Location = new System.Drawing.Point(154, 431);
-            this.txt_password.Name = "txt_password";
-            this.txt_password.Size = new System.Drawing.Size(328, 34);
-            this.txt_password.TabIndex = 13;
-            // 
             // frm_Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -178,6 +178,7 @@
             this.Controls.Add(this.panel_logo);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frm_Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login Module";
