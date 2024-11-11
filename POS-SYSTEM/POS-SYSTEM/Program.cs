@@ -16,7 +16,19 @@ namespace POS_SYSTEM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_Login());
+
+            // Start with the login form
+            frm_Login loginForm = new frm_Login();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                // After successful login, open the dashboard
+                Application.Run(new frm_Dashboard());
+            }
+            else
+            {
+                // Exit the application if login was not successful
+                Application.Exit();
+            }
         }
     }
 }

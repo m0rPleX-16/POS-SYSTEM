@@ -55,11 +55,35 @@
     <Compile Include="frm_Dashboard.Designer.cs">
       <DependentUpon>frm_Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_History.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_History.Designer.cs">
+      <DependentUpon>frm_History.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Inventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Inventory.Designer.cs">
+      <DependentUpon>frm_Inventory.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_Login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frm_Login.Designer.cs">
       <DependentUpon>frm_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Reports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Reports.Designer.cs">
+      <DependentUpon>frm_Reports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Users.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Users.Designer.cs">
+      <DependentUpon>frm_Users.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +92,9 @@
     </Compile>
     <EmbeddedResource Include="frm_Dashboard.resx">
       <DependentUpon>frm_Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_Inventory.resx">
+      <DependentUpon>frm_Inventory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_Login.resx">
       <DependentUpon>frm_Login.cs</DependentUpon>

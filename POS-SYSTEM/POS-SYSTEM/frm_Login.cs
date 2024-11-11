@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM
@@ -15,6 +8,23 @@ namespace POS_SYSTEM
         public frm_Login()
         {
             InitializeComponent();
+        }
+
+        private void Btn_login_Click(object sender, EventArgs e)
+        {
+            string validUsername = "admin";
+            string validPassword = "password";
+
+            if (txt_username.Text == validUsername && txt_password.Text == validPassword)
+            {
+                this.DialogResult = DialogResult.OK;
+
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password. Please try again.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

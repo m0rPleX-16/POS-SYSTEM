@@ -31,17 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Login));
             this.panel_logo = new System.Windows.Forms.Panel();
             this.panel_log = new System.Windows.Forms.Panel();
+            this.line_pass = new System.Windows.Forms.Panel();
+            this.line_username = new System.Windows.Forms.Panel();
             this.txt_password = new System.Windows.Forms.TextBox();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.login_logo = new System.Windows.Forms.Panel();
             this.lbl_user = new System.Windows.Forms.Label();
-            this.btn_login = new System.Windows.Forms.Button();
+            this.Btn_login = new System.Windows.Forms.Button();
+            this.lbl_pass = new System.Windows.Forms.Label();
+            this.lbl_username = new System.Windows.Forms.Label();
             this.password_icon = new System.Windows.Forms.Panel();
             this.user_icon = new System.Windows.Forms.Panel();
-            this.line_username = new System.Windows.Forms.Panel();
-            this.line_pass = new System.Windows.Forms.Panel();
-            this.lbl_username = new System.Windows.Forms.Label();
-            this.lbl_pass = new System.Windows.Forms.Label();
             this.panel_log.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +65,7 @@
             this.panel_log.Controls.Add(this.txt_username);
             this.panel_log.Controls.Add(this.login_logo);
             this.panel_log.Controls.Add(this.lbl_user);
-            this.panel_log.Controls.Add(this.btn_login);
+            this.panel_log.Controls.Add(this.Btn_login);
             this.panel_log.Controls.Add(this.lbl_pass);
             this.panel_log.Controls.Add(this.lbl_username);
             this.panel_log.Controls.Add(this.password_icon);
@@ -75,6 +75,22 @@
             this.panel_log.Name = "panel_log";
             this.panel_log.Size = new System.Drawing.Size(564, 673);
             this.panel_log.TabIndex = 1;
+            // 
+            // line_pass
+            // 
+            this.line_pass.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.line_pass.Location = new System.Drawing.Point(155, 466);
+            this.line_pass.Name = "line_pass";
+            this.line_pass.Size = new System.Drawing.Size(330, 1);
+            this.line_pass.TabIndex = 15;
+            // 
+            // line_username
+            // 
+            this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.line_username.Location = new System.Drawing.Point(155, 355);
+            this.line_username.Name = "line_username";
+            this.line_username.Size = new System.Drawing.Size(330, 1);
+            this.line_username.TabIndex = 14;
             // 
             // txt_password
             // 
@@ -86,6 +102,7 @@
             this.txt_password.PasswordChar = '*';
             this.txt_password.Size = new System.Drawing.Size(328, 27);
             this.txt_password.TabIndex = 13;
+            this.txt_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_username
             // 
@@ -96,6 +113,7 @@
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(328, 27);
             this.txt_username.TabIndex = 12;
+            this.txt_username.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // login_logo
             // 
@@ -111,25 +129,48 @@
             this.lbl_user.AutoSize = true;
             this.lbl_user.Font = new System.Drawing.Font("Segoe UI Semibold", 30F);
             this.lbl_user.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.lbl_user.Location = new System.Drawing.Point(174, 185);
+            this.lbl_user.Location = new System.Drawing.Point(174, 173);
             this.lbl_user.Name = "lbl_user";
             this.lbl_user.Size = new System.Drawing.Size(311, 67);
             this.lbl_user.TabIndex = 8;
             this.lbl_user.Text = "USER LOGIN";
             // 
-            // btn_login
+            // Btn_login
             // 
-            this.btn_login.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.btn_login.Cursor = System.Windows.Forms.Cursors.No;
-            this.btn_login.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_login.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
-            this.btn_login.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.btn_login.Location = new System.Drawing.Point(212, 520);
-            this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(170, 52);
-            this.btn_login.TabIndex = 7;
-            this.btn_login.Text = "LOGIN";
-            this.btn_login.UseVisualStyleBackColor = false;
+            this.Btn_login.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.Btn_login.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_login.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_login.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
+            this.Btn_login.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.Btn_login.Location = new System.Drawing.Point(212, 520);
+            this.Btn_login.Name = "Btn_login";
+            this.Btn_login.Size = new System.Drawing.Size(170, 52);
+            this.Btn_login.TabIndex = 7;
+            this.Btn_login.Text = "LOGIN";
+            this.Btn_login.UseVisualStyleBackColor = false;
+            this.Btn_login.Click += new System.EventHandler(this.Btn_login_Click);
+            // 
+            // lbl_pass
+            // 
+            this.lbl_pass.AutoSize = true;
+            this.lbl_pass.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.lbl_pass.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            this.lbl_pass.Location = new System.Drawing.Point(152, 396);
+            this.lbl_pass.Name = "lbl_pass";
+            this.lbl_pass.Size = new System.Drawing.Size(97, 28);
+            this.lbl_pass.TabIndex = 6;
+            this.lbl_pass.Text = "Password";
+            // 
+            // lbl_username
+            // 
+            this.lbl_username.AutoSize = true;
+            this.lbl_username.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.lbl_username.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            this.lbl_username.Location = new System.Drawing.Point(152, 282);
+            this.lbl_username.Name = "lbl_username";
+            this.lbl_username.Size = new System.Drawing.Size(104, 28);
+            this.lbl_username.TabIndex = 5;
+            this.lbl_username.Text = "Username";
             // 
             // password_icon
             // 
@@ -150,44 +191,6 @@
             this.user_icon.Name = "user_icon";
             this.user_icon.Size = new System.Drawing.Size(53, 41);
             this.user_icon.TabIndex = 3;
-            // 
-            // line_username
-            // 
-            this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_username.Location = new System.Drawing.Point(155, 355);
-            this.line_username.Name = "line_username";
-            this.line_username.Size = new System.Drawing.Size(330, 1);
-            this.line_username.TabIndex = 14;
-            // 
-            // line_pass
-            // 
-            this.line_pass.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_pass.Location = new System.Drawing.Point(155, 466);
-            this.line_pass.Name = "line_pass";
-            this.line_pass.Size = new System.Drawing.Size(330, 1);
-            this.line_pass.TabIndex = 15;
-            // 
-            // lbl_username
-            // 
-            this.lbl_username.AutoSize = true;
-            this.lbl_username.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.lbl_username.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.lbl_username.Location = new System.Drawing.Point(152, 282);
-            this.lbl_username.Name = "lbl_username";
-            this.lbl_username.Size = new System.Drawing.Size(104, 28);
-            this.lbl_username.TabIndex = 5;
-            this.lbl_username.Text = "Username";
-            // 
-            // lbl_pass
-            // 
-            this.lbl_pass.AutoSize = true;
-            this.lbl_pass.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.lbl_pass.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.lbl_pass.Location = new System.Drawing.Point(152, 396);
-            this.lbl_pass.Name = "lbl_pass";
-            this.lbl_pass.Size = new System.Drawing.Size(97, 28);
-            this.lbl_pass.TabIndex = 6;
-            this.lbl_pass.Text = "Password";
             // 
             // frm_Login
             // 
@@ -216,7 +219,7 @@
         private System.Windows.Forms.Panel panel_log;
         private System.Windows.Forms.Panel password_icon;
         private System.Windows.Forms.Panel user_icon;
-        private System.Windows.Forms.Button btn_login;
+        private System.Windows.Forms.Button Btn_login;
         private System.Windows.Forms.Panel login_logo;
         private System.Windows.Forms.Label lbl_user;
         private System.Windows.Forms.TextBox txt_username;
