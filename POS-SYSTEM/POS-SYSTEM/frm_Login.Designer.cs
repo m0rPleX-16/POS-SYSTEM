@@ -47,7 +47,7 @@
             // 
             // panel_logo
             // 
-            this.panel_logo.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.panel_logo.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.panel_logo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel_logo.BackgroundImage")));
             this.panel_logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panel_logo.Dock = System.Windows.Forms.DockStyle.Left;
