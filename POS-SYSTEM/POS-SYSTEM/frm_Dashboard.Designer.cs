@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Dashboard));
             this.panel_menu = new System.Windows.Forms.Panel();
+            this.lbl_about = new System.Windows.Forms.Label();
             this.btn_dashboard = new System.Windows.Forms.Button();
             this.btn_logout = new System.Windows.Forms.Button();
             this.btn_users = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lbl_about = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
@@ -91,6 +91,18 @@
             this.panel_menu.Name = "panel_menu";
             this.panel_menu.Size = new System.Drawing.Size(378, 1075);
             this.panel_menu.TabIndex = 1;
+            // 
+            // lbl_about
+            // 
+            this.lbl_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_about.AutoSize = true;
+            this.lbl_about.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.lbl_about.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_about.Location = new System.Drawing.Point(90, 1014);
+            this.lbl_about.Name = "lbl_about";
+            this.lbl_about.Size = new System.Drawing.Size(202, 23);
+            this.lbl_about.TabIndex = 20;
+            this.lbl_about.Text = "POS System @ 2024 etc. ";
             // 
             // btn_dashboard
             // 
@@ -378,48 +390,36 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Sales Dashboard";
             // 
-            // lbl_about
-            // 
-            this.lbl_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbl_about.AutoSize = true;
-            this.lbl_about.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.lbl_about.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_about.Location = new System.Drawing.Point(90, 1014);
-            this.lbl_about.Name = "lbl_about";
-            this.lbl_about.Size = new System.Drawing.Size(202, 23);
-            this.lbl_about.TabIndex = 20;
-            this.lbl_about.Text = "POS System @ 2024 etc. ";
-            // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.DarkOrange;
-            this.panel8.Location = new System.Drawing.Point(154, 50);
+            this.panel8.Location = new System.Drawing.Point(154, 33);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(284, 157);
+            this.panel8.Size = new System.Drawing.Size(284, 142);
             this.panel8.TabIndex = 18;
             // 
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.DarkOrange;
-            this.panel9.Location = new System.Drawing.Point(512, 50);
+            this.panel9.Location = new System.Drawing.Point(512, 33);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(284, 157);
+            this.panel9.Size = new System.Drawing.Size(284, 142);
             this.panel9.TabIndex = 19;
             // 
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.DarkOrange;
-            this.panel10.Location = new System.Drawing.Point(870, 50);
+            this.panel10.Location = new System.Drawing.Point(870, 33);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(284, 157);
+            this.panel10.Size = new System.Drawing.Size(284, 142);
             this.panel10.TabIndex = 20;
             // 
             // panel11
             // 
             this.panel11.BackColor = System.Drawing.Color.DarkOrange;
-            this.panel11.Location = new System.Drawing.Point(1225, 50);
+            this.panel11.Location = new System.Drawing.Point(1225, 33);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(284, 157);
+            this.panel11.Size = new System.Drawing.Size(284, 142);
             this.panel11.TabIndex = 21;
             // 
             // pnl_bgStats
@@ -432,25 +432,25 @@
             this.pnl_bgStats.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_bgStats.Location = new System.Drawing.Point(378, 153);
             this.pnl_bgStats.Name = "pnl_bgStats";
-            this.pnl_bgStats.Size = new System.Drawing.Size(1564, 257);
+            this.pnl_bgStats.Size = new System.Drawing.Size(1564, 209);
             this.pnl_bgStats.TabIndex = 22;
             // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel12.Location = new System.Drawing.Point(378, 410);
+            this.panel12.Location = new System.Drawing.Point(378, 362);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(796, 665);
+            this.panel12.Size = new System.Drawing.Size(796, 713);
             this.panel12.TabIndex = 23;
             // 
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(1174, 410);
+            this.panel13.Location = new System.Drawing.Point(1174, 362);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(768, 665);
+            this.panel13.Size = new System.Drawing.Size(768, 713);
             this.panel13.TabIndex = 24;
             // 
             // frm_Dashboard
