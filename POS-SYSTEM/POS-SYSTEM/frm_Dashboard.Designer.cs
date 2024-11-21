@@ -30,13 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Dashboard));
             this.panel_menu = new System.Windows.Forms.Panel();
-            this.lbl_about = new System.Windows.Forms.Label();
-            this.btn_dashboard = new System.Windows.Forms.Button();
             this.btn_logout = new System.Windows.Forms.Button();
             this.btn_users = new System.Windows.Forms.Button();
             this.btn_reports = new System.Windows.Forms.Button();
             this.btn_history = new System.Windows.Forms.Button();
+            this.btn_POS = new System.Windows.Forms.Button();
             this.btn_inventory = new System.Windows.Forms.Button();
+            this.btn_dashboard = new System.Windows.Forms.Button();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.lbl_about = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -70,13 +72,15 @@
             // panel_menu
             // 
             this.panel_menu.BackColor = System.Drawing.Color.Wheat;
-            this.panel_menu.Controls.Add(this.lbl_about);
-            this.panel_menu.Controls.Add(this.btn_dashboard);
             this.panel_menu.Controls.Add(this.btn_logout);
             this.panel_menu.Controls.Add(this.btn_users);
             this.panel_menu.Controls.Add(this.btn_reports);
             this.panel_menu.Controls.Add(this.btn_history);
+            this.panel_menu.Controls.Add(this.btn_POS);
             this.panel_menu.Controls.Add(this.btn_inventory);
+            this.panel_menu.Controls.Add(this.btn_dashboard);
+            this.panel_menu.Controls.Add(this.panel14);
+            this.panel_menu.Controls.Add(this.lbl_about);
             this.panel_menu.Controls.Add(this.panel7);
             this.panel_menu.Controls.Add(this.panel6);
             this.panel_menu.Controls.Add(this.panel5);
@@ -92,34 +96,6 @@
             this.panel_menu.Size = new System.Drawing.Size(378, 1075);
             this.panel_menu.TabIndex = 1;
             // 
-            // lbl_about
-            // 
-            this.lbl_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbl_about.AutoSize = true;
-            this.lbl_about.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.lbl_about.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_about.Location = new System.Drawing.Point(90, 1014);
-            this.lbl_about.Name = "lbl_about";
-            this.lbl_about.Size = new System.Drawing.Size(202, 23);
-            this.lbl_about.TabIndex = 20;
-            this.lbl_about.Text = "POS System @ 2024 etc. ";
-            // 
-            // btn_dashboard
-            // 
-            this.btn_dashboard.BackColor = System.Drawing.Color.Wheat;
-            this.btn_dashboard.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_dashboard.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_dashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_dashboard.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_dashboard.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_dashboard.Location = new System.Drawing.Point(113, 371);
-            this.btn_dashboard.Name = "btn_dashboard";
-            this.btn_dashboard.Size = new System.Drawing.Size(230, 63);
-            this.btn_dashboard.TabIndex = 29;
-            this.btn_dashboard.Text = "Dashboard";
-            this.btn_dashboard.UseVisualStyleBackColor = false;
-            this.btn_dashboard.Click += new System.EventHandler(this.btn_dashboard_Click);
-            // 
             // btn_logout
             // 
             this.btn_logout.BackColor = System.Drawing.Color.Wheat;
@@ -128,10 +104,10 @@
             this.btn_logout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_logout.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_logout.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_logout.Location = new System.Drawing.Point(113, 851);
+            this.btn_logout.Location = new System.Drawing.Point(115, 934);
             this.btn_logout.Name = "btn_logout";
             this.btn_logout.Size = new System.Drawing.Size(230, 63);
-            this.btn_logout.TabIndex = 34;
+            this.btn_logout.TabIndex = 42;
             this.btn_logout.Text = "Logout";
             this.btn_logout.UseVisualStyleBackColor = false;
             this.btn_logout.Click += new System.EventHandler(this.btn_logout_Click);
@@ -144,10 +120,10 @@
             this.btn_users.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_users.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_users.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_users.Location = new System.Drawing.Point(113, 760);
+            this.btn_users.Location = new System.Drawing.Point(115, 843);
             this.btn_users.Name = "btn_users";
             this.btn_users.Size = new System.Drawing.Size(230, 63);
-            this.btn_users.TabIndex = 33;
+            this.btn_users.TabIndex = 41;
             this.btn_users.Text = "Users";
             this.btn_users.UseVisualStyleBackColor = false;
             this.btn_users.Click += new System.EventHandler(this.btn_users_Click);
@@ -160,10 +136,10 @@
             this.btn_reports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_reports.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_reports.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_reports.Location = new System.Drawing.Point(113, 667);
+            this.btn_reports.Location = new System.Drawing.Point(115, 750);
             this.btn_reports.Name = "btn_reports";
             this.btn_reports.Size = new System.Drawing.Size(230, 63);
-            this.btn_reports.TabIndex = 32;
+            this.btn_reports.TabIndex = 40;
             this.btn_reports.Text = "Reports";
             this.btn_reports.UseVisualStyleBackColor = false;
             this.btn_reports.Click += new System.EventHandler(this.btn_reports_Click);
@@ -176,13 +152,29 @@
             this.btn_history.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_history.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_history.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_history.Location = new System.Drawing.Point(113, 568);
+            this.btn_history.Location = new System.Drawing.Point(115, 651);
             this.btn_history.Name = "btn_history";
             this.btn_history.Size = new System.Drawing.Size(230, 63);
-            this.btn_history.TabIndex = 31;
+            this.btn_history.TabIndex = 39;
             this.btn_history.Text = "History";
             this.btn_history.UseVisualStyleBackColor = false;
             this.btn_history.Click += new System.EventHandler(this.btn_history_Click);
+            // 
+            // btn_POS
+            // 
+            this.btn_POS.BackColor = System.Drawing.Color.Wheat;
+            this.btn_POS.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_POS.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_POS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_POS.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_POS.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_POS.Location = new System.Drawing.Point(115, 559);
+            this.btn_POS.Name = "btn_POS";
+            this.btn_POS.Size = new System.Drawing.Size(230, 63);
+            this.btn_POS.TabIndex = 38;
+            this.btn_POS.Text = "Cashier";
+            this.btn_POS.UseVisualStyleBackColor = false;
+            this.btn_POS.Click += new System.EventHandler(this.btn_POS_Click);
             // 
             // btn_inventory
             // 
@@ -192,13 +184,52 @@
             this.btn_inventory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_inventory.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_inventory.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_inventory.Location = new System.Drawing.Point(113, 466);
+            this.btn_inventory.Location = new System.Drawing.Point(115, 466);
             this.btn_inventory.Name = "btn_inventory";
             this.btn_inventory.Size = new System.Drawing.Size(230, 63);
-            this.btn_inventory.TabIndex = 30;
+            this.btn_inventory.TabIndex = 37;
             this.btn_inventory.Text = "Inventory";
             this.btn_inventory.UseVisualStyleBackColor = false;
             this.btn_inventory.Click += new System.EventHandler(this.btn_inventory_Click);
+            // 
+            // btn_dashboard
+            // 
+            this.btn_dashboard.BackColor = System.Drawing.Color.Wheat;
+            this.btn_dashboard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_dashboard.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_dashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_dashboard.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_dashboard.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_dashboard.Location = new System.Drawing.Point(115, 371);
+            this.btn_dashboard.Name = "btn_dashboard";
+            this.btn_dashboard.Size = new System.Drawing.Size(230, 63);
+            this.btn_dashboard.TabIndex = 36;
+            this.btn_dashboard.Text = "Dashboard";
+            this.btn_dashboard.UseVisualStyleBackColor = false;
+            this.btn_dashboard.Click += new System.EventHandler(this.btn_dashboard_Click);
+            // 
+            // panel14
+            // 
+            this.panel14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel14.BackColor = System.Drawing.Color.Wheat;
+            this.panel14.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel14.BackgroundImage")));
+            this.panel14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel14.Location = new System.Drawing.Point(28, 559);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(64, 63);
+            this.panel14.TabIndex = 35;
+            // 
+            // lbl_about
+            // 
+            this.lbl_about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_about.AutoSize = true;
+            this.lbl_about.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.lbl_about.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_about.Location = new System.Drawing.Point(85, 1030);
+            this.lbl_about.Name = "lbl_about";
+            this.lbl_about.Size = new System.Drawing.Size(202, 23);
+            this.lbl_about.TabIndex = 20;
+            this.lbl_about.Text = "POS System @ 2024 etc. ";
             // 
             // panel7
             // 
@@ -206,7 +237,7 @@
             this.panel7.BackColor = System.Drawing.Color.Wheat;
             this.panel7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel7.BackgroundImage")));
             this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel7.Location = new System.Drawing.Point(28, 851);
+            this.panel7.Location = new System.Drawing.Point(28, 934);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(64, 63);
             this.panel7.TabIndex = 23;
@@ -217,7 +248,7 @@
             this.panel6.BackColor = System.Drawing.Color.Wheat;
             this.panel6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel6.BackgroundImage")));
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel6.Location = new System.Drawing.Point(28, 760);
+            this.panel6.Location = new System.Drawing.Point(28, 843);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(64, 63);
             this.panel6.TabIndex = 19;
@@ -228,7 +259,7 @@
             this.panel5.BackColor = System.Drawing.Color.Wheat;
             this.panel5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel5.BackgroundImage")));
             this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel5.Location = new System.Drawing.Point(28, 667);
+            this.panel5.Location = new System.Drawing.Point(28, 750);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(64, 63);
             this.panel5.TabIndex = 19;
@@ -239,7 +270,7 @@
             this.panel4.BackColor = System.Drawing.Color.Wheat;
             this.panel4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel4.BackgroundImage")));
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel4.Location = new System.Drawing.Point(28, 568);
+            this.panel4.Location = new System.Drawing.Point(28, 651);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(64, 63);
             this.panel4.TabIndex = 22;
@@ -290,13 +321,13 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("HYHeadLine-Medium", 25F);
+            this.label2.Font = new System.Drawing.Font("HYHeadLine-Medium", 20F);
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(170, 34);
+            this.label2.Location = new System.Drawing.Point(156, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 84);
+            this.label2.Size = new System.Drawing.Size(202, 68);
             this.label2.TabIndex = 17;
-            this.label2.Text = "POS \r\nSYSTEM";
+            this.label2.Text = "EASYROLL \r\nPOS SYSTEM";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -502,12 +533,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button btn_dashboard;
-        private System.Windows.Forms.Button btn_logout;
-        private System.Windows.Forms.Button btn_users;
-        private System.Windows.Forms.Button btn_reports;
-        private System.Windows.Forms.Button btn_history;
-        private System.Windows.Forms.Button btn_inventory;
         private System.Windows.Forms.Label lbl_about;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
@@ -516,5 +541,13 @@
         private System.Windows.Forms.Panel pnl_bgStats;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Button btn_logout;
+        private System.Windows.Forms.Button btn_users;
+        private System.Windows.Forms.Button btn_reports;
+        private System.Windows.Forms.Button btn_history;
+        private System.Windows.Forms.Button btn_POS;
+        private System.Windows.Forms.Button btn_inventory;
+        private System.Windows.Forms.Button btn_dashboard;
     }
 }
