@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace POS_SYSTEM
 {
-    public partial class frm_Inventory : Form
+    public partial class frm_DashboardContents : Form
     {
-        public frm_Inventory()
+        public frm_DashboardContents()
         {
             InitializeComponent();
             timerClock.Start();
@@ -33,16 +33,6 @@ namespace POS_SYSTEM
             else suffix = "th";
             lbl_date.Text = now.ToString($"dddd, d'{suffix}' 'of' MMMM yyyy");
             lbl_time.Text = now.ToString("hh:mm:ss tt");
-        }
-
-        private void pnl_top_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void line_username_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

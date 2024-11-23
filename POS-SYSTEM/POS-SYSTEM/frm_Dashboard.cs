@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace POS_SYSTEM
 {
@@ -8,18 +9,28 @@ namespace POS_SYSTEM
         public frm_Dashboard()
         {
             InitializeComponent();
+            LoadDashboardContent(); 
         }
 
+        private void LoadDashboardContent()
+        {
+            OpenNewForm(new frm_DashboardContents());
+        }
         private void OpenNewForm(Form newForm)
         {
-            this.Hide();
-            newForm.ShowDialog();
-            this.Show();
+            pnl_display.Controls.Clear();
+
+            newForm.TopLevel = false;
+            newForm.FormBorderStyle = FormBorderStyle.None;
+            newForm.Dock = DockStyle.Fill;
+
+            pnl_display.Controls.Add(newForm);
+            newForm.Show();
         }
 
         private void btn_dashboard_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_Dashboard());
+            OpenNewForm(new frm_DashboardContents());
         }
 
         private void btn_inventory_Click(object sender, EventArgs e)
@@ -29,23 +40,31 @@ namespace POS_SYSTEM
 
         private void btn_POS_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_POS());
+            using (frm_POS pos = new frm_POS())
+            {
+                pos.ShowDialog();
+            }
         }
 
         private void btn_history_Click(object sender, EventArgs e)
         {
             OpenNewForm(new frm_History());
-        }   
+        }
 
         private void btn_reports_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_Reports());
+            using (frm_Reports reports = new frm_Reports())
+            {
+                reports.ShowDialog();
+            }
         }
 
         private void btn_users_Click(object sender, EventArgs e)
         {
             OpenNewForm(new frm_Users());
         }
+
+
         private void btn_logout_Click(object sender, EventArgs e)
         {
             this.Hide();
