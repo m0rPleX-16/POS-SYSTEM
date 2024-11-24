@@ -31,9 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Inventory));
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.panel12 = new System.Windows.Forms.Panel();
             this.pnl_bgStats = new System.Windows.Forms.Panel();
+            this.btn_stockin = new System.Windows.Forms.Button();
             this.btn_category = new System.Windows.Forms.Button();
             this.btn_product = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -45,28 +44,15 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_stockin = new System.Windows.Forms.Button();
+            this.pnl_inventBG = new System.Windows.Forms.Panel();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.dgv_history = new System.Windows.Forms.DataGridView();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
+            this.pnl_inventBG.SuspendLayout();
+            this.panel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel13
-            // 
-            this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(505, 272);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(1437, 830);
-            this.panel13.TabIndex = 31;
-            // 
-            // panel12
-            // 
-            this.panel12.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel12.Location = new System.Drawing.Point(0, 272);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(505, 830);
-            this.panel12.TabIndex = 30;
             // 
             // pnl_bgStats
             // 
@@ -80,8 +66,24 @@
             this.pnl_bgStats.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_bgStats.Location = new System.Drawing.Point(0, 153);
             this.pnl_bgStats.Name = "pnl_bgStats";
-            this.pnl_bgStats.Size = new System.Drawing.Size(1942, 119);
+            this.pnl_bgStats.Size = new System.Drawing.Size(1461, 119);
             this.pnl_bgStats.TabIndex = 29;
+            // 
+            // btn_stockin
+            // 
+            this.btn_stockin.BackColor = System.Drawing.Color.Wheat;
+            this.btn_stockin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_stockin.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_stockin.Location = new System.Drawing.Point(668, 11);
+            this.btn_stockin.Name = "btn_stockin";
+            this.btn_stockin.Size = new System.Drawing.Size(191, 98);
+            this.btn_stockin.TabIndex = 39;
+            this.btn_stockin.Text = "Stock-in";
+            this.btn_stockin.UseVisualStyleBackColor = false;
+            this.btn_stockin.Click += new System.EventHandler(this.btn_stockin_Click);
             // 
             // btn_category
             // 
@@ -97,6 +99,7 @@
             this.btn_category.TabIndex = 38;
             this.btn_category.Text = "Category";
             this.btn_category.UseVisualStyleBackColor = false;
+            this.btn_category.Click += new System.EventHandler(this.btn_category_Click);
             // 
             // btn_product
             // 
@@ -112,6 +115,7 @@
             this.btn_product.TabIndex = 37;
             this.btn_product.Text = "Products";
             this.btn_product.UseVisualStyleBackColor = false;
+            this.btn_product.Click += new System.EventHandler(this.btn_product_Click);
             // 
             // button1
             // 
@@ -122,7 +126,7 @@
             this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FloralWhite;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(1829, 40);
+            this.button1.Location = new System.Drawing.Point(1348, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(51, 46);
             this.button1.TabIndex = 25;
@@ -132,7 +136,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.panel1.Location = new System.Drawing.Point(1450, 88);
+            this.panel1.Location = new System.Drawing.Point(969, 88);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(430, 1);
             this.panel1.TabIndex = 24;
@@ -144,7 +148,7 @@
             this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
             this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_search.Location = new System.Drawing.Point(1450, 52);
+            this.txt_search.Location = new System.Drawing.Point(969, 52);
             this.txt_search.Name = "txt_search";
             this.txt_search.Size = new System.Drawing.Size(382, 36);
             this.txt_search.TabIndex = 23;
@@ -161,9 +165,8 @@
             this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_top.Location = new System.Drawing.Point(0, 0);
             this.pnl_top.Name = "pnl_top";
-            this.pnl_top.Size = new System.Drawing.Size(1942, 153);
+            this.pnl_top.Size = new System.Drawing.Size(1461, 153);
             this.pnl_top.TabIndex = 33;
-            this.pnl_top.Paint += new System.Windows.Forms.PaintEventHandler(this.pnl_top_Paint);
             // 
             // pnl_clock
             // 
@@ -171,7 +174,7 @@
             this.pnl_clock.BackColor = System.Drawing.Color.SeaShell;
             this.pnl_clock.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_clock.BackgroundImage")));
             this.pnl_clock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pnl_clock.Location = new System.Drawing.Point(1311, 85);
+            this.pnl_clock.Location = new System.Drawing.Point(830, 85);
             this.pnl_clock.Name = "pnl_clock";
             this.pnl_clock.Size = new System.Drawing.Size(55, 43);
             this.pnl_clock.TabIndex = 16;
@@ -182,7 +185,7 @@
             this.pnl_calendar.BackColor = System.Drawing.Color.SeaShell;
             this.pnl_calendar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_calendar.BackgroundImage")));
             this.pnl_calendar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pnl_calendar.Location = new System.Drawing.Point(1311, 28);
+            this.pnl_calendar.Location = new System.Drawing.Point(830, 28);
             this.pnl_calendar.Name = "pnl_calendar";
             this.pnl_calendar.Size = new System.Drawing.Size(55, 43);
             this.pnl_calendar.TabIndex = 15;
@@ -193,7 +196,7 @@
             this.lbl_time.AutoSize = true;
             this.lbl_time.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.lbl_time.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_time.Location = new System.Drawing.Point(1369, 82);
+            this.lbl_time.Location = new System.Drawing.Point(888, 82);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(96, 46);
             this.lbl_time.TabIndex = 14;
@@ -205,7 +208,7 @@
             this.lbl_date.AutoSize = true;
             this.lbl_date.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.lbl_date.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_date.Location = new System.Drawing.Point(1369, 25);
+            this.lbl_date.Location = new System.Drawing.Point(888, 25);
             this.lbl_date.Name = "lbl_date";
             this.lbl_date.Size = new System.Drawing.Size(92, 46);
             this.lbl_date.TabIndex = 13;
@@ -222,29 +225,46 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Inventory Management";
             // 
-            // btn_stockin
+            // pnl_inventBG
             // 
-            this.btn_stockin.BackColor = System.Drawing.Color.Wheat;
-            this.btn_stockin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_stockin.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_stockin.Location = new System.Drawing.Point(668, 11);
-            this.btn_stockin.Name = "btn_stockin";
-            this.btn_stockin.Size = new System.Drawing.Size(191, 98);
-            this.btn_stockin.TabIndex = 39;
-            this.btn_stockin.Text = "Stock-in";
-            this.btn_stockin.UseVisualStyleBackColor = false;
+            this.pnl_inventBG.Controls.Add(this.panel13);
+            this.pnl_inventBG.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_inventBG.Location = new System.Drawing.Point(0, 272);
+            this.pnl_inventBG.Name = "pnl_inventBG";
+            this.pnl_inventBG.Size = new System.Drawing.Size(1461, 710);
+            this.pnl_inventBG.TabIndex = 34;
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel13.Controls.Add(this.dgv_history);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(0, 0);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(1461, 710);
+            this.panel13.TabIndex = 33;
+            // 
+            // dgv_history
+            // 
+            this.dgv_history.AllowUserToAddRows = false;
+            this.dgv_history.AllowUserToDeleteRows = false;
+            this.dgv_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_history.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_history.Location = new System.Drawing.Point(0, 0);
+            this.dgv_history.Name = "dgv_history";
+            this.dgv_history.ReadOnly = true;
+            this.dgv_history.RowHeadersWidth = 51;
+            this.dgv_history.RowTemplate.Height = 24;
+            this.dgv_history.Size = new System.Drawing.Size(1461, 710);
+            this.dgv_history.TabIndex = 1;
             // 
             // frm_Inventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1942, 1102);
+            this.ClientSize = new System.Drawing.Size(1461, 982);
             this.ControlBox = false;
-            this.Controls.Add(this.panel13);
-            this.Controls.Add(this.panel12);
+            this.Controls.Add(this.pnl_inventBG);
             this.Controls.Add(this.pnl_bgStats);
             this.Controls.Add(this.pnl_top);
             this.ForeColor = System.Drawing.Color.Transparent;
@@ -258,14 +278,15 @@
             this.pnl_bgStats.PerformLayout();
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
+            this.pnl_inventBG.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer timerClock;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel pnl_bgStats;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
@@ -279,5 +300,8 @@
         private System.Windows.Forms.Label lbl_date;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_stockin;
+        private System.Windows.Forms.Panel pnl_inventBG;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.DataGridView dgv_history;
     }
 }

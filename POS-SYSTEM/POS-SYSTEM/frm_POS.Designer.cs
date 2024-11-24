@@ -48,7 +48,6 @@
             this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.pnl_bill = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
             this.btn_confirm = new System.Windows.Forms.Button();
             this.pnl_bgCash = new System.Windows.Forms.Panel();
             this.lbl_subtotal = new System.Windows.Forms.Label();
@@ -59,6 +58,9 @@
             this.Subtotal = new System.Windows.Forms.Label();
             this.Discount = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
+            this.cmb_paymentMethod = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.pnl_bg.SuspendLayout();
             this.pnl_categories.SuspendLayout();
             this.pnl_top.SuspendLayout();
@@ -79,7 +81,7 @@
             this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_bg.Location = new System.Drawing.Point(0, 0);
             this.pnl_bg.Name = "pnl_bg";
-            this.pnl_bg.Size = new System.Drawing.Size(1942, 1058);
+            this.pnl_bg.Size = new System.Drawing.Size(1942, 1102);
             this.pnl_bg.TabIndex = 3;
             // 
             // btn_cancel
@@ -264,25 +266,16 @@
             // pnl_bill
             // 
             this.pnl_bill.BackColor = System.Drawing.Color.MistyRose;
+            this.pnl_bill.Controls.Add(this.label1);
+            this.pnl_bill.Controls.Add(this.cmb_paymentMethod);
             this.pnl_bill.Controls.Add(this.label7);
             this.pnl_bill.Controls.Add(this.btn_confirm);
             this.pnl_bill.Controls.Add(this.pnl_bgCash);
             this.pnl_bill.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnl_bill.Location = new System.Drawing.Point(1378, 0);
             this.pnl_bill.Name = "pnl_bill";
-            this.pnl_bill.Size = new System.Drawing.Size(564, 1058);
+            this.pnl_bill.Size = new System.Drawing.Size(564, 1102);
             this.pnl_bill.TabIndex = 19;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
-            this.label7.ForeColor = System.Drawing.Color.DarkRed;
-            this.label7.Location = new System.Drawing.Point(196, 50);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(182, 46);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Bill Details";
             // 
             // btn_confirm
             // 
@@ -306,7 +299,7 @@
             this.pnl_bgCash.Controls.Add(this.pnl_totalBG);
             this.pnl_bgCash.Controls.Add(this.Subtotal);
             this.pnl_bgCash.Controls.Add(this.Discount);
-            this.pnl_bgCash.Location = new System.Drawing.Point(0, 620);
+            this.pnl_bgCash.Location = new System.Drawing.Point(-26, 540);
             this.pnl_bgCash.Name = "pnl_bgCash";
             this.pnl_bgCash.Size = new System.Drawing.Size(564, 313);
             this.pnl_bgCash.TabIndex = 0;
@@ -387,12 +380,43 @@
             this.Discount.TabIndex = 0;
             this.Discount.Text = "Discount (%)";
             // 
+            // cmb_paymentMethod
+            // 
+            this.cmb_paymentMethod.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.cmb_paymentMethod.FormattingEnabled = true;
+            this.cmb_paymentMethod.Location = new System.Drawing.Point(347, 884);
+            this.cmb_paymentMethod.Name = "cmb_paymentMethod";
+            this.cmb_paymentMethod.Size = new System.Drawing.Size(160, 53);
+            this.cmb_paymentMethod.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F);
+            this.label1.ForeColor = System.Drawing.Color.DarkRed;
+            this.label1.Location = new System.Drawing.Point(39, 887);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(278, 46);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Payment Method";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
+            this.label7.ForeColor = System.Drawing.Color.DarkRed;
+            this.label7.Location = new System.Drawing.Point(183, 30);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(182, 46);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Bill Details";
+            // 
             // frm_POS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SeaShell;
-            this.ClientSize = new System.Drawing.Size(1942, 1058);
+            this.ClientSize = new System.Drawing.Size(1942, 1102);
             this.Controls.Add(this.pnl_bg);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -425,7 +449,6 @@
         private System.Windows.Forms.Label Total;
         private System.Windows.Forms.Label Subtotal;
         private System.Windows.Forms.Label Discount;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lbl_subtotal;
         private System.Windows.Forms.Label lbl__discount;
         private System.Windows.Forms.Panel pnl_totalBG;
@@ -444,5 +467,8 @@
         private System.Windows.Forms.Panel pnl_calendar;
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Label lbl_date;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmb_paymentMethod;
+        private System.Windows.Forms.Label label7;
     }
 }

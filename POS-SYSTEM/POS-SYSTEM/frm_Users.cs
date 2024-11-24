@@ -34,5 +34,10 @@ namespace POS_SYSTEM
             lbl_date.Text = now.ToString($"dddd, d'{suffix}' 'of' MMMM yyyy");
             lbl_time.Text = now.ToString("hh:mm:ss tt");
         }
+
+        private void pnl_top_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

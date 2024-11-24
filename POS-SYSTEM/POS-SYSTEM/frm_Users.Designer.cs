@@ -43,13 +43,17 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.dgv_users = new System.Windows.Forms.DataGridView();
+            this.panel13.SuspendLayout();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_users)).BeginInit();
             this.SuspendLayout();
             // 
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel13.Controls.Add(this.dgv_users);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(505, 272);
             this.panel13.Name = "panel13";
@@ -127,6 +131,7 @@
             this.pnl_top.Name = "pnl_top";
             this.pnl_top.Size = new System.Drawing.Size(1924, 153);
             this.pnl_top.TabIndex = 33;
+            this.pnl_top.Paint += new System.Windows.Forms.PaintEventHandler(this.pnl_top_Paint);
             // 
             // pnl_clock
             // 
@@ -185,6 +190,20 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "User Management";
             // 
+            // dgv_users
+            // 
+            this.dgv_users.AllowUserToAddRows = false;
+            this.dgv_users.AllowUserToDeleteRows = false;
+            this.dgv_users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_users.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_users.Location = new System.Drawing.Point(0, 0);
+            this.dgv_users.Name = "dgv_users";
+            this.dgv_users.ReadOnly = true;
+            this.dgv_users.RowHeadersWidth = 51;
+            this.dgv_users.RowTemplate.Height = 24;
+            this.dgv_users.Size = new System.Drawing.Size(1419, 756);
+            this.dgv_users.TabIndex = 1;
+            // 
             // frm_Users
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -199,10 +218,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "v";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.panel13.ResumeLayout(false);
             this.pnl_bgStats.ResumeLayout(false);
             this.pnl_bgStats.PerformLayout();
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_users)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -221,5 +242,6 @@
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Label lbl_date;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgv_users;
     }
 }

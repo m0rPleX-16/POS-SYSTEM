@@ -35,6 +35,7 @@
             this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.dgv_history = new System.Windows.Forms.DataGridView();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_clock = new System.Windows.Forms.Panel();
@@ -42,13 +43,23 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.DateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.DateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.pnl_bgStats.SuspendLayout();
+            this.panel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).BeginInit();
             this.pnl_top.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_bgStats
             // 
             this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
+            this.pnl_bgStats.Controls.Add(this.label5);
+            this.pnl_bgStats.Controls.Add(this.label4);
+            this.pnl_bgStats.Controls.Add(this.DateTimePicker2);
+            this.pnl_bgStats.Controls.Add(this.DateTimePicker1);
             this.pnl_bgStats.Controls.Add(this.btn_search);
             this.pnl_bgStats.Controls.Add(this.line_username);
             this.pnl_bgStats.Controls.Add(this.txt_search);
@@ -57,7 +68,6 @@
             this.pnl_bgStats.Name = "pnl_bgStats";
             this.pnl_bgStats.Size = new System.Drawing.Size(1924, 119);
             this.pnl_bgStats.TabIndex = 24;
-            this.pnl_bgStats.Paint += new System.Windows.Forms.PaintEventHandler(this.pnl_bgStats_Paint);
             // 
             // btn_search
             // 
@@ -86,7 +96,7 @@
             // txt_search
             // 
             this.txt_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_search.BackColor = System.Drawing.Color.SeaShell;
+            this.txt_search.BackColor = System.Drawing.Color.FloralWhite;
             this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
             this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
@@ -99,11 +109,26 @@
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel13.Controls.Add(this.dgv_history);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 272);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(1924, 756);
             this.panel13.TabIndex = 28;
+            // 
+            // dgv_history
+            // 
+            this.dgv_history.AllowUserToAddRows = false;
+            this.dgv_history.AllowUserToDeleteRows = false;
+            this.dgv_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_history.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_history.Location = new System.Drawing.Point(0, 0);
+            this.dgv_history.Name = "dgv_history";
+            this.dgv_history.ReadOnly = true;
+            this.dgv_history.RowHeadersWidth = 51;
+            this.dgv_history.RowTemplate.Height = 24;
+            this.dgv_history.Size = new System.Drawing.Size(1924, 756);
+            this.dgv_history.TabIndex = 0;
             // 
             // pnl_top
             // 
@@ -176,6 +201,50 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "History/Logs";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.DarkRed;
+            this.label5.Location = new System.Drawing.Point(361, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(103, 28);
+            this.label5.TabIndex = 36;
+            this.label5.Text = "End Date:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.label4.ForeColor = System.Drawing.Color.DarkRed;
+            this.label4.Location = new System.Drawing.Point(12, 28);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(115, 28);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "Start Date:";
+            // 
+            // DateTimePicker2
+            // 
+            this.DateTimePicker2.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DateTimePicker2.CalendarForeColor = System.Drawing.Color.White;
+            this.DateTimePicker2.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.DateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DateTimePicker2.Location = new System.Drawing.Point(366, 63);
+            this.DateTimePicker2.Name = "DateTimePicker2";
+            this.DateTimePicker2.Size = new System.Drawing.Size(271, 26);
+            this.DateTimePicker2.TabIndex = 35;
+            // 
+            // DateTimePicker1
+            // 
+            this.DateTimePicker1.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DateTimePicker1.CalendarForeColor = System.Drawing.Color.White;
+            this.DateTimePicker1.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.DateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DateTimePicker1.Location = new System.Drawing.Point(17, 63);
+            this.DateTimePicker1.Name = "DateTimePicker1";
+            this.DateTimePicker1.Size = new System.Drawing.Size(270, 26);
+            this.DateTimePicker1.TabIndex = 34;
+            // 
             // frm_History
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -192,6 +261,8 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_bgStats.ResumeLayout(false);
             this.pnl_bgStats.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).EndInit();
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
             this.ResumeLayout(false);
@@ -211,5 +282,10 @@
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Label lbl_date;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgv_history;
+        internal System.Windows.Forms.Label label5;
+        internal System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.DateTimePicker DateTimePicker2;
+        internal System.Windows.Forms.DateTimePicker DateTimePicker1;
     }
 }

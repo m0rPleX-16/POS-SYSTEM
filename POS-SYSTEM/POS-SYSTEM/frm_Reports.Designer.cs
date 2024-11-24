@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Reports));
             this.pnl_top = new System.Windows.Forms.Panel();
+            this.btn_close = new System.Windows.Forms.Button();
             this.pnl_clock = new System.Windows.Forms.Panel();
             this.pnl_calendar = new System.Windows.Forms.Panel();
             this.lbl_time = new System.Windows.Forms.Label();
@@ -39,6 +40,8 @@
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.panel13 = new System.Windows.Forms.Panel();
             this.pnl_bgStats = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Panel4 = new System.Windows.Forms.Panel();
             this.Label2 = new System.Windows.Forms.Label();
@@ -53,14 +56,14 @@
             this.btn_search = new System.Windows.Forms.Button();
             this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
-            this.btn_close = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.dgv_reports = new System.Windows.Forms.DataGridView();
             this.pnl_top.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.pnl_bgStats.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
             this.Panel4.SuspendLayout();
             this.Panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_reports)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_top
@@ -77,6 +80,24 @@
             this.pnl_top.Name = "pnl_top";
             this.pnl_top.Size = new System.Drawing.Size(1942, 153);
             this.pnl_top.TabIndex = 22;
+            // 
+            // btn_close
+            // 
+            this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_close.BackColor = System.Drawing.Color.Maroon;
+            this.btn_close.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_close.FlatAppearance.BorderSize = 0;
+            this.btn_close.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
+            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_close.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.btn_close.ForeColor = System.Drawing.Color.White;
+            this.btn_close.Location = new System.Drawing.Point(1855, 0);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.Size = new System.Drawing.Size(87, 38);
+            this.btn_close.TabIndex = 30;
+            this.btn_close.Text = "Close";
+            this.btn_close.UseVisualStyleBackColor = false;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // pnl_clock
             // 
@@ -138,6 +159,7 @@
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel13.Controls.Add(this.dgv_reports);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 272);
             this.panel13.Name = "panel13";
@@ -163,6 +185,28 @@
             this.pnl_bgStats.Size = new System.Drawing.Size(1942, 119);
             this.pnl_bgStats.TabIndex = 29;
             this.pnl_bgStats.Paint += new System.Windows.Forms.PaintEventHandler(this.pnl_bgStats_Paint);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.DarkRed;
+            this.label5.Location = new System.Drawing.Point(874, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(103, 28);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "End Date:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.label4.ForeColor = System.Drawing.Color.DarkRed;
+            this.label4.Location = new System.Drawing.Point(567, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(115, 28);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Start Date:";
             // 
             // TableLayoutPanel1
             // 
@@ -288,18 +332,20 @@
             // 
             this.DateTimePicker2.CalendarForeColor = System.Drawing.Color.White;
             this.DateTimePicker2.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.DateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.DateTimePicker2.Location = new System.Drawing.Point(879, 61);
             this.DateTimePicker2.Name = "DateTimePicker2";
-            this.DateTimePicker2.Size = new System.Drawing.Size(251, 22);
+            this.DateTimePicker2.Size = new System.Drawing.Size(275, 26);
             this.DateTimePicker2.TabIndex = 28;
             // 
             // DateTimePicker1
             // 
             this.DateTimePicker1.CalendarForeColor = System.Drawing.Color.White;
             this.DateTimePicker1.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.DateTimePicker1.Location = new System.Drawing.Point(601, 61);
+            this.DateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DateTimePicker1.Location = new System.Drawing.Point(572, 61);
             this.DateTimePicker1.Name = "DateTimePicker1";
-            this.DateTimePicker1.Size = new System.Drawing.Size(247, 22);
+            this.DateTimePicker1.Size = new System.Drawing.Size(271, 26);
             this.DateTimePicker1.TabIndex = 27;
             // 
             // btn_search
@@ -336,45 +382,16 @@
             this.txt_search.TabIndex = 23;
             this.txt_search.Text = "Search";
             // 
-            // btn_close
+            // dgv_reports
             // 
-            this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_close.BackColor = System.Drawing.Color.Maroon;
-            this.btn_close.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_close.FlatAppearance.BorderSize = 0;
-            this.btn_close.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DodgerBlue;
-            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_close.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.btn_close.ForeColor = System.Drawing.Color.White;
-            this.btn_close.Location = new System.Drawing.Point(1855, 0);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(87, 38);
-            this.btn_close.TabIndex = 30;
-            this.btn_close.Text = "Close";
-            this.btn_close.UseVisualStyleBackColor = false;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.label4.ForeColor = System.Drawing.Color.DarkRed;
-            this.label4.Location = new System.Drawing.Point(596, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(115, 28);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Start Date:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.label5.ForeColor = System.Drawing.Color.DarkRed;
-            this.label5.Location = new System.Drawing.Point(874, 26);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 28);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "End Date:";
+            this.dgv_reports.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_reports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_reports.Location = new System.Drawing.Point(0, 0);
+            this.dgv_reports.Name = "dgv_reports";
+            this.dgv_reports.RowHeadersWidth = 51;
+            this.dgv_reports.RowTemplate.Height = 24;
+            this.dgv_reports.Size = new System.Drawing.Size(1942, 830);
+            this.dgv_reports.TabIndex = 0;
             // 
             // frm_Reports
             // 
@@ -392,6 +409,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
+            this.panel13.ResumeLayout(false);
             this.pnl_bgStats.ResumeLayout(false);
             this.pnl_bgStats.PerformLayout();
             this.TableLayoutPanel1.ResumeLayout(false);
@@ -399,6 +417,7 @@
             this.Panel4.PerformLayout();
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_reports)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -431,5 +450,6 @@
         internal System.Windows.Forms.Button btn_close;
         internal System.Windows.Forms.Label label5;
         internal System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dgv_reports;
     }
 }

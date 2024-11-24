@@ -98,6 +98,24 @@
     <Compile Include="frm_Users.Designer.cs">
       <DependentUpon>frm_Users.cs</DependentUpon>
     </Compile>
+    <Compile Include="inventory\inventory_category.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="inventory\inventory_category.Designer.cs">
+      <DependentUpon>inventory_category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="inventory\inventory_product.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="inventory\inventory_product.Designer.cs">
+      <DependentUpon>inventory_product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="inventory\inventory_stockin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="inventory\inventory_stockin.Designer.cs">
+      <DependentUpon>inventory_stockin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoundedTextBox.cs">
@@ -126,6 +144,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_Users.resx">
       <DependentUpon>frm_Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inventory\inventory_category.resx">
+      <DependentUpon>inventory_category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inventory\inventory_product.resx">
+      <DependentUpon>inventory_product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inventory\inventory_stockin.resx">
+      <DependentUpon>inventory_stockin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
