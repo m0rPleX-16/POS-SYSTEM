@@ -33,7 +33,7 @@ namespace POS_SYSTEM
             else if (day % 10 == 3 && day != 13) suffix = "rd";
             else suffix = "th";
             lbl_date.Text = now.ToString($"dddd, d'{suffix}' 'of' MMMM yyyy");
-            lbl_time.Text = now.ToString("hh:mm:ss TT");
+            lbl_time.Text = now.ToString("hh:mm:ss tt");
         }
 
         private void LoadUserControl(UserControl userControl)
