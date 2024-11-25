@@ -67,9 +67,9 @@
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
             this.panel13.Controls.Add(this.dgv_product);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(474, 0);
+            this.panel13.Location = new System.Drawing.Point(470, 0);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(1010, 716);
+            this.panel13.Size = new System.Drawing.Size(1014, 716);
             this.panel13.TabIndex = 33;
             // 
             // panel12
@@ -79,7 +79,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(474, 716);
+            this.panel12.Size = new System.Drawing.Size(470, 716);
             this.panel12.TabIndex = 32;
             // 
             // label1
@@ -146,7 +146,7 @@
             this.dgv_product.RowHeadersVisible = false;
             this.dgv_product.RowHeadersWidth = 51;
             this.dgv_product.RowTemplate.Height = 24;
-            this.dgv_product.Size = new System.Drawing.Size(1010, 716);
+            this.dgv_product.Size = new System.Drawing.Size(1014, 716);
             this.dgv_product.TabIndex = 2;
             // 
             // image_base64
