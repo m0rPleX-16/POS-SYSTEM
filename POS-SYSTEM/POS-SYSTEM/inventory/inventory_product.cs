@@ -16,5 +16,10 @@ namespace POS_SYSTEM
         {
             InitializeComponent();
         }
+
+        private void dgv_products_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

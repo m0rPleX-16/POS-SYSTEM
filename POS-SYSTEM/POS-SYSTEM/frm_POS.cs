@@ -39,6 +39,5 @@ namespace POS_SYSTEM
         {
             this.Close();
         }
-
     }
 }

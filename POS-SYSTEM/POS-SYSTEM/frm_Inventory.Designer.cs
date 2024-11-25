@@ -30,6 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Inventory));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.pnl_bgStats = new System.Windows.Forms.Panel();
             this.btn_stockin = new System.Windows.Forms.Button();
@@ -46,12 +54,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pnl_inventBG = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.dgv_history = new System.Windows.Forms.DataGridView();
+            this.dgv_inventory = new System.Windows.Forms.DataGridView();
+            this.inventory_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.product_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.current_stocks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reorder_level = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
             this.pnl_inventBG.SuspendLayout();
             this.panel13.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_inventory)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_bgStats
@@ -77,7 +89,7 @@
             this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_stockin.Location = new System.Drawing.Point(668, 11);
+            this.btn_stockin.Location = new System.Drawing.Point(441, 11);
             this.btn_stockin.Name = "btn_stockin";
             this.btn_stockin.Size = new System.Drawing.Size(191, 98);
             this.btn_stockin.TabIndex = 39;
@@ -93,7 +105,7 @@
             this.btn_category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_category.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_category.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_category.Location = new System.Drawing.Point(347, 11);
+            this.btn_category.Location = new System.Drawing.Point(234, 11);
             this.btn_category.Name = "btn_category";
             this.btn_category.Size = new System.Drawing.Size(191, 98);
             this.btn_category.TabIndex = 38;
@@ -109,7 +121,7 @@
             this.btn_product.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_product.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_product.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_product.Location = new System.Drawing.Point(37, 11);
+            this.btn_product.Location = new System.Drawing.Point(23, 11);
             this.btn_product.Name = "btn_product";
             this.btn_product.Size = new System.Drawing.Size(191, 98);
             this.btn_product.TabIndex = 37;
@@ -237,26 +249,113 @@
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.panel13.Controls.Add(this.dgv_history);
+            this.panel13.Controls.Add(this.dgv_inventory);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(1461, 710);
             this.panel13.TabIndex = 33;
             // 
-            // dgv_history
+            // dgv_inventory
             // 
-            this.dgv_history.AllowUserToAddRows = false;
-            this.dgv_history.AllowUserToDeleteRows = false;
-            this.dgv_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_history.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_history.Location = new System.Drawing.Point(0, 0);
-            this.dgv_history.Name = "dgv_history";
-            this.dgv_history.ReadOnly = true;
-            this.dgv_history.RowHeadersWidth = 51;
-            this.dgv_history.RowTemplate.Height = 24;
-            this.dgv_history.Size = new System.Drawing.Size(1461, 710);
-            this.dgv_history.TabIndex = 1;
+            this.dgv_inventory.AllowUserToAddRows = false;
+            this.dgv_inventory.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.dgv_inventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgv_inventory.BackgroundColor = System.Drawing.Color.BurlyWood;
+            this.dgv_inventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgv_inventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_inventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.inventory_id,
+            this.product_name,
+            this.current_stocks,
+            this.reorder_level});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_inventory.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dgv_inventory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_inventory.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.dgv_inventory.Location = new System.Drawing.Point(0, 0);
+            this.dgv_inventory.Name = "dgv_inventory";
+            this.dgv_inventory.ReadOnly = true;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inventory.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            this.dgv_inventory.RowHeadersVisible = false;
+            this.dgv_inventory.RowHeadersWidth = 51;
+            this.dgv_inventory.RowTemplate.Height = 24;
+            this.dgv_inventory.Size = new System.Drawing.Size(1461, 710);
+            this.dgv_inventory.TabIndex = 1;
+            // 
+            // inventory_id
+            // 
+            this.inventory_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.inventory_id.DefaultCellStyle = dataGridViewCellStyle3;
+            this.inventory_id.HeaderText = "INVENTORY NO.";
+            this.inventory_id.MinimumWidth = 6;
+            this.inventory_id.Name = "inventory_id";
+            this.inventory_id.ReadOnly = true;
+            this.inventory_id.Visible = false;
+            this.inventory_id.Width = 143;
+            // 
+            // product_name
+            // 
+            this.product_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.product_name.DefaultCellStyle = dataGridViewCellStyle4;
+            this.product_name.HeaderText = "PRODUCT NAME";
+            this.product_name.MinimumWidth = 6;
+            this.product_name.Name = "product_name";
+            this.product_name.ReadOnly = true;
+            // 
+            // current_stocks
+            // 
+            this.current_stocks.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.current_stocks.DefaultCellStyle = dataGridViewCellStyle5;
+            this.current_stocks.HeaderText = "CURRENT STOCKS";
+            this.current_stocks.MinimumWidth = 6;
+            this.current_stocks.Name = "current_stocks";
+            this.current_stocks.ReadOnly = true;
+            // 
+            // reorder_level
+            // 
+            this.reorder_level.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.reorder_level.DefaultCellStyle = dataGridViewCellStyle6;
+            this.reorder_level.HeaderText = "CURRENT REORDER LEVEL";
+            this.reorder_level.MinimumWidth = 6;
+            this.reorder_level.Name = "reorder_level";
+            this.reorder_level.ReadOnly = true;
             // 
             // frm_Inventory
             // 
@@ -280,7 +379,7 @@
             this.pnl_top.PerformLayout();
             this.pnl_inventBG.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_history)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_inventory)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -302,6 +401,10 @@
         private System.Windows.Forms.Button btn_stockin;
         private System.Windows.Forms.Panel pnl_inventBG;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.DataGridView dgv_history;
+        private System.Windows.Forms.DataGridView dgv_inventory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inventory_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn product_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn current_stocks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn reorder_level;
     }
 }
