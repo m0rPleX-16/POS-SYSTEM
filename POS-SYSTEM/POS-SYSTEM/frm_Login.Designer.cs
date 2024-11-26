@@ -139,6 +139,7 @@
             // 
             this.Btn_login.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.Btn_login.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_login.FlatAppearance.BorderSize = 0;
             this.Btn_login.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_login.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
             this.Btn_login.ForeColor = System.Drawing.SystemColors.HighlightText;
