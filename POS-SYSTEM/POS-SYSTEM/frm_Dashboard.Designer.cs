@@ -53,8 +53,8 @@
             this.lbl_user = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.pnl_display = new System.Windows.Forms.Panel();
-            this.message = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.message = new System.Windows.Forms.Label();
             this.panel_menu.SuspendLayout();
             this.pnl_pfview.SuspendLayout();
             this.pnl_display.SuspendLayout();
@@ -294,7 +294,7 @@
             this.lbl_role.AutoSize = true;
             this.lbl_role.Font = new System.Drawing.Font("Segoe UI Semibold", 25F);
             this.lbl_role.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_role.Location = new System.Drawing.Point(89, 251);
+            this.lbl_role.Location = new System.Drawing.Point(79, 251);
             this.lbl_role.Name = "lbl_role";
             this.lbl_role.Size = new System.Drawing.Size(126, 57);
             this.lbl_role.TabIndex = 20;
@@ -315,7 +315,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("HYHeadLine-Medium", 20F);
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(97, 42);
+            this.label2.Location = new System.Drawing.Point(96, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(202, 68);
             this.label2.TabIndex = 17;
@@ -352,6 +352,17 @@
             this.pnl_display.Size = new System.Drawing.Size(1633, 1075);
             this.pnl_display.TabIndex = 3;
             // 
+            // panel8
+            // 
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel8.BackColor = System.Drawing.Color.FloralWhite;
+            this.panel8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel8.BackgroundImage")));
+            this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel8.Location = new System.Drawing.Point(607, 181);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(406, 364);
+            this.panel8.TabIndex = 19;
+            // 
             // message
             // 
             this.message.AutoSize = true;
@@ -364,17 +375,6 @@
             this.message.TabIndex = 0;
             this.message.Text = "ERROR 404\r\nOops! Page not found.";
             this.message.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel8
-            // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel8.BackColor = System.Drawing.Color.FloralWhite;
-            this.panel8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel8.BackgroundImage")));
-            this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel8.Location = new System.Drawing.Point(607, 181);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(406, 364);
-            this.panel8.TabIndex = 19;
             // 
             // frm_Dashboard
             // 

@@ -40,6 +40,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.flp_sales = new System.Windows.Forms.FlowLayoutPanel();
             this.pnl_top = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.linepanel_transact = new System.Windows.Forms.Panel();
             this.txt_transactNo = new System.Windows.Forms.TextBox();
             this.pnl_clock = new System.Windows.Forms.Panel();
@@ -47,6 +48,7 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.btn_search = new System.Windows.Forms.Button();
+            this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.txt_transaction = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -62,8 +64,7 @@
             this.Subtotal = new System.Windows.Forms.Label();
             this.Discount = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.line_username = new System.Windows.Forms.Panel();
+            this.flp_billDetails = new System.Windows.Forms.FlowLayoutPanel();
             this.pnl_bg.SuspendLayout();
             this.pnl_categories.SuspendLayout();
             this.pnl_top.SuspendLayout();
@@ -94,7 +95,7 @@
             this.btn_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_cancel.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_cancel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_cancel.Location = new System.Drawing.Point(888, 976);
+            this.btn_cancel.Location = new System.Drawing.Point(829, 976);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(317, 59);
             this.btn_cancel.TabIndex = 22;
@@ -108,7 +109,7 @@
             this.btn_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_exit.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
             this.btn_exit.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_exit.Location = new System.Drawing.Point(357, 976);
+            this.btn_exit.Location = new System.Drawing.Point(298, 976);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(317, 59);
             this.btn_exit.TabIndex = 21;
@@ -186,6 +187,18 @@
             this.pnl_top.Size = new System.Drawing.Size(1378, 129);
             this.pnl_top.TabIndex = 20;
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label2.ForeColor = System.Drawing.Color.DarkRed;
+            this.label2.Location = new System.Drawing.Point(723, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(193, 35);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Transaction No.";
+            // 
             // linepanel_transact
             // 
             this.linepanel_transact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -209,7 +222,6 @@
             // 
             // pnl_clock
             // 
-            this.pnl_clock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_clock.BackColor = System.Drawing.Color.MistyRose;
             this.pnl_clock.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_clock.BackgroundImage")));
             this.pnl_clock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -220,7 +232,6 @@
             // 
             // pnl_calendar
             // 
-            this.pnl_calendar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_calendar.BackColor = System.Drawing.Color.MistyRose;
             this.pnl_calendar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_calendar.BackgroundImage")));
             this.pnl_calendar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -231,7 +242,6 @@
             // 
             // lbl_time
             // 
-            this.lbl_time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_time.AutoSize = true;
             this.lbl_time.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.lbl_time.ForeColor = System.Drawing.Color.DarkRed;
@@ -243,7 +253,6 @@
             // 
             // lbl_date
             // 
-            this.lbl_date.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_date.AutoSize = true;
             this.lbl_date.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.lbl_date.ForeColor = System.Drawing.Color.DarkRed;
@@ -268,6 +277,15 @@
             this.btn_search.TabIndex = 22;
             this.btn_search.UseVisualStyleBackColor = true;
             // 
+            // line_username
+            // 
+            this.line_username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.line_username.Location = new System.Drawing.Point(922, 113);
+            this.line_username.Name = "line_username";
+            this.line_username.Size = new System.Drawing.Size(390, 1);
+            this.line_username.TabIndex = 21;
+            // 
             // txt_search
             // 
             this.txt_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -284,6 +302,7 @@
             // txt_transaction
             // 
             this.txt_transaction.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_transaction.Controls.Add(this.flp_billDetails);
             this.txt_transaction.Controls.Add(this.label1);
             this.txt_transaction.Controls.Add(this.cmb_paymentMethod);
             this.txt_transaction.Controls.Add(this.label7);
@@ -300,7 +319,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(39, 887);
+            this.label1.Location = new System.Drawing.Point(34, 887);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(204, 35);
             this.label1.TabIndex = 5;
@@ -314,7 +333,7 @@
             "Cash",
             "GCash",
             "Maya"});
-            this.cmb_paymentMethod.Location = new System.Drawing.Point(306, 884);
+            this.cmb_paymentMethod.Location = new System.Drawing.Point(301, 884);
             this.cmb_paymentMethod.Name = "cmb_paymentMethod";
             this.cmb_paymentMethod.Size = new System.Drawing.Size(201, 43);
             this.cmb_paymentMethod.TabIndex = 4;
@@ -324,7 +343,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.label7.ForeColor = System.Drawing.Color.DarkRed;
-            this.label7.Location = new System.Drawing.Point(183, 30);
+            this.label7.Location = new System.Drawing.Point(168, 18);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(182, 46);
             this.label7.TabIndex = 3;
@@ -346,13 +365,15 @@
             // 
             // pnl_bgCash
             // 
+            this.pnl_bgCash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_bgCash.BackColor = System.Drawing.Color.PeachPuff;
             this.pnl_bgCash.Controls.Add(this.lbl_subtotal);
             this.pnl_bgCash.Controls.Add(this.lbl__discount);
             this.pnl_bgCash.Controls.Add(this.pnl_totalBG);
             this.pnl_bgCash.Controls.Add(this.Subtotal);
             this.pnl_bgCash.Controls.Add(this.Discount);
-            this.pnl_bgCash.Location = new System.Drawing.Point(-26, 582);
+            this.pnl_bgCash.Location = new System.Drawing.Point(-31, 582);
             this.pnl_bgCash.Name = "pnl_bgCash";
             this.pnl_bgCash.Size = new System.Drawing.Size(564, 284);
             this.pnl_bgCash.TabIndex = 0;
@@ -433,25 +454,15 @@
             this.Discount.TabIndex = 0;
             this.Discount.Text = "Discount (%)";
             // 
-            // label2
+            // flp_billDetails
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(723, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 35);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Transaction No.";
-            // 
-            // line_username
-            // 
-            this.line_username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_username.Location = new System.Drawing.Point(922, 113);
-            this.line_username.Name = "line_username";
-            this.line_username.Size = new System.Drawing.Size(390, 1);
-            this.line_username.TabIndex = 21;
+            this.flp_billDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flp_billDetails.BackColor = System.Drawing.Color.Peru;
+            this.flp_billDetails.Location = new System.Drawing.Point(-31, 80);
+            this.flp_billDetails.Name = "flp_billDetails";
+            this.flp_billDetails.Size = new System.Drawing.Size(564, 479);
+            this.flp_billDetails.TabIndex = 6;
             // 
             // frm_POS
             // 
@@ -515,5 +526,6 @@
         private System.Windows.Forms.Panel linepanel_transact;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel line_username;
+        private System.Windows.Forms.FlowLayoutPanel flp_billDetails;
     }
 }

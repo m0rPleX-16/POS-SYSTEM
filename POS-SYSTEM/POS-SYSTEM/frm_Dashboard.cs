@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace POS_SYSTEM
 {
     public partial class frm_Dashboard : Form
     {
-        public frm_Dashboard()
+        private Employee _currentEmployee;
+
+        public frm_Dashboard(Employee currentEmployee)
         {
             InitializeComponent();
-            LoadDashboardContent(); 
+            _currentEmployee = currentEmployee;
+            LoadDashboardContent();
+            UpdateRoleLabel();
         }
 
         private void LoadDashboardContent()
         {
             OpenNewForm(new frm_DashboardContents());
         }
+
         private void OpenNewForm(Form newForm)
         {
             pnl_display.Controls.Clear();
@@ -26,6 +30,11 @@ namespace POS_SYSTEM
 
             pnl_display.Controls.Add(newForm);
             newForm.Show();
+        }
+
+        private void UpdateRoleLabel()
+        {
+            lbl_role.Text = _currentEmployee.Role;
         }
 
         private void btn_dashboard_Click(object sender, EventArgs e)
@@ -64,7 +73,6 @@ namespace POS_SYSTEM
             OpenNewForm(new frm_Users());
         }
 
-
         private void btn_logout_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -80,6 +88,5 @@ namespace POS_SYSTEM
                 }
             }
         }
-
     }
 }

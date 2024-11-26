@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace POS_SYSTEM
 {
@@ -10,16 +11,8 @@ namespace POS_SYSTEM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Start with the login form
-            using (frm_Login loginForm = new frm_Login())
-            {
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                {
-                    // Open the dashboard after successful login
-                    Application.Run(new frm_Dashboard());
-                }
-            }
+            Application.Run(new frm_Login());
         }
     }
 }
+
