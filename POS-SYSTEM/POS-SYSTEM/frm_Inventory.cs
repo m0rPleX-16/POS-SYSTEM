@@ -48,7 +48,7 @@ namespace POS_SYSTEM
 
         private void btn_product_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new inventory_items());
+            LoadUserControl(new inventory_items(_currentEmployee));
         }
 
         private void btn_category_Click(object sender, EventArgs e)

@@ -232,7 +232,6 @@ namespace POS_SYSTEM
             }
         }
 
-
         private void DgvInventoryCategory_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgv_category.CurrentRow != null)
