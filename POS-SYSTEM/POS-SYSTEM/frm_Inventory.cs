@@ -59,7 +59,7 @@ namespace POS_SYSTEM
 
         private void btn_stockin_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new inventory_ingridients());
+            LoadUserControl(new inventory_ingridients(_currentEmployee));
         }
 
         private void btn_tables_Click(object sender, EventArgs e)
