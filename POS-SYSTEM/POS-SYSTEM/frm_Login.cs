@@ -6,7 +6,7 @@ namespace POS_SYSTEM
 {
     public partial class frm_Login : Form
     {
-        private string connectionString = "server=localhost;userid=root;password=;database=pos_system";
+        private string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         public static Employee CurrentEmployee { get; private set; }
         public string userid = "";
         public string userRole = "";
@@ -24,7 +24,7 @@ namespace POS_SYSTEM
         {
             using (var conn = new MySqlConnection(connectionString))
             {
-                string query = "SELECT user_id, firstname, lastname, username, role FROM employee_tb WHERE username = @username AND password = @password AND is_archived = 0 AND status = 'Active'";
+                string query = "SELECT employee_id, firstname, lastname, username, role FROM employee_tb WHERE username = @username AND password = @password AND is_archived = 0 AND status = 'Active'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", username);
                 cmd.Parameters.AddWithValue("@password", password);
@@ -38,7 +38,7 @@ namespace POS_SYSTEM
                         {
                             while (reader.Read())
                             {
-                                userid = reader["user_id"].ToString();
+                                userid = reader["employee_id"].ToString();
                                 userRole = reader["role"].ToString();
                                 firstname = reader["firstname"].ToString();
                                 lastname = reader["lastname"].ToString();
@@ -54,17 +54,21 @@ namespace POS_SYSTEM
             }
             return false;
         }
-
-        private void LogAction(string action)
+        private void LogAction(string action, string module, string details = null, string itemId = null, int? quantity = null, decimal? amount = null)
         {
             using (var conn = new MySqlConnection(connectionString))
             {
-                string query = "INSERT INTO logs (user, name, logdate, action) VALUES (@user, @name, @logdate, @action)";
+                string query = "INSERT INTO system_logs (action_module, action, item_id, quantity, amount, timestamp, details, employee_id) " +
+                               "VALUES (@action_module, @action, @item_id, @quantity, @amount, @timestamp, @details, @employee_id)";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@user", userid);
-                cmd.Parameters.AddWithValue("@name", $"{lastname}, {firstname}");
-                cmd.Parameters.AddWithValue("@logdate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@action_module", module);
                 cmd.Parameters.AddWithValue("@action", action);
+                cmd.Parameters.AddWithValue("@item_id", itemId ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@quantity", quantity.HasValue ? (object)quantity : DBNull.Value);
+                cmd.Parameters.AddWithValue("@amount", amount.HasValue ? (object)amount : DBNull.Value);
+                cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                cmd.Parameters.AddWithValue("@details", details ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@employee_id", userid);
 
                 try
                 {
@@ -100,21 +104,26 @@ namespace POS_SYSTEM
                     Lastname = lastname
                 };
 
-                LogAction("Logged in successfully");
+                LogAction("Login", "Authentication", $"User {username} logged in");
+
                 this.Hide();
 
                 if (userRole == "Admin")
                 {
-                    var dashboard = new frm_Dashboard(CurrentEmployee);
-                    dashboard.ShowDialog();
+                    using (var dashboard = new frm_Dashboard(CurrentEmployee))
+                    {
+                        dashboard.ShowDialog();
+                    }
                 }
-                else if (userRole == "Staff")
+                else if (userRole == "Cashier")
                 {
-                    var pointofsale = new frm_POS();
-                    pointofsale.ShowDialog();
+                    using (var pointofsale = new frm_POS(CurrentEmployee))
+                    {
+                        pointofsale.ShowDialog();
+                    }
                 }
 
-                LogAction("Logged out successfully");
+                LogAction("Logout", "Authentication", $"User {username} logged out");
                 this.Close();
             }
             else

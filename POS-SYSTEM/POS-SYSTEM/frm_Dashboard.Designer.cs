@@ -84,7 +84,7 @@
             this.panel_menu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_menu.Location = new System.Drawing.Point(0, 0);
             this.panel_menu.Name = "panel_menu";
-            this.panel_menu.Size = new System.Drawing.Size(309, 1075);
+            this.panel_menu.Size = new System.Drawing.Size(309, 982);
             this.panel_menu.TabIndex = 1;
             // 
             // btn_logout
@@ -217,7 +217,7 @@
             this.lbl_about.AutoSize = true;
             this.lbl_about.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             this.lbl_about.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_about.Location = new System.Drawing.Point(50, 1030);
+            this.lbl_about.Location = new System.Drawing.Point(50, 937);
             this.lbl_about.Name = "lbl_about";
             this.lbl_about.Size = new System.Drawing.Size(202, 23);
             this.lbl_about.TabIndex = 20;
@@ -349,7 +349,7 @@
             this.pnl_display.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_display.Location = new System.Drawing.Point(309, 0);
             this.pnl_display.Name = "pnl_display";
-            this.pnl_display.Size = new System.Drawing.Size(1633, 1075);
+            this.pnl_display.Size = new System.Drawing.Size(1633, 982);
             this.pnl_display.TabIndex = 3;
             // 
             // panel8
@@ -381,7 +381,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(1942, 1075);
+            this.ClientSize = new System.Drawing.Size(1942, 982);
             this.ControlBox = false;
             this.Controls.Add(this.pnl_display);
             this.Controls.Add(this.panel_menu);

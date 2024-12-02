@@ -41,6 +41,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.pnl_bgStats = new System.Windows.Forms.Panel();
+            this.recipe = new System.Windows.Forms.Button();
+            this.btn_tables = new System.Windows.Forms.Button();
             this.btn_stockin = new System.Windows.Forms.Button();
             this.btn_category = new System.Windows.Forms.Button();
             this.btn_product = new System.Windows.Forms.Button();
@@ -70,6 +72,8 @@
             // pnl_bgStats
             // 
             this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
+            this.pnl_bgStats.Controls.Add(this.recipe);
+            this.pnl_bgStats.Controls.Add(this.btn_tables);
             this.pnl_bgStats.Controls.Add(this.btn_stockin);
             this.pnl_bgStats.Controls.Add(this.btn_category);
             this.pnl_bgStats.Controls.Add(this.btn_product);
@@ -81,6 +85,38 @@
             this.pnl_bgStats.Name = "pnl_bgStats";
             this.pnl_bgStats.Size = new System.Drawing.Size(1461, 119);
             this.pnl_bgStats.TabIndex = 29;
+            // 
+            // recipe
+            // 
+            this.recipe.BackColor = System.Drawing.Color.Wheat;
+            this.recipe.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.recipe.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.recipe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.recipe.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.recipe.ForeColor = System.Drawing.Color.DarkRed;
+            this.recipe.Location = new System.Drawing.Point(853, 11);
+            this.recipe.Name = "recipe";
+            this.recipe.Size = new System.Drawing.Size(191, 98);
+            this.recipe.TabIndex = 41;
+            this.recipe.Text = "Recipe";
+            this.recipe.UseVisualStyleBackColor = false;
+            this.recipe.Click += new System.EventHandler(this.recipe_Click);
+            // 
+            // btn_tables
+            // 
+            this.btn_tables.BackColor = System.Drawing.Color.Wheat;
+            this.btn_tables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_tables.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_tables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_tables.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_tables.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_tables.Location = new System.Drawing.Point(647, 11);
+            this.btn_tables.Name = "btn_tables";
+            this.btn_tables.Size = new System.Drawing.Size(191, 98);
+            this.btn_tables.TabIndex = 40;
+            this.btn_tables.Text = "Tables";
+            this.btn_tables.UseVisualStyleBackColor = false;
+            this.btn_tables.Click += new System.EventHandler(this.btn_tables_Click);
             // 
             // btn_stockin
             // 
@@ -94,7 +130,7 @@
             this.btn_stockin.Name = "btn_stockin";
             this.btn_stockin.Size = new System.Drawing.Size(191, 98);
             this.btn_stockin.TabIndex = 39;
-            this.btn_stockin.Text = "Stock-in";
+            this.btn_stockin.Text = "Ingridients";
             this.btn_stockin.UseVisualStyleBackColor = false;
             this.btn_stockin.Click += new System.EventHandler(this.btn_stockin_Click);
             // 
@@ -110,7 +146,7 @@
             this.btn_category.Name = "btn_category";
             this.btn_category.Size = new System.Drawing.Size(191, 98);
             this.btn_category.TabIndex = 38;
-            this.btn_category.Text = "Category";
+            this.btn_category.Text = "Categories";
             this.btn_category.UseVisualStyleBackColor = false;
             this.btn_category.Click += new System.EventHandler(this.btn_category_Click);
             // 
@@ -126,7 +162,7 @@
             this.btn_product.Name = "btn_product";
             this.btn_product.Size = new System.Drawing.Size(191, 98);
             this.btn_product.TabIndex = 37;
-            this.btn_product.Text = "Products";
+            this.btn_product.Text = "Items";
             this.btn_product.UseVisualStyleBackColor = false;
             this.btn_product.Click += new System.EventHandler(this.btn_product_Click);
             // 
@@ -285,7 +321,7 @@
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -413,5 +449,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn product_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn current_stocks;
         private System.Windows.Forms.DataGridViewTextBoxColumn reorder_level;
+        private System.Windows.Forms.Button btn_tables;
+        private System.Windows.Forms.Button recipe;
     }
 }

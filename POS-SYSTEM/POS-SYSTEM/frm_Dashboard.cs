@@ -7,6 +7,7 @@ namespace POS_SYSTEM
     {
         private Employee _currentEmployee;
 
+        // Accept Employee object in the constructor
         public frm_Dashboard(Employee currentEmployee)
         {
             InitializeComponent();
@@ -23,11 +24,9 @@ namespace POS_SYSTEM
         private void OpenNewForm(Form newForm)
         {
             pnl_display.Controls.Clear();
-
             newForm.TopLevel = false;
             newForm.FormBorderStyle = FormBorderStyle.None;
             newForm.Dock = DockStyle.Fill;
-
             pnl_display.Controls.Add(newForm);
             newForm.Show();
         }
@@ -49,7 +48,7 @@ namespace POS_SYSTEM
 
         private void btn_POS_Click(object sender, EventArgs e)
         {
-            using (frm_POS pos = new frm_POS())
+            using (frm_POS pos = new frm_POS(_currentEmployee))
             {
                 pos.ShowDialog();
             }
@@ -57,12 +56,12 @@ namespace POS_SYSTEM
 
         private void btn_history_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_History());
+            OpenNewForm(new frm_History(_currentEmployee));
         }
 
         private void btn_reports_Click(object sender, EventArgs e)
         {
-            using (frm_Reports reports = new frm_Reports())
+            using (frm_Reports reports = new frm_Reports(_currentEmployee))
             {
                 reports.ShowDialog();
             }
@@ -70,7 +69,7 @@ namespace POS_SYSTEM
 
         private void btn_users_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_Users());
+            OpenNewForm(new frm_Users(_currentEmployee));
         }
 
         private void btn_logout_Click(object sender, EventArgs e)

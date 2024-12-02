@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,16 +13,53 @@ using System.Windows.Forms;
 namespace POS_SYSTEM
 {
     public partial class frm_POS : Form
+
     {
-        public frm_POS()
+        private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
+        private readonly Employee _currentEmployee;
+
+        public frm_POS(Employee currentEmployee)
         {
             InitializeComponent();
-            timerClock.Start();
-            timerClock.Interval = 100;
+            _currentEmployee = currentEmployee;
+            timerClock.Interval = 1000; 
             timerClock.Tick += TimerClock_Tick;
             timerClock.Start();
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            LogAction("Logout", "POS Session", $"Cashier {_currentEmployee.Username} logged out");
+        }
+
+        private void LogAction(string action, string module, string details = null, string itemId = null, int? quantity = null, decimal? amount = null)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                string query = "INSERT INTO system_logs (action_module, action, item_id, quantity, amount, timestamp, details, employee_id) " +
+                               "VALUES (@action_module, @action, @item_id, @quantity, @amount, @timestamp, @details, @employee_id)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@action_module", module);
+                cmd.Parameters.AddWithValue("@action", action);
+                cmd.Parameters.AddWithValue("@item_id", itemId ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@quantity", quantity.HasValue ? (object)quantity : DBNull.Value);
+                cmd.Parameters.AddWithValue("@amount", amount.HasValue ? (object)amount : DBNull.Value);
+                cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                cmd.Parameters.AddWithValue("@details", details ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@employee_id", _currentEmployee.Userid);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Error logging action: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
         private void TimerClock_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;

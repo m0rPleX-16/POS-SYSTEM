@@ -45,6 +45,25 @@
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.panel13 = new System.Windows.Forms.Panel();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_respassword = new System.Windows.Forms.Button();
+            this.btn_unarchive = new System.Windows.Forms.Button();
+            this.btn_archive = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cb_status = new System.Windows.Forms.ComboBox();
+            this.cb_role = new System.Windows.Forms.ComboBox();
+            this.txt_username = new System.Windows.Forms.TextBox();
+            this.txt_lastname = new System.Windows.Forms.TextBox();
+            this.txt_firstname = new System.Windows.Forms.TextBox();
+            this.txt_userid = new System.Windows.Forms.TextBox();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.line_username = new System.Windows.Forms.Panel();
             this.btn_search = new System.Windows.Forms.Button();
@@ -55,28 +74,17 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txt_userid = new System.Windows.Forms.TextBox();
-            this.txt_firstname = new System.Windows.Forms.TextBox();
-            this.txt_lastname = new System.Windows.Forms.TextBox();
-            this.txt_username = new System.Windows.Forms.TextBox();
-            this.cb_role = new System.Windows.Forms.ComboBox();
-            this.cb_status = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.disable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lastname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.firstname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.employee_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_users = new System.Windows.Forms.DataGridView();
             this.panel13.SuspendLayout();
             this.panel12.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_users)).BeginInit();
@@ -89,12 +97,13 @@
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(470, 272);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(1454, 756);
+            this.panel13.Size = new System.Drawing.Size(1454, 830);
             this.panel13.TabIndex = 31;
             // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel12.Controls.Add(this.panel1);
             this.panel12.Controls.Add(this.label7);
             this.panel12.Controls.Add(this.label6);
             this.panel12.Controls.Add(this.label5);
@@ -110,8 +119,248 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel12.Location = new System.Drawing.Point(0, 272);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(470, 756);
+            this.panel12.Size = new System.Drawing.Size(470, 830);
             this.panel12.TabIndex = 30;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btn_respassword);
+            this.panel1.Controls.Add(this.btn_unarchive);
+            this.panel1.Controls.Add(this.btn_archive);
+            this.panel1.Controls.Add(this.btn_edit);
+            this.panel1.Controls.Add(this.btn_clear);
+            this.panel1.Controls.Add(this.btn_save);
+            this.panel1.Location = new System.Drawing.Point(1, 515);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 299);
+            this.panel1.TabIndex = 38;
+            // 
+            // btn_respassword
+            // 
+            this.btn_respassword.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_respassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_respassword.FlatAppearance.BorderSize = 0;
+            this.btn_respassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_respassword.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_respassword.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_respassword.Location = new System.Drawing.Point(153, 36);
+            this.btn_respassword.Name = "btn_respassword";
+            this.btn_respassword.Size = new System.Drawing.Size(161, 58);
+            this.btn_respassword.TabIndex = 37;
+            this.btn_respassword.Text = "Reset Password";
+            this.btn_respassword.UseVisualStyleBackColor = false;
+            this.btn_respassword.Click += new System.EventHandler(this.btn_respassword_Click);
+            // 
+            // btn_unarchive
+            // 
+            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_unarchive.FlatAppearance.BorderSize = 0;
+            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_unarchive.Location = new System.Drawing.Point(319, 171);
+            this.btn_unarchive.Name = "btn_unarchive";
+            this.btn_unarchive.Size = new System.Drawing.Size(93, 58);
+            this.btn_unarchive.TabIndex = 36;
+            this.btn_unarchive.Text = "Unarchive";
+            this.btn_unarchive.UseVisualStyleBackColor = false;
+            this.btn_unarchive.Click += new System.EventHandler(this.btn_unarchive_Click);
+            // 
+            // btn_archive
+            // 
+            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_archive.FlatAppearance.BorderSize = 0;
+            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_archive.Location = new System.Drawing.Point(189, 211);
+            this.btn_archive.Name = "btn_archive";
+            this.btn_archive.Size = new System.Drawing.Size(93, 58);
+            this.btn_archive.TabIndex = 35;
+            this.btn_archive.Text = "Archive";
+            this.btn_archive.UseVisualStyleBackColor = false;
+            this.btn_archive.Click += new System.EventHandler(this.btn_archive_Click);
+            // 
+            // btn_edit
+            // 
+            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit.FlatAppearance.BorderSize = 0;
+            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_edit.Location = new System.Drawing.Point(49, 211);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(93, 58);
+            this.btn_edit.TabIndex = 34;
+            this.btn_edit.Text = "Edit";
+            this.btn_edit.UseVisualStyleBackColor = false;
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click_1);
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_clear.FlatAppearance.BorderSize = 0;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_clear.Location = new System.Drawing.Point(187, 127);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(93, 58);
+            this.btn_clear.TabIndex = 33;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.UseVisualStyleBackColor = false;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            // 
+            // btn_save
+            // 
+            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.FlatAppearance.BorderSize = 0;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_save.Location = new System.Drawing.Point(47, 127);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(93, 58);
+            this.btn_save.TabIndex = 32;
+            this.btn_save.Text = "Add";
+            this.btn_save.UseVisualStyleBackColor = false;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click_1);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label7.Location = new System.Drawing.Point(27, 441);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(71, 28);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Status";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label6.Location = new System.Drawing.Point(27, 366);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 28);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Role";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label5.Location = new System.Drawing.Point(27, 304);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 28);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Username";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label4.Location = new System.Drawing.Point(27, 234);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 28);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Lastname";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label3.Location = new System.Drawing.Point(27, 171);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 28);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Firstname";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(27, 102);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 28);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "User ID";
+            // 
+            // cb_status
+            // 
+            this.cb_status.BackColor = System.Drawing.Color.FloralWhite;
+            this.cb_status.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_status.FormattingEnabled = true;
+            this.cb_status.Items.AddRange(new object[] {
+            "",
+            "Active",
+            "Inactive"});
+            this.cb_status.Location = new System.Drawing.Point(188, 441);
+            this.cb_status.Name = "cb_status";
+            this.cb_status.Size = new System.Drawing.Size(240, 36);
+            this.cb_status.TabIndex = 8;
+            // 
+            // cb_role
+            // 
+            this.cb_role.BackColor = System.Drawing.Color.FloralWhite;
+            this.cb_role.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_role.FormattingEnabled = true;
+            this.cb_role.Items.AddRange(new object[] {
+            "",
+            "Admin",
+            "Cashier"});
+            this.cb_role.Location = new System.Drawing.Point(188, 366);
+            this.cb_role.Name = "cb_role";
+            this.cb_role.Size = new System.Drawing.Size(240, 36);
+            this.cb_role.TabIndex = 7;
+            // 
+            // txt_username
+            // 
+            this.txt_username.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_username.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_username.Location = new System.Drawing.Point(188, 301);
+            this.txt_username.Name = "txt_username";
+            this.txt_username.Size = new System.Drawing.Size(240, 34);
+            this.txt_username.TabIndex = 5;
+            // 
+            // txt_lastname
+            // 
+            this.txt_lastname.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_lastname.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_lastname.Location = new System.Drawing.Point(188, 231);
+            this.txt_lastname.Name = "txt_lastname";
+            this.txt_lastname.Size = new System.Drawing.Size(240, 34);
+            this.txt_lastname.TabIndex = 4;
+            // 
+            // txt_firstname
+            // 
+            this.txt_firstname.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_firstname.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_firstname.Location = new System.Drawing.Point(188, 168);
+            this.txt_firstname.Name = "txt_firstname";
+            this.txt_firstname.Size = new System.Drawing.Size(240, 34);
+            this.txt_firstname.TabIndex = 3;
+            // 
+            // txt_userid
+            // 
+            this.txt_userid.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_userid.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_userid.Location = new System.Drawing.Point(188, 99);
+            this.txt_userid.Name = "txt_userid";
+            this.txt_userid.ReadOnly = true;
+            this.txt_userid.Size = new System.Drawing.Size(240, 34);
+            this.txt_userid.TabIndex = 0;
             // 
             // txt_search
             // 
@@ -233,140 +482,18 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "User Management";
             // 
-            // txt_userid
+            // disable
             // 
-            this.txt_userid.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_userid.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_userid.Location = new System.Drawing.Point(188, 71);
-            this.txt_userid.Name = "txt_userid";
-            this.txt_userid.Size = new System.Drawing.Size(240, 34);
-            this.txt_userid.TabIndex = 0;
-            // 
-            // txt_firstname
-            // 
-            this.txt_firstname.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_firstname.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_firstname.Location = new System.Drawing.Point(188, 153);
-            this.txt_firstname.Name = "txt_firstname";
-            this.txt_firstname.Size = new System.Drawing.Size(240, 34);
-            this.txt_firstname.TabIndex = 3;
-            // 
-            // txt_lastname
-            // 
-            this.txt_lastname.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_lastname.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_lastname.Location = new System.Drawing.Point(188, 233);
-            this.txt_lastname.Name = "txt_lastname";
-            this.txt_lastname.Size = new System.Drawing.Size(240, 34);
-            this.txt_lastname.TabIndex = 4;
-            // 
-            // txt_username
-            // 
-            this.txt_username.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_username.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_username.Location = new System.Drawing.Point(188, 314);
-            this.txt_username.Name = "txt_username";
-            this.txt_username.Size = new System.Drawing.Size(240, 34);
-            this.txt_username.TabIndex = 5;
-            // 
-            // cb_role
-            // 
-            this.cb_role.BackColor = System.Drawing.Color.FloralWhite;
-            this.cb_role.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_role.FormattingEnabled = true;
-            this.cb_role.Location = new System.Drawing.Point(188, 393);
-            this.cb_role.Name = "cb_role";
-            this.cb_role.Size = new System.Drawing.Size(240, 36);
-            this.cb_role.TabIndex = 7;
-            // 
-            // cb_status
-            // 
-            this.cb_status.BackColor = System.Drawing.Color.FloralWhite;
-            this.cb_status.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_status.FormattingEnabled = true;
-            this.cb_status.Location = new System.Drawing.Point(188, 472);
-            this.cb_status.Name = "cb_status";
-            this.cb_status.Size = new System.Drawing.Size(240, 36);
-            this.cb_status.TabIndex = 8;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(27, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 28);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "User ID";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(27, 156);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 28);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Firstname";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(27, 236);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 28);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Lastname";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label5.Location = new System.Drawing.Point(27, 317);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(106, 28);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Username";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label6.Location = new System.Drawing.Point(27, 393);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 28);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Role";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label7.Location = new System.Drawing.Point(27, 472);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(71, 28);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Status";
-            // 
-            // is_archived
-            // 
-            this.is_archived.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.disable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.is_archived.DefaultCellStyle = dataGridViewCellStyle9;
-            this.is_archived.HeaderText = "DISABLE";
-            this.is_archived.MinimumWidth = 6;
-            this.is_archived.Name = "is_archived";
-            this.is_archived.ReadOnly = true;
-            this.is_archived.Width = 108;
+            this.disable.DefaultCellStyle = dataGridViewCellStyle9;
+            this.disable.HeaderText = "DISABLE";
+            this.disable.MinimumWidth = 6;
+            this.disable.Name = "disable";
+            this.disable.ReadOnly = true;
+            this.disable.Width = 108;
             // 
             // status
             // 
@@ -428,30 +555,29 @@
             this.firstname.Name = "firstname";
             this.firstname.ReadOnly = true;
             // 
-            // employee_id
+            // userid
             // 
-            this.employee_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.userid.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.employee_id.DefaultCellStyle = dataGridViewCellStyle3;
-            this.employee_id.HeaderText = "USER NO.";
-            this.employee_id.MinimumWidth = 6;
-            this.employee_id.Name = "employee_id";
-            this.employee_id.ReadOnly = true;
-            this.employee_id.Visible = false;
-            this.employee_id.Width = 125;
+            this.userid.DefaultCellStyle = dataGridViewCellStyle3;
+            this.userid.HeaderText = "ID";
+            this.userid.MinimumWidth = 6;
+            this.userid.Name = "userid";
+            this.userid.ReadOnly = true;
+            this.userid.Width = 57;
             // 
             // dgv_users
             // 
             this.dgv_users.AllowUserToAddRows = false;
             this.dgv_users.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             this.dgv_users.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_users.BackgroundColor = System.Drawing.Color.BurlyWood;
@@ -467,13 +593,13 @@
             this.dgv_users.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_users.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.employee_id,
+            this.userid,
             this.firstname,
             this.lastname,
             this.username,
             this.role,
             this.status,
-            this.is_archived});
+            this.disable});
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.DarkGoldenrod;
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -498,7 +624,7 @@
             this.dgv_users.RowHeadersVisible = false;
             this.dgv_users.RowHeadersWidth = 51;
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -506,14 +632,14 @@
             this.dgv_users.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dgv_users.RowTemplate.Height = 24;
             this.dgv_users.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_users.Size = new System.Drawing.Size(1454, 756);
-            this.dgv_users.TabIndex = 2;
+            this.dgv_users.Size = new System.Drawing.Size(1454, 830);
+            this.dgv_users.TabIndex = 4;
             // 
             // frm_Users
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 1028);
+            this.ClientSize = new System.Drawing.Size(1924, 1102);
             this.Controls.Add(this.panel13);
             this.Controls.Add(this.panel12);
             this.Controls.Add(this.pnl_bgStats);
@@ -526,6 +652,7 @@
             this.panel13.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.pnl_bgStats.ResumeLayout(false);
             this.pnl_bgStats.PerformLayout();
             this.pnl_top.ResumeLayout(false);
@@ -561,13 +688,20 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_unarchive;
+        private System.Windows.Forms.Button btn_archive;
+        private System.Windows.Forms.Button btn_edit;
+        private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.Button btn_respassword;
         private System.Windows.Forms.DataGridView dgv_users;
-        private System.Windows.Forms.DataGridViewTextBoxColumn employee_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userid;
         private System.Windows.Forms.DataGridViewTextBoxColumn firstname;
         private System.Windows.Forms.DataGridViewTextBoxColumn lastname;
         private System.Windows.Forms.DataGridViewTextBoxColumn username;
         private System.Windows.Forms.DataGridViewTextBoxColumn role;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn is_archived;
+        private System.Windows.Forms.DataGridViewTextBoxColumn disable;
     }
 }

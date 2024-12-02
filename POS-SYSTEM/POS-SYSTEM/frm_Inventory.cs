@@ -13,6 +13,8 @@ namespace POS_SYSTEM
 {
     public partial class frm_Inventory : Form
     {
+        private Employee _currentEmployee;
+
         public frm_Inventory()
         {
             InitializeComponent();
@@ -46,17 +48,28 @@ namespace POS_SYSTEM
 
         private void btn_product_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new inventory_product());
+            LoadUserControl(new inventory_items());
         }
 
         private void btn_category_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new inventory_category());
+  
+            LoadUserControl(new inventory_category(_currentEmployee));
         }
 
         private void btn_stockin_Click(object sender, EventArgs e)
         {
-            LoadUserControl(new inventory_stockin());
+            LoadUserControl(new inventory_ingridients());
+        }
+
+        private void btn_tables_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new inventory_tables(_currentEmployee));
+        }
+
+        private void recipe_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new inventory_recipe(_currentEmployee));
         }
     }
 }

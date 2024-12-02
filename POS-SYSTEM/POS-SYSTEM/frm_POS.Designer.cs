@@ -31,13 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_POS));
             this.pnl_bg = new System.Windows.Forms.Panel();
+            this.flp_categories = new System.Windows.Forms.FlowLayoutPanel();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
-            this.pnl_categories = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.flp_sales = new System.Windows.Forms.FlowLayoutPanel();
             this.pnl_top = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +47,12 @@
             this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.txt_transaction = new System.Windows.Forms.Panel();
+            this.line_cash = new System.Windows.Forms.Panel();
+            this.txt_change = new System.Windows.Forms.Label();
+            this.txt_cash = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.flp_billDetails = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cmb_paymentMethod = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -64,9 +66,7 @@
             this.Subtotal = new System.Windows.Forms.Label();
             this.Discount = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.flp_billDetails = new System.Windows.Forms.FlowLayoutPanel();
             this.pnl_bg.SuspendLayout();
-            this.pnl_categories.SuspendLayout();
             this.pnl_top.SuspendLayout();
             this.txt_transaction.SuspendLayout();
             this.pnl_bgCash.SuspendLayout();
@@ -76,9 +76,9 @@
             // pnl_bg
             // 
             this.pnl_bg.BackColor = System.Drawing.Color.MistyRose;
+            this.pnl_bg.Controls.Add(this.flp_categories);
             this.pnl_bg.Controls.Add(this.btn_cancel);
             this.pnl_bg.Controls.Add(this.btn_exit);
-            this.pnl_bg.Controls.Add(this.pnl_categories);
             this.pnl_bg.Controls.Add(this.flp_sales);
             this.pnl_bg.Controls.Add(this.pnl_top);
             this.pnl_bg.Controls.Add(this.txt_transaction);
@@ -87,6 +87,14 @@
             this.pnl_bg.Name = "pnl_bg";
             this.pnl_bg.Size = new System.Drawing.Size(1942, 1102);
             this.pnl_bg.TabIndex = 3;
+            // 
+            // flp_categories
+            // 
+            this.flp_categories.BackColor = System.Drawing.Color.Bisque;
+            this.flp_categories.Location = new System.Drawing.Point(37, 780);
+            this.flp_categories.Name = "flp_categories";
+            this.flp_categories.Size = new System.Drawing.Size(1400, 153);
+            this.flp_categories.TabIndex = 23;
             // 
             // btn_cancel
             // 
@@ -99,7 +107,7 @@
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(317, 59);
             this.btn_cancel.TabIndex = 22;
-            this.btn_cancel.Text = "Cancel Order";
+            this.btn_cancel.Text = "New Order";
             this.btn_cancel.UseVisualStyleBackColor = false;
             // 
             // btn_exit
@@ -117,53 +125,9 @@
             this.btn_exit.UseVisualStyleBackColor = false;
             this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
-            // pnl_categories
-            // 
-            this.pnl_categories.BackColor = System.Drawing.Color.Bisque;
-            this.pnl_categories.Controls.Add(this.panel7);
-            this.pnl_categories.Controls.Add(this.panel6);
-            this.pnl_categories.Controls.Add(this.panel5);
-            this.pnl_categories.Controls.Add(this.panel4);
-            this.pnl_categories.Location = new System.Drawing.Point(37, 780);
-            this.pnl_categories.Name = "pnl_categories";
-            this.pnl_categories.Size = new System.Drawing.Size(1400, 153);
-            this.pnl_categories.TabIndex = 18;
-            // 
-            // panel7
-            // 
-            this.panel7.BackColor = System.Drawing.Color.Ivory;
-            this.panel7.Location = new System.Drawing.Point(1089, 22);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(178, 112);
-            this.panel7.TabIndex = 2;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.Ivory;
-            this.panel6.Location = new System.Drawing.Point(744, 22);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(178, 112);
-            this.panel6.TabIndex = 2;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.Ivory;
-            this.panel5.Location = new System.Drawing.Point(421, 22);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(178, 112);
-            this.panel5.TabIndex = 1;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Ivory;
-            this.panel4.Location = new System.Drawing.Point(123, 22);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(178, 112);
-            this.panel4.TabIndex = 0;
-            // 
             // flp_sales
             // 
-            this.flp_sales.BackColor = System.Drawing.Color.Peru;
+            this.flp_sales.BackColor = System.Drawing.Color.NavajoWhite;
             this.flp_sales.Location = new System.Drawing.Point(37, 129);
             this.flp_sales.Name = "flp_sales";
             this.flp_sales.Size = new System.Drawing.Size(1400, 651);
@@ -195,9 +159,9 @@
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
             this.label2.Location = new System.Drawing.Point(723, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 35);
+            this.label2.Size = new System.Drawing.Size(127, 35);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Transaction No.";
+            this.label2.Text = "Order No.";
             // 
             // linepanel_transact
             // 
@@ -302,6 +266,11 @@
             // txt_transaction
             // 
             this.txt_transaction.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_transaction.Controls.Add(this.line_cash);
+            this.txt_transaction.Controls.Add(this.txt_change);
+            this.txt_transaction.Controls.Add(this.txt_cash);
+            this.txt_transaction.Controls.Add(this.label4);
+            this.txt_transaction.Controls.Add(this.label3);
             this.txt_transaction.Controls.Add(this.flp_billDetails);
             this.txt_transaction.Controls.Add(this.label1);
             this.txt_transaction.Controls.Add(this.cmb_paymentMethod);
@@ -314,12 +283,85 @@
             this.txt_transaction.Size = new System.Drawing.Size(564, 1102);
             this.txt_transaction.TabIndex = 19;
             // 
+            // line_cash
+            // 
+            this.line_cash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.line_cash.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.line_cash.Location = new System.Drawing.Point(346, 832);
+            this.line_cash.Name = "line_cash";
+            this.line_cash.Size = new System.Drawing.Size(142, 1);
+            this.line_cash.TabIndex = 22;
+            // 
+            // txt_change
+            // 
+            this.txt_change.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_change.AutoSize = true;
+            this.txt_change.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.txt_change.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_change.Location = new System.Drawing.Point(403, 855);
+            this.txt_change.Name = "txt_change";
+            this.txt_change.Size = new System.Drawing.Size(59, 35);
+            this.txt_change.TabIndex = 10;
+            this.txt_change.Text = "0.00";
+            // 
+            // txt_cash
+            // 
+            this.txt_cash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_cash.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_cash.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_cash.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.txt_cash.Location = new System.Drawing.Point(346, 796);
+            this.txt_cash.Name = "txt_cash";
+            this.txt_cash.Size = new System.Drawing.Size(143, 34);
+            this.txt_cash.TabIndex = 9;
+            this.txt_cash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.label4.ForeColor = System.Drawing.Color.DarkRed;
+            this.label4.Location = new System.Drawing.Point(34, 855);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 35);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Change";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.label3.ForeColor = System.Drawing.Color.DarkRed;
+            this.label3.Location = new System.Drawing.Point(34, 802);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 35);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Cash ";
+            // 
+            // flp_billDetails
+            // 
+            this.flp_billDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flp_billDetails.BackColor = System.Drawing.Color.NavajoWhite;
+            this.flp_billDetails.Location = new System.Drawing.Point(-31, 80);
+            this.flp_billDetails.Name = "flp_billDetails";
+            this.flp_billDetails.Size = new System.Drawing.Size(564, 496);
+            this.flp_billDetails.TabIndex = 6;
+            // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(34, 887);
+            this.label1.Location = new System.Drawing.Point(34, 907);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(204, 35);
             this.label1.TabIndex = 5;
@@ -327,15 +369,18 @@
             // 
             // cmb_paymentMethod
             // 
+            this.cmb_paymentMethod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmb_paymentMethod.BackColor = System.Drawing.Color.Ivory;
             this.cmb_paymentMethod.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.cmb_paymentMethod.FormattingEnabled = true;
             this.cmb_paymentMethod.Items.AddRange(new object[] {
             "Cash",
             "GCash",
             "Maya"});
-            this.cmb_paymentMethod.Location = new System.Drawing.Point(301, 884);
+            this.cmb_paymentMethod.Location = new System.Drawing.Point(346, 904);
             this.cmb_paymentMethod.Name = "cmb_paymentMethod";
-            this.cmb_paymentMethod.Size = new System.Drawing.Size(201, 43);
+            this.cmb_paymentMethod.Size = new System.Drawing.Size(143, 43);
             this.cmb_paymentMethod.TabIndex = 4;
             // 
             // label7
@@ -345,9 +390,9 @@
             this.label7.ForeColor = System.Drawing.Color.DarkRed;
             this.label7.Location = new System.Drawing.Point(168, 18);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(182, 46);
+            this.label7.Size = new System.Drawing.Size(224, 46);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Bill Details";
+            this.label7.Text = "Order Details";
             // 
             // btn_confirm
             // 
@@ -375,7 +420,7 @@
             this.pnl_bgCash.Controls.Add(this.Discount);
             this.pnl_bgCash.Location = new System.Drawing.Point(-31, 582);
             this.pnl_bgCash.Name = "pnl_bgCash";
-            this.pnl_bgCash.Size = new System.Drawing.Size(564, 284);
+            this.pnl_bgCash.Size = new System.Drawing.Size(564, 204);
             this.pnl_bgCash.TabIndex = 0;
             // 
             // lbl_subtotal
@@ -383,7 +428,7 @@
             this.lbl_subtotal.AutoSize = true;
             this.lbl_subtotal.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.lbl_subtotal.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_subtotal.Location = new System.Drawing.Point(430, 104);
+            this.lbl_subtotal.Location = new System.Drawing.Point(430, 79);
             this.lbl_subtotal.Name = "lbl_subtotal";
             this.lbl_subtotal.Size = new System.Drawing.Size(59, 35);
             this.lbl_subtotal.TabIndex = 5;
@@ -394,7 +439,7 @@
             this.lbl__discount.AutoSize = true;
             this.lbl__discount.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.lbl__discount.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl__discount.Location = new System.Drawing.Point(430, 43);
+            this.lbl__discount.Location = new System.Drawing.Point(430, 18);
             this.lbl__discount.Name = "lbl__discount";
             this.lbl__discount.Size = new System.Drawing.Size(59, 35);
             this.lbl__discount.TabIndex = 4;
@@ -405,7 +450,7 @@
             this.pnl_totalBG.BackColor = System.Drawing.Color.Linen;
             this.pnl_totalBG.Controls.Add(this.lbl_total);
             this.pnl_totalBG.Controls.Add(this.Total);
-            this.pnl_totalBG.Location = new System.Drawing.Point(55, 180);
+            this.pnl_totalBG.Location = new System.Drawing.Point(55, 131);
             this.pnl_totalBG.Name = "pnl_totalBG";
             this.pnl_totalBG.Size = new System.Drawing.Size(478, 57);
             this.pnl_totalBG.TabIndex = 3;
@@ -437,7 +482,7 @@
             this.Subtotal.AutoSize = true;
             this.Subtotal.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.Subtotal.ForeColor = System.Drawing.Color.DarkRed;
-            this.Subtotal.Location = new System.Drawing.Point(65, 104);
+            this.Subtotal.Location = new System.Drawing.Point(65, 79);
             this.Subtotal.Name = "Subtotal";
             this.Subtotal.Size = new System.Drawing.Size(107, 35);
             this.Subtotal.TabIndex = 1;
@@ -448,21 +493,11 @@
             this.Discount.AutoSize = true;
             this.Discount.Font = new System.Drawing.Font("Segoe UI", 15F);
             this.Discount.ForeColor = System.Drawing.Color.DarkRed;
-            this.Discount.Location = new System.Drawing.Point(65, 43);
+            this.Discount.Location = new System.Drawing.Point(65, 18);
             this.Discount.Name = "Discount";
-            this.Discount.Size = new System.Drawing.Size(156, 35);
+            this.Discount.Size = new System.Drawing.Size(167, 35);
             this.Discount.TabIndex = 0;
-            this.Discount.Text = "Discount (%)";
-            // 
-            // flp_billDetails
-            // 
-            this.flp_billDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flp_billDetails.BackColor = System.Drawing.Color.Peru;
-            this.flp_billDetails.Location = new System.Drawing.Point(-31, 80);
-            this.flp_billDetails.Name = "flp_billDetails";
-            this.flp_billDetails.Size = new System.Drawing.Size(564, 479);
-            this.flp_billDetails.TabIndex = 6;
+            this.Discount.Text = "No. of Orders";
             // 
             // frm_POS
             // 
@@ -478,7 +513,6 @@
             this.Text = "Cashier Module";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_bg.ResumeLayout(false);
-            this.pnl_categories.ResumeLayout(false);
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
             this.txt_transaction.ResumeLayout(false);
@@ -494,7 +528,6 @@
         #endregion
         private System.Windows.Forms.Panel pnl_bg;
         private System.Windows.Forms.FlowLayoutPanel flp_sales;
-        private System.Windows.Forms.Panel pnl_categories;
         private System.Windows.Forms.Panel pnl_top;
         private System.Windows.Forms.Panel txt_transaction;
         private System.Windows.Forms.Button btn_confirm;
@@ -508,10 +541,6 @@
         private System.Windows.Forms.Label lbl_total;
         private System.Windows.Forms.Button btn_cancel;
         private System.Windows.Forms.Button btn_exit;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.Timer timerClock;
@@ -527,5 +556,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel line_username;
         private System.Windows.Forms.FlowLayoutPanel flp_billDetails;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txt_cash;
+        private System.Windows.Forms.Label txt_change;
+        private System.Windows.Forms.Panel line_cash;
+        private System.Windows.Forms.FlowLayoutPanel flp_categories;
     }
 }

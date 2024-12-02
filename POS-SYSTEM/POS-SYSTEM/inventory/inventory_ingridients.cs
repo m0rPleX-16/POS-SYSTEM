@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace POS_SYSTEM.inventory
 {
-    public partial class inventory_stockin : UserControl
+    public partial class inventory_ingridients : UserControl
     {
-        public inventory_stockin()
+        public inventory_ingridients()
         {
             InitializeComponent();
         }
