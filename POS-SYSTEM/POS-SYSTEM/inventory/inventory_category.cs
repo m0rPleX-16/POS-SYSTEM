@@ -208,6 +208,9 @@ namespace POS_SYSTEM
         {
             try
             {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM categories_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -219,7 +222,10 @@ namespace POS_SYSTEM
 
                 while (reader.Read())
                 {
-                    dgv_category.Rows.Add(reader["category_id"], reader["category_name"], reader["is_archived"]);
+                    dgv_category.Rows.Add(
+                        reader["category_id"], 
+                        reader["category_name"], 
+                        reader.GetBoolean("is_archived") ? "Archived" : "Unarchived");
                 }
             }
             catch (MySqlException ex)

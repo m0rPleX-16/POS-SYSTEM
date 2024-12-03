@@ -53,11 +53,11 @@ namespace POS_SYSTEM
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM employee_tb", conn);
-                MySqlDataReader dr = cmd.ExecuteReader();
+                MySqlDataReader dr = cmd.ExecuteReader();   
 
                 while (dr.Read())
                 {
-                    dgv_users.Rows.Add(dr["employee_id"], dr["firstname"], dr["lastname"], dr["username"], dr["role"], dr["status"], dr["is_archived"]);
+                    dgv_users.Rows.Add(dr["employee_id"], dr["firstname"], dr["lastname"], dr["username"], dr["role"], dr["status"], dr.GetBoolean("is_archived") ? "Archived" : "Unarchived");
                 }
 
                 dr.Dispose();

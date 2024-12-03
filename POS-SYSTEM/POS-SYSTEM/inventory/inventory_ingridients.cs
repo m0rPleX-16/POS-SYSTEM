@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM.inventory
@@ -22,6 +23,9 @@ namespace POS_SYSTEM.inventory
         {
             try
             {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -40,7 +44,9 @@ namespace POS_SYSTEM.inventory
                         reader["unit"],
                         reader["stock_quantity"],
                         reader["minimum_quantity"],
-                        reader["is_active"]);
+                        reader["expiration_date"],
+                        reader["date_updated"],
+                        reader.GetBoolean("is_active") ? "Active" : "Inactive");
                 }
             }
             catch (MySqlException ex)
@@ -133,6 +139,7 @@ namespace POS_SYSTEM.inventory
                 txt_unit.Text = dgv_ingridients.CurrentRow.Cells[2].Value.ToString();
                 txt_stockquan.Text = dgv_ingridients.CurrentRow.Cells[3].Value.ToString();
                 txt_minquan.Text = dgv_ingridients.CurrentRow.Cells[4].Value.ToString();
+                expire_dtp.Value = dgv_ingridients.CurrentRow.Cells[5].Value == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dgv_ingridients.CurrentRow.Cells[5].Value);
 
                 btn_save.Enabled = false;
             }
@@ -150,19 +157,22 @@ namespace POS_SYSTEM.inventory
                 MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             try
             {
                 conn.Open();
 
                 string query = @"
-                    INSERT INTO ingredients_tb (ingredient_name, unit, stock_quantity, minimum_quantity, is_active)
-                    VALUES (@ingredient_name, @unit, @stock_quantity, @minimum_quantity, @is_active)";
+            INSERT INTO ingredients_tb (ingredient_name, unit, stock_quantity, minimum_quantity, expiration_date, is_active)
+            VALUES (@ingredient_name, @unit, @stock_quantity, @minimum_quantity, @expiration_date, @is_active)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@ingredient_name", txt_ingname.Text.Trim());
                 cmd.Parameters.AddWithValue("@unit", txt_unit.Text.Trim());
                 cmd.Parameters.AddWithValue("@stock_quantity", txt_stockquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@minimum_quantity", txt_minquan.Text.Trim());
+                cmd.Parameters.AddWithValue("@expiration_date", expire_dtp.Value.Date == DateTime.MinValue ? (object)DBNull.Value : expire_dtp.Value.Date);
+                cmd.Parameters.AddWithValue("@is_active", true);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Ingredient saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -201,15 +211,16 @@ namespace POS_SYSTEM.inventory
                 MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             try
             {
                 conn.Open();
 
                 string query = @"
-                    UPDATE ingredients_tb
-                    SET ingredient_name = @ingredient_name, unit = @unit, stock_quantity = @stock_quantity,
-                        minimum_quantity = @minimum_quantity, is_active = @is_active
-                    WHERE ingredient_id = @ingredient_id";
+            UPDATE ingredients_tb
+            SET ingredient_name = @ingredient_name, unit = @unit, stock_quantity = @stock_quantity,
+                minimum_quantity = @minimum_quantity, expiration_date = @expiration_date, is_active = @is_active
+            WHERE ingredient_id = @ingredient_id";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@ingredient_id", txt_ingid.Text.Trim());
@@ -217,6 +228,8 @@ namespace POS_SYSTEM.inventory
                 cmd.Parameters.AddWithValue("@unit", txt_unit.Text.Trim());
                 cmd.Parameters.AddWithValue("@stock_quantity", txt_stockquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@minimum_quantity", txt_minquan.Text.Trim());
+                cmd.Parameters.AddWithValue("@expiration_date", expire_dtp.Value.Date == DateTime.MinValue ? (object)DBNull.Value : expire_dtp.Value.Date);
+                cmd.Parameters.AddWithValue("@is_active", true);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Ingredient updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -243,7 +256,7 @@ namespace POS_SYSTEM.inventory
             {
                 conn.Open();
 
-                string query = "UPDATE ingredients_tb SET is_active = 0 WHERE ingredient_id = @ingredient_id";
+                string query = "UPDATE ingredients_tb SET is_active = 1 WHERE ingredient_id = @ingredient_id";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@ingredient_id", dgv_ingridients.CurrentRow.Cells[0].Value);
@@ -273,7 +286,7 @@ namespace POS_SYSTEM.inventory
             {
                 conn.Open();
 
-                string query = "UPDATE ingredients_tb SET is_active = 1 WHERE ingredient_id = @ingredient_id";
+                string query = "UPDATE ingredients_tb SET is_active = 0 WHERE ingredient_id = @ingredient_id";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@ingredient_id", dgv_ingridients.CurrentRow.Cells[0].Value);

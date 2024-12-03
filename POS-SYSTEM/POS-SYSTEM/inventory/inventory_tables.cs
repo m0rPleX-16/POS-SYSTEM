@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM
@@ -81,6 +82,9 @@ namespace POS_SYSTEM
         {
             try
             {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT table_id, table_number, is_active, is_archived FROM tables_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -92,7 +96,7 @@ namespace POS_SYSTEM
 
                 while (reader.Read())
                 {
-                    dgv_tables.Rows.Add(reader["table_id"], reader["table_number"], reader["is_active"], reader["is_archived"]);
+                    dgv_tables.Rows.Add(reader["table_id"], reader["table_number"], reader["is_active"], reader.GetBoolean("is_archived") ? "Archived" : "Unarchived");
                 }
             }
             catch (MySqlException ex)

@@ -58,9 +58,9 @@ namespace POS_SYSTEM
                 }
             }
         }
-
         private void LoadComboBoxes()
         {
+
             try
             {
                 conn.Open();
@@ -70,16 +70,16 @@ namespace POS_SYSTEM
                 cb_items.Items.Clear();
                 while (drItems.Read())
                 {
-                    cb_items.Items.Add(new { Text = drItems["item_name"].ToString(), Value = drItems["item_id"].ToString() });
+                    cb_items.Items.Add(drItems["item_name"].ToString());
                 }
                 drItems.Close();
 
-                MySqlCommand cmdIngredients = new MySqlCommand("SELECT ingredient_id, ingredient_name FROM ingredients_tb WHERE is_active = 'Yes'", conn);
+                MySqlCommand cmdIngredients = new MySqlCommand("SELECT ingredient_id, ingredient_name FROM ingredients_tb WHERE is_active = 0", conn);
                 MySqlDataReader drIngredients = cmdIngredients.ExecuteReader();
                 cb_ingridients.Items.Clear();
                 while (drIngredients.Read())
                 {
-                    cb_ingridients.Items.Add(new { Text = drIngredients["ingredient_name"].ToString(), Value = drIngredients["ingredient_id"].ToString() });
+                    cb_ingridients.Items.Add(drIngredients["ingredient_name"].ToString());
                 }
                 drIngredients.Close();
             }
@@ -97,10 +97,13 @@ namespace POS_SYSTEM
         {
             try
             {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
                 conn.Open();
                 string query = @"
                     SELECT 
-                        r.recipe_id, i.item_name, ing.ingredient_name, r.quantity_required
+                        r.recipe_id, i.item_name, ing.ingredient_name, r.quantity_required, r.is_archived
                     FROM recipe_tb r
                     JOIN menu_items_tb i ON r.item_id = i.item_id
                     JOIN ingredients_tb ing ON r.ingredient_id = ing.ingredient_id";
@@ -115,7 +118,8 @@ namespace POS_SYSTEM
                         reader["recipe_id"],
                         reader["item_name"],
                         reader["ingredient_name"],
-                        reader["quantity_required"]
+                        reader["quantity_required"],
+                        reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
                     );
                 }
             }
@@ -130,20 +134,6 @@ namespace POS_SYSTEM
         }
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(txt_recipeid.Text))
-            {
-                MessageBox.Show("Recipe ID cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txt_recipeid.Focus();
-                return false;
-            }
-
-            if (!int.TryParse(txt_recipeid.Text, out _))
-            {
-                MessageBox.Show("Recipe ID must be a valid integer.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txt_recipeid.Focus();
-                return false;
-            }
-
             if (cb_items.SelectedItem == null)
             {
                 MessageBox.Show("Please select an item.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -184,20 +174,51 @@ namespace POS_SYSTEM
             {
                 conn.Open();
 
+                int itemId = 0;
+                string selectedItemName = cb_items.SelectedItem.ToString();
+                MySqlCommand cmdItem = new MySqlCommand("SELECT item_id FROM menu_items_tb WHERE item_name = @item_name", conn);
+                cmdItem.Parameters.AddWithValue("@item_name", selectedItemName);
+                var result = cmdItem.ExecuteScalar();
+
+                if (result != null)
+                {
+                    itemId = Convert.ToInt32(result);
+                }
+                else
+                {
+                    MessageBox.Show("Item not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int ingredientId = 0;
+                string selectedIngredientName = cb_ingridients.SelectedItem.ToString();
+                MySqlCommand cmdIngredient = new MySqlCommand("SELECT ingredient_id FROM ingredients_tb WHERE ingredient_name = @ingredient_name", conn);
+                cmdIngredient.Parameters.AddWithValue("@ingredient_name", selectedIngredientName);
+                var ingredientResult = cmdIngredient.ExecuteScalar();
+
+                if (ingredientResult != null)
+                {
+                    ingredientId = Convert.ToInt32(ingredientResult);
+                }
+                else
+                {
+                    MessageBox.Show("Ingredient not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string query = @"
-            INSERT INTO recipe_tb (recipe_id, item_id, ingredient_id, quantity_required)
-            VALUES (@recipe_id, @item_id, @ingredient_id, @quantity_required)";
+            INSERT INTO recipe_tb (item_id, ingredient_id, quantity_required)
+            VALUES (@item_id, @ingredient_id, @quantity_required)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@recipe_id", txt_recipeid.Text.Trim());
-                cmd.Parameters.AddWithValue("@item_id", ((dynamic)cb_items.SelectedItem).Value);
-                cmd.Parameters.AddWithValue("@ingredient_id", ((dynamic)cb_ingridients.SelectedItem).Value);
+                cmd.Parameters.AddWithValue("@item_id", itemId);
+                cmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
                 cmd.Parameters.AddWithValue("@quantity_required", txt_quantityreq.Text.Trim());
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Recipe saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                LogAction("Recipe", "Add", int.Parse(txt_recipeid.Text));
+                LogAction("Recipe", "Add", null, null, null, "Added new recipe with item: " + selectedItemName + " and ingredient: " + selectedIngredientName);
                 LoadDataGridView();
             }
             catch (MySqlException ex)
@@ -229,6 +250,38 @@ namespace POS_SYSTEM
             {
                 conn.Open();
 
+                int itemId = 0;
+                string selectedItemName = cb_items.SelectedItem.ToString();
+                MySqlCommand cmdItem = new MySqlCommand("SELECT item_id FROM menu_items_tb WHERE item_name = @item_name", conn);
+                cmdItem.Parameters.AddWithValue("@item_name", selectedItemName);
+                var result = cmdItem.ExecuteScalar();
+
+                if (result != null)
+                {
+                    itemId = Convert.ToInt32(result);
+                }
+                else
+                {
+                    MessageBox.Show("Item not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int ingredientId = 0;
+                string selectedIngredientName = cb_ingridients.SelectedItem.ToString();
+                MySqlCommand cmdIngredient = new MySqlCommand("SELECT ingredient_id FROM ingredients_tb WHERE ingredient_name = @ingredient_name", conn);
+                cmdIngredient.Parameters.AddWithValue("@ingredient_name", selectedIngredientName);
+                var ingredientResult = cmdIngredient.ExecuteScalar();
+
+                if (ingredientResult != null)
+                {
+                    ingredientId = Convert.ToInt32(ingredientResult);
+                }
+                else
+                {
+                    MessageBox.Show("Ingredient not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string query = @"
             UPDATE recipe_tb 
             SET item_id = @item_id, ingredient_id = @ingredient_id, quantity_required = @quantity_required
@@ -236,14 +289,14 @@ namespace POS_SYSTEM
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@recipe_id", txt_recipeid.Text.Trim());
-                cmd.Parameters.AddWithValue("@item_id", ((dynamic)cb_items.SelectedItem).Value);
-                cmd.Parameters.AddWithValue("@ingredient_id", ((dynamic)cb_ingridients.SelectedItem).Value);
+                cmd.Parameters.AddWithValue("@item_id", itemId);
+                cmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
                 cmd.Parameters.AddWithValue("@quantity_required", txt_quantityreq.Text.Trim());
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Recipe updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                LogAction("Recipe", "Edit", int.Parse(txt_recipeid.Text));
+                LogAction("Recipe", "Edit", int.Parse(txt_recipeid.Text), null, null, "Edited recipe with item: " + selectedItemName + " and ingredient: " + selectedIngredientName);
                 LoadDataGridView();
             }
             catch (MySqlException ex)
