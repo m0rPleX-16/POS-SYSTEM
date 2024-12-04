@@ -311,6 +311,12 @@
     <Compile Include="frm_ResetPassword.Designer.cs">
       <DependentUpon>frm_ResetPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="inventory\inventory_transactions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="inventory\inventory_transactions.Designer.cs">
+      <DependentUpon>inventory_transactions.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_Users.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -393,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="inventory\inventory_tables.resx">
       <DependentUpon>inventory_tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inventory\inventory_transactions.resx">
+      <DependentUpon>inventory_transactions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

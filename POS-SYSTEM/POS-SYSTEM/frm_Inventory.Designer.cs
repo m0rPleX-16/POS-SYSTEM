@@ -62,6 +62,7 @@
             this.product_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.current_stocks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reorder_level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btn_transactions = new System.Windows.Forms.Button();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
             this.pnl_inventBG.SuspendLayout();
@@ -72,6 +73,7 @@
             // pnl_bgStats
             // 
             this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
+            this.pnl_bgStats.Controls.Add(this.btn_transactions);
             this.pnl_bgStats.Controls.Add(this.recipe);
             this.pnl_bgStats.Controls.Add(this.btn_tables);
             this.pnl_bgStats.Controls.Add(this.btn_stockin);
@@ -92,11 +94,11 @@
             this.recipe.Cursor = System.Windows.Forms.Cursors.Hand;
             this.recipe.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
             this.recipe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.recipe.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.recipe.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
             this.recipe.ForeColor = System.Drawing.Color.DarkRed;
-            this.recipe.Location = new System.Drawing.Point(853, 11);
+            this.recipe.Location = new System.Drawing.Point(732, 18);
             this.recipe.Name = "recipe";
-            this.recipe.Size = new System.Drawing.Size(191, 98);
+            this.recipe.Size = new System.Drawing.Size(166, 85);
             this.recipe.TabIndex = 41;
             this.recipe.Text = "Recipe";
             this.recipe.UseVisualStyleBackColor = false;
@@ -108,11 +110,11 @@
             this.btn_tables.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_tables.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
             this.btn_tables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_tables.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_tables.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
             this.btn_tables.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_tables.Location = new System.Drawing.Point(647, 11);
+            this.btn_tables.Location = new System.Drawing.Point(553, 18);
             this.btn_tables.Name = "btn_tables";
-            this.btn_tables.Size = new System.Drawing.Size(191, 98);
+            this.btn_tables.Size = new System.Drawing.Size(166, 85);
             this.btn_tables.TabIndex = 40;
             this.btn_tables.Text = "Tables";
             this.btn_tables.UseVisualStyleBackColor = false;
@@ -124,11 +126,11 @@
             this.btn_stockin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_stockin.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
             this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
             this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_stockin.Location = new System.Drawing.Point(441, 11);
+            this.btn_stockin.Location = new System.Drawing.Point(374, 18);
             this.btn_stockin.Name = "btn_stockin";
-            this.btn_stockin.Size = new System.Drawing.Size(191, 98);
+            this.btn_stockin.Size = new System.Drawing.Size(166, 85);
             this.btn_stockin.TabIndex = 39;
             this.btn_stockin.Text = "Ingredients";
             this.btn_stockin.UseVisualStyleBackColor = false;
@@ -140,11 +142,11 @@
             this.btn_category.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_category.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
             this.btn_category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_category.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_category.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
             this.btn_category.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_category.Location = new System.Drawing.Point(234, 11);
+            this.btn_category.Location = new System.Drawing.Point(193, 18);
             this.btn_category.Name = "btn_category";
-            this.btn_category.Size = new System.Drawing.Size(191, 98);
+            this.btn_category.Size = new System.Drawing.Size(166, 85);
             this.btn_category.TabIndex = 38;
             this.btn_category.Text = "Categories";
             this.btn_category.UseVisualStyleBackColor = false;
@@ -156,11 +158,11 @@
             this.btn_product.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_product.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
             this.btn_product.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_product.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
+            this.btn_product.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
             this.btn_product.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_product.Location = new System.Drawing.Point(23, 11);
+            this.btn_product.Location = new System.Drawing.Point(12, 17);
             this.btn_product.Name = "btn_product";
-            this.btn_product.Size = new System.Drawing.Size(191, 98);
+            this.btn_product.Size = new System.Drawing.Size(166, 85);
             this.btn_product.TabIndex = 37;
             this.btn_product.Text = "Items";
             this.btn_product.UseVisualStyleBackColor = false;
@@ -400,6 +402,22 @@
             this.reorder_level.Name = "reorder_level";
             this.reorder_level.ReadOnly = true;
             // 
+            // btn_transactions
+            // 
+            this.btn_transactions.BackColor = System.Drawing.Color.Wheat;
+            this.btn_transactions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_transactions.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_transactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_transactions.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.btn_transactions.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_transactions.Location = new System.Drawing.Point(909, 18);
+            this.btn_transactions.Name = "btn_transactions";
+            this.btn_transactions.Size = new System.Drawing.Size(166, 85);
+            this.btn_transactions.TabIndex = 42;
+            this.btn_transactions.Text = "Transactions";
+            this.btn_transactions.UseVisualStyleBackColor = false;
+            this.btn_transactions.Click += new System.EventHandler(this.btn_transactions_Click);
+            // 
             // frm_Inventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -451,5 +469,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn reorder_level;
         private System.Windows.Forms.Button btn_tables;
         private System.Windows.Forms.Button recipe;
+        private System.Windows.Forms.Button btn_transactions;
     }
 }

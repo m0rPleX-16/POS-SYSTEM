@@ -35,6 +35,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,10 +48,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -64,6 +64,11 @@
             this.reports_control = new System.Windows.Forms.TabControl();
             this.sales_tab = new System.Windows.Forms.TabPage();
             this.dgv_sales = new System.Windows.Forms.DataGridView();
+            this.order_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.order_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total_sale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.payment_method = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.payment_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inv_tab = new System.Windows.Forms.TabPage();
             this.dgv_inventory = new System.Windows.Forms.DataGridView();
             this.pnl_bgStats = new System.Windows.Forms.Panel();
@@ -88,17 +93,13 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.order_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.order_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total_sale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.payment_method = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.payment_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ingridient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ingridient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stock_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minimum_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.is_active = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transaction_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ingredient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transaction_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transaction_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnl_top.SuspendLayout();
             this.panel13.SuspendLayout();
             this.reports_control.SuspendLayout();
@@ -225,7 +226,7 @@
             // 
             // sales_tab
             // 
-            this.sales_tab.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.sales_tab.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.sales_tab.Controls.Add(this.dgv_sales);
             this.sales_tab.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sales_tab.Location = new System.Drawing.Point(4, 25);
@@ -290,12 +291,72 @@
             dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_sales.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_sales.RowTemplate.Height = 24;
-            this.dgv_sales.Size = new System.Drawing.Size(1926, 793);
+            this.dgv_sales.Size = new System.Drawing.Size(1924, 791);
             this.dgv_sales.TabIndex = 2;
+            // 
+            // order_id
+            // 
+            this.order_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.order_id.DefaultCellStyle = dataGridViewCellStyle3;
+            this.order_id.HeaderText = "ORDER ID";
+            this.order_id.MinimumWidth = 6;
+            this.order_id.Name = "order_id";
+            this.order_id.ReadOnly = true;
+            this.order_id.Width = 108;
+            // 
+            // order_date
+            // 
+            this.order_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.order_date.DefaultCellStyle = dataGridViewCellStyle4;
+            this.order_date.HeaderText = "ORDER DATE";
+            this.order_date.MinimumWidth = 6;
+            this.order_date.Name = "order_date";
+            this.order_date.ReadOnly = true;
+            // 
+            // total_sale
+            // 
+            this.total_sale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.total_sale.DefaultCellStyle = dataGridViewCellStyle5;
+            this.total_sale.HeaderText = "TOTAL SALE";
+            this.total_sale.MinimumWidth = 6;
+            this.total_sale.Name = "total_sale";
+            this.total_sale.ReadOnly = true;
+            this.total_sale.Width = 118;
+            // 
+            // payment_method
+            // 
+            this.payment_method.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.payment_method.HeaderText = "PAYMENT METHOD";
+            this.payment_method.MinimumWidth = 6;
+            this.payment_method.Name = "payment_method";
+            this.payment_method.ReadOnly = true;
+            this.payment_method.Width = 175;
+            // 
+            // payment_date
+            // 
+            this.payment_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.payment_date.DefaultCellStyle = dataGridViewCellStyle6;
+            this.payment_date.HeaderText = "PAYMENT DATE";
+            this.payment_date.MinimumWidth = 6;
+            this.payment_date.Name = "payment_date";
+            this.payment_date.ReadOnly = true;
             // 
             // inv_tab
             // 
-            this.inv_tab.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inv_tab.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.inv_tab.Controls.Add(this.dgv_inventory);
             this.inv_tab.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inv_tab.Location = new System.Drawing.Point(4, 25);
@@ -311,7 +372,11 @@
             this.dgv_inventory.AllowUserToAddRows = false;
             this.dgv_inventory.AllowUserToDeleteRows = false;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
             this.dgv_inventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgv_inventory.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_inventory.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -327,12 +392,13 @@
             this.dgv_inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dgv_inventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_inventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ingridient_id,
-            this.ingridient_name,
-            this.unit,
-            this.stock_quantity,
-            this.minimum_quantity,
-            this.is_active});
+            this.transaction_id,
+            this.ingredient_id,
+            this.ingredient_name,
+            this.transaction_type,
+            this.quantity,
+            this.transaction_date,
+            this.notes});
             dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -357,11 +423,14 @@
             this.dgv_inventory.RowHeadersVisible = false;
             this.dgv_inventory.RowHeadersWidth = 51;
             dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
             this.dgv_inventory.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dgv_inventory.RowTemplate.Height = 24;
-            this.dgv_inventory.Size = new System.Drawing.Size(1926, 793);
+            this.dgv_inventory.Size = new System.Drawing.Size(1924, 791);
             this.dgv_inventory.TabIndex = 2;
             // 
             // pnl_bgStats
@@ -649,135 +718,83 @@
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Width = 125;
             // 
-            // order_id
+            // transaction_id
             // 
-            this.order_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.order_id.DefaultCellStyle = dataGridViewCellStyle3;
-            this.order_id.HeaderText = "ORDER ID";
-            this.order_id.MinimumWidth = 6;
-            this.order_id.Name = "order_id";
-            this.order_id.ReadOnly = true;
-            this.order_id.Width = 117;
-            // 
-            // order_date
-            // 
-            this.order_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.order_date.DefaultCellStyle = dataGridViewCellStyle4;
-            this.order_date.HeaderText = "ORDER DATE";
-            this.order_date.MinimumWidth = 6;
-            this.order_date.Name = "order_date";
-            this.order_date.ReadOnly = true;
-            // 
-            // total_sale
-            // 
-            this.total_sale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.total_sale.DefaultCellStyle = dataGridViewCellStyle5;
-            this.total_sale.HeaderText = "TOTAL SALE";
-            this.total_sale.MinimumWidth = 6;
-            this.total_sale.Name = "total_sale";
-            this.total_sale.ReadOnly = true;
-            this.total_sale.Width = 128;
-            // 
-            // payment_method
-            // 
-            this.payment_method.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.payment_method.HeaderText = "PAYMENT METHOD";
-            this.payment_method.MinimumWidth = 6;
-            this.payment_method.Name = "payment_method";
-            this.payment_method.ReadOnly = true;
-            this.payment_method.Width = 175;
-            // 
-            // payment_date
-            // 
-            this.payment_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.payment_date.DefaultCellStyle = dataGridViewCellStyle6;
-            this.payment_date.HeaderText = "PAYMENT DATE";
-            this.payment_date.MinimumWidth = 6;
-            this.payment_date.Name = "payment_date";
-            this.payment_date.ReadOnly = true;
-            // 
-            // ingridient_id
-            // 
-            this.ingridient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.transaction_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.DarkRed;
             dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
-            this.ingridient_id.DefaultCellStyle = dataGridViewCellStyle12;
-            this.ingridient_id.HeaderText = "INGRIDIENT ID";
-            this.ingridient_id.MinimumWidth = 6;
-            this.ingridient_id.Name = "ingridient_id";
-            this.ingridient_id.ReadOnly = true;
-            this.ingridient_id.Width = 155;
+            this.transaction_id.DefaultCellStyle = dataGridViewCellStyle12;
+            this.transaction_id.HeaderText = "TRANSACTION ID";
+            this.transaction_id.MinimumWidth = 6;
+            this.transaction_id.Name = "transaction_id";
+            this.transaction_id.ReadOnly = true;
+            this.transaction_id.Width = 161;
             // 
-            // ingridient_name
+            // ingredient_id
             // 
-            this.ingridient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.ingridient_name.DefaultCellStyle = dataGridViewCellStyle13;
-            this.ingridient_name.HeaderText = "INGRIDIENT NAME";
-            this.ingridient_name.MinimumWidth = 6;
-            this.ingridient_name.Name = "ingridient_name";
-            this.ingridient_name.ReadOnly = true;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle13;
+            this.ingredient_id.HeaderText = "INGREDIENT ID";
+            this.ingredient_id.MinimumWidth = 6;
+            this.ingredient_id.Name = "ingredient_id";
+            this.ingredient_id.ReadOnly = true;
+            this.ingredient_id.Width = 146;
             // 
-            // unit
+            // ingredient_name
             // 
-            this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ingredient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.unit.DefaultCellStyle = dataGridViewCellStyle14;
-            this.unit.HeaderText = "UNIT";
-            this.unit.MinimumWidth = 6;
-            this.unit.Name = "unit";
-            this.unit.ReadOnly = true;
-            this.unit.Width = 78;
+            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle14;
+            this.ingredient_name.HeaderText = "INGREDIENT NAME";
+            this.ingredient_name.MinimumWidth = 6;
+            this.ingredient_name.Name = "ingredient_name";
+            this.ingredient_name.ReadOnly = true;
             // 
-            // stock_quantity
+            // transaction_type
             // 
-            this.stock_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.transaction_type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.stock_quantity.DefaultCellStyle = dataGridViewCellStyle15;
-            this.stock_quantity.HeaderText = "STOCK QUANTITY";
-            this.stock_quantity.MinimumWidth = 6;
-            this.stock_quantity.Name = "stock_quantity";
-            this.stock_quantity.ReadOnly = true;
-            this.stock_quantity.Width = 177;
+            this.transaction_type.DefaultCellStyle = dataGridViewCellStyle15;
+            this.transaction_type.HeaderText = "TRANSACTION TYPE";
+            this.transaction_type.MinimumWidth = 6;
+            this.transaction_type.Name = "transaction_type";
+            this.transaction_type.ReadOnly = true;
+            this.transaction_type.Width = 180;
             // 
-            // minimum_quantity
+            // quantity
             // 
-            this.minimum_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.minimum_quantity.HeaderText = "MINIMUM QUANTITY";
-            this.minimum_quantity.MinimumWidth = 6;
-            this.minimum_quantity.Name = "minimum_quantity";
-            this.minimum_quantity.ReadOnly = true;
-            this.minimum_quantity.Width = 191;
+            this.quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.quantity.HeaderText = "QUANTITY";
+            this.quantity.MinimumWidth = 6;
+            this.quantity.Name = "quantity";
+            this.quantity.ReadOnly = true;
+            this.quantity.Width = 121;
             // 
-            // is_active
+            // transaction_date
             // 
-            this.is_active.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.is_active.HeaderText = "IS ACTIVE";
-            this.is_active.MinimumWidth = 6;
-            this.is_active.Name = "is_active";
-            this.is_active.ReadOnly = true;
-            this.is_active.Width = 105;
+            this.transaction_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.transaction_date.HeaderText = "DATE";
+            this.transaction_date.MinimumWidth = 6;
+            this.transaction_date.Name = "transaction_date";
+            this.transaction_date.ReadOnly = true;
+            this.transaction_date.Width = 79;
+            // 
+            // notes
+            // 
+            this.notes.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.notes.HeaderText = "REMARKS";
+            this.notes.MinimumWidth = 6;
+            this.notes.Name = "notes";
+            this.notes.ReadOnly = true;
             // 
             // frm_Reports
             // 
@@ -855,11 +872,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn total_sale;
         private System.Windows.Forms.DataGridViewTextBoxColumn payment_method;
         private System.Windows.Forms.DataGridViewTextBoxColumn payment_date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ingridient_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ingridient_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stock_quantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn minimum_quantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn is_active;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transaction_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transaction_type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transaction_date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn notes;
     }
 }

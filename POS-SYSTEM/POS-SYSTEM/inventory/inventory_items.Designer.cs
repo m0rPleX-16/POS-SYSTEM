@@ -112,7 +112,8 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgv_items.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgv_items.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_items.ColumnHeadersHeight = 29;
+            this.dgv_items.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv_items.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.image_base64,
             this.item_id,
@@ -304,6 +305,7 @@
             this.cb_category.Name = "cb_category";
             this.cb_category.Size = new System.Drawing.Size(240, 36);
             this.cb_category.TabIndex = 25;
+            this.cb_category.Text = "Select Category";
             // 
             // label5
             // 

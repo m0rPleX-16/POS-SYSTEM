@@ -129,7 +129,7 @@ namespace POS_SYSTEM
                     productImage,
                     reader["item_id"],
                     reader["item_name"],
-                    reader["category_id"],
+                    reader["category_name"],
                     reader["price"],
                     reader["date_added"],
                     reader.GetBoolean("is_available") ? "Active" : "Inactive",
@@ -149,20 +149,20 @@ namespace POS_SYSTEM
                 txt_price.Text = row.Cells["price"].Value?.ToString();
                 chk_available.Checked = row.Cells["is_available"].Value?.ToString() == "Active";
 
-                if (row.Cells["image_base64"].Value is byte[] imageBytes)
+                if (row.Cells["image_base64"].Value != DBNull.Value && row.Cells["image_base64"].Value is byte[] imageBytes)
+                {
+                    using (var ms = new MemoryStream(imageBytes))
                     {
-                        using (var ms = new MemoryStream(imageBytes))
-                        {
-                            pic_ProdImg.Image = Image.FromStream(ms);
-                        }
+                        pic_ProdImg.Image = Image.FromStream(ms);
                     }
-                    else
-                    {
-                        pic_ProdImg.Image = null;
-                    }
+                }
+                else
+                {
+                    pic_ProdImg.Image = null;
+                }
 
-                    btn_save.Enabled = false;
-                    btn_edit.Enabled = true;
+                btn_save.Enabled = false;
+                btn_edit.Enabled = true;
             }
         }
 
@@ -173,7 +173,6 @@ namespace POS_SYSTEM
                 return Image.FromStream(ms);
             }
         }
-
         private void pic_ProdImg_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -227,16 +226,17 @@ namespace POS_SYSTEM
             return resizedImage;
         }
 
-
         private byte[] GetImageBytes()
         {
             if (pic_ProdImg.Image == null) return null;
+
             using (var ms = new MemoryStream())
             {
                 pic_ProdImg.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                 return ms.ToArray();
             }
         }
+
         private void btn_save_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs())
@@ -282,7 +282,7 @@ namespace POS_SYSTEM
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Menu item saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogAction("Menu Management", "Add Menu Item", int.Parse(txt_itemID.Text), null, price, "Added menu item:" + txt_itemname.Text);
+                LogAction("Menu Management", "Add Menu Item", Convert.ToInt32(txt_itemID.Text), null, price, "Added menu item:" + txt_itemname.Text);
                 LoadDataGridView();
             }
             catch (MySqlException ex)

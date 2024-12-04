@@ -47,7 +47,7 @@ namespace POS_SYSTEM.inventory
                         reader["minimum_quantity"],
                         reader["expiration_date"],
                         reader["date_updated"],
-                        reader.GetBoolean("is_active") ? "Active" : "Inactive");
+                        reader.GetBoolean("is_active") ? "Archived" : "Unarchived");
                 }
             }
             catch (MySqlException ex)

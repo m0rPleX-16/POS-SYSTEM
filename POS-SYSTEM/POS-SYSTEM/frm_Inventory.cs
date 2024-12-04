@@ -71,5 +71,10 @@ namespace POS_SYSTEM
         {
             LoadUserControl(new inventory_recipe(_currentEmployee));
         }
+
+        private void btn_transactions_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new inventory_transactions(_currentEmployee));
+        }
     }
 }
