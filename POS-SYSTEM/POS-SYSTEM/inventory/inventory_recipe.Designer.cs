@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cb_ingridients = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cb_items = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_unarchive = new System.Windows.Forms.Button();
             this.btn_archive = new System.Windows.Forms.Button();
@@ -50,13 +54,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.dgv_recipe = new System.Windows.Forms.DataGridView();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cb_items = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cb_ingridients = new System.Windows.Forms.ComboBox();
             this.recipe_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ingridient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity_required = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12.SuspendLayout();
@@ -83,6 +83,48 @@
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(470, 798);
             this.panel12.TabIndex = 33;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(35, 223);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(181, 28);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Ingredients Name";
+            // 
+            // cb_ingridients
+            // 
+            this.cb_ingridients.BackColor = System.Drawing.Color.FloralWhite;
+            this.cb_ingridients.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_ingridients.FormattingEnabled = true;
+            this.cb_ingridients.Location = new System.Drawing.Point(241, 223);
+            this.cb_ingridients.Name = "cb_ingridients";
+            this.cb_ingridients.Size = new System.Drawing.Size(203, 36);
+            this.cb_ingridients.TabIndex = 41;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label8.Location = new System.Drawing.Point(35, 164);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(117, 28);
+            this.label8.TabIndex = 40;
+            this.label8.Text = "Item Name";
+            // 
+            // cb_items
+            // 
+            this.cb_items.BackColor = System.Drawing.Color.FloralWhite;
+            this.cb_items.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_items.FormattingEnabled = true;
+            this.cb_items.Location = new System.Drawing.Point(241, 156);
+            this.cb_items.Name = "cb_items";
+            this.cb_items.Size = new System.Drawing.Size(203, 36);
+            this.cb_items.TabIndex = 39;
             // 
             // panel1
             // 
@@ -241,116 +283,74 @@
             // 
             this.dgv_recipe.AllowUserToAddRows = false;
             this.dgv_recipe.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_recipe.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_recipe.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgv_recipe.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_recipe.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_recipe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_recipe.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.recipe_id,
             this.category_name,
-            this.ingridient_id,
+            this.ingredient_id,
             this.quantity_required,
             this.is_archived});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_recipe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_recipe.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_recipe.Location = new System.Drawing.Point(0, 0);
             this.dgv_recipe.Name = "dgv_recipe";
             this.dgv_recipe.ReadOnly = true;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgv_recipe.RowHeadersVisible = false;
             this.dgv_recipe.RowHeadersWidth = 51;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_recipe.RowTemplate.Height = 24;
             this.dgv_recipe.Size = new System.Drawing.Size(819, 798);
             this.dgv_recipe.TabIndex = 2;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label8.Location = new System.Drawing.Point(35, 164);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(117, 28);
-            this.label8.TabIndex = 40;
-            this.label8.Text = "Item Name";
-            // 
-            // cb_items
-            // 
-            this.cb_items.BackColor = System.Drawing.Color.FloralWhite;
-            this.cb_items.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_items.FormattingEnabled = true;
-            this.cb_items.Location = new System.Drawing.Point(241, 156);
-            this.cb_items.Name = "cb_items";
-            this.cb_items.Size = new System.Drawing.Size(203, 36);
-            this.cb_items.TabIndex = 39;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(35, 223);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(176, 28);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Ingridients Name";
-            // 
-            // cb_ingridients
-            // 
-            this.cb_ingridients.BackColor = System.Drawing.Color.FloralWhite;
-            this.cb_ingridients.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_ingridients.FormattingEnabled = true;
-            this.cb_ingridients.Location = new System.Drawing.Point(241, 223);
-            this.cb_ingridients.Name = "cb_ingridients";
-            this.cb_ingridients.Size = new System.Drawing.Size(203, 36);
-            this.cb_ingridients.TabIndex = 41;
-            // 
             // recipe_id
             // 
             this.recipe_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
-            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle3;
             this.recipe_id.HeaderText = "RECIPE NO.";
             this.recipe_id.MinimumWidth = 6;
             this.recipe_id.Name = "recipe_id";
@@ -360,29 +360,29 @@
             // category_name
             // 
             this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_name.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle4;
             this.category_name.HeaderText = "ITEM NAME";
             this.category_name.MinimumWidth = 6;
             this.category_name.Name = "category_name";
             this.category_name.ReadOnly = true;
             this.category_name.Width = 155;
             // 
-            // ingridient_id
+            // ingredient_id
             // 
-            this.ingridient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.White;
-            this.ingridient_id.DefaultCellStyle = dataGridViewCellStyle13;
-            this.ingridient_id.HeaderText = "INGRIDIENT NAME";
-            this.ingridient_id.MinimumWidth = 6;
-            this.ingridient_id.Name = "ingridient_id";
-            this.ingridient_id.ReadOnly = true;
+            this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ingredient_id.HeaderText = "INGREDIENT NAME";
+            this.ingredient_id.MinimumWidth = 6;
+            this.ingredient_id.Name = "ingredient_id";
+            this.ingredient_id.ReadOnly = true;
             // 
             // quantity_required
             // 
@@ -441,7 +441,7 @@
         private System.Windows.Forms.ComboBox cb_items;
         private System.Windows.Forms.DataGridViewTextBoxColumn recipe_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn category_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ingridient_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity_required;
         private System.Windows.Forms.DataGridViewTextBoxColumn is_archived;
     }

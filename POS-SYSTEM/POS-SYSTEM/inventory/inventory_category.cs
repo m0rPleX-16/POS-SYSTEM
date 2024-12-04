@@ -86,6 +86,7 @@ namespace POS_SYSTEM
             finally
             {
                 conn.Close();
+                LoadDataGridView();
             }
         }
 
@@ -119,6 +120,7 @@ namespace POS_SYSTEM
             finally
             {
                 conn.Close();
+                LoadDataGridView();
             }
         }
 
@@ -162,6 +164,7 @@ namespace POS_SYSTEM
                     finally
                     {
                         conn.Close();
+                        LoadDataGridView();
                     }
                 }
             }
@@ -199,6 +202,7 @@ namespace POS_SYSTEM
                     finally
                     {
                         conn.Close();
+                        LoadDataGridView();
                     }
                 }
             }
@@ -214,6 +218,7 @@ namespace POS_SYSTEM
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM categories_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
+                dgv_category.Rows.Clear();
 
                 if (!reader.HasRows)
                 {

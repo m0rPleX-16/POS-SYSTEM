@@ -130,7 +130,7 @@
             this.btn_stockin.Name = "btn_stockin";
             this.btn_stockin.Size = new System.Drawing.Size(191, 98);
             this.btn_stockin.TabIndex = 39;
-            this.btn_stockin.Text = "Ingridients";
+            this.btn_stockin.Text = "Ingredients";
             this.btn_stockin.UseVisualStyleBackColor = false;
             this.btn_stockin.Click += new System.EventHandler(this.btn_stockin_Click);
             // 

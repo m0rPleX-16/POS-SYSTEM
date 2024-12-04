@@ -117,7 +117,7 @@ namespace POS_SYSTEM
             FROM `ingredients_tb` i
             JOIN `inventory_transactions_tb` it ON i.ingredient_id = it.ingredient_id
             WHERE it.transaction_date BETWEEN @startDate AND @endDate
-                  AND i.is_active = 'Yes'
+                  AND i.is_active = 'Active'
             ORDER BY it.transaction_date DESC";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);

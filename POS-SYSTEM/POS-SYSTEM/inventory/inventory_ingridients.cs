@@ -29,6 +29,7 @@ namespace POS_SYSTEM.inventory
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
+                dgv_ingridients.Rows.Clear();
 
                 if (!reader.HasRows)
                 {
@@ -157,7 +158,7 @@ namespace POS_SYSTEM.inventory
                 MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+                
             try
             {
                 conn.Open();

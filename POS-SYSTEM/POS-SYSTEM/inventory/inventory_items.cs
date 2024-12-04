@@ -145,7 +145,7 @@ namespace POS_SYSTEM
 
                 txt_itemID.Text = row.Cells["item_id"].Value?.ToString();
                 txt_itemname.Text = row.Cells["item_name"].Value?.ToString();
-                cb_category.SelectedItem = dgv_items.CurrentRow.Cells[3].Value.ToString();
+                cb_category.SelectedItem = row.Cells["category_id"].Value.ToString();
                 txt_price.Text = row.Cells["price"].Value?.ToString();
                 chk_available.Checked = row.Cells["is_available"].Value?.ToString() == "Active";
 
@@ -262,20 +262,27 @@ namespace POS_SYSTEM
                     return;
                 }
 
+                decimal price;
+                if (!decimal.TryParse(txt_price.Text.Trim(), out price))
+                {
+                    MessageBox.Show("Invalid Price. Please enter a valid number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 string query = @"INSERT INTO menu_items_tb (item_name, category_id, price, is_available, image_base64, is_archived)
                          VALUES (@item_name, @category_id, @price, @is_available, @image_base64, @is_archived)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@item_name", txt_itemname.Text.Trim());
                 cmd.Parameters.AddWithValue("@category_id", catId);
-                cmd.Parameters.AddWithValue("@price", Convert.ToDecimal(txt_price.Text.Trim()));
+                cmd.Parameters.AddWithValue("@price", price);
                 cmd.Parameters.AddWithValue("@is_available", chk_available.Checked ? 1 : 0);
                 cmd.Parameters.AddWithValue("@image_base64", GetImageBytes());
                 cmd.Parameters.AddWithValue("@is_archived", 0);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Menu item saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogAction("Menu Management", "Add Menu Item", Convert.ToInt32(txt_itemID.Text), null, Convert.ToDecimal(txt_price.Text), $"Added menu item: {txt_itemname.Text}");
+                LogAction("Menu Management", "Add Menu Item", int.Parse(txt_itemID.Text), null, price, "Added menu item:" + txt_itemname.Text);
                 LoadDataGridView();
             }
             catch (MySqlException ex)
@@ -296,6 +303,7 @@ namespace POS_SYSTEM
             pic_ProdImg.Image = null;
             cb_category.SelectedIndex = -1;
             chk_available.Checked = false;
+            btn_save.Enabled = true;
         }
 
         private void btn_edit_Click(object sender, EventArgs e)

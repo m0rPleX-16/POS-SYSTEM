@@ -88,6 +88,7 @@ namespace POS_SYSTEM
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT table_id, table_number, is_active, is_archived FROM tables_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
+                dgv_tables.Rows.Clear();
 
                 if (!reader.HasRows)
                 {
@@ -225,8 +226,8 @@ namespace POS_SYSTEM
             }
             finally
             {
-    conn.Close();
-                LoadDataGridView();
+            conn.Close();
+            LoadDataGridView();
 }
         }
 
