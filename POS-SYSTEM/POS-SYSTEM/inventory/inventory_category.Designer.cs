@@ -37,9 +37,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel13 = new System.Windows.Forms.Panel();
             this.dgv_category = new System.Windows.Forms.DataGridView();
-            this.category_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_unarchive = new System.Windows.Forms.Button();
@@ -52,6 +49,9 @@
             this.txt_category_name = new System.Windows.Forms.TextBox();
             this.txt_category_id = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.category_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_category)).BeginInit();
             this.panel12.SuspendLayout();
@@ -81,7 +81,6 @@
             this.dgv_category.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_category.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_category.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_category.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_category.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
@@ -129,39 +128,6 @@
             this.dgv_category.RowTemplate.Height = 24;
             this.dgv_category.Size = new System.Drawing.Size(839, 843);
             this.dgv_category.TabIndex = 2;
-            // 
-            // category_id
-            // 
-            this.category_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.category_id.DefaultCellStyle = dataGridViewCellStyle3;
-            this.category_id.HeaderText = "CATEGORY NO.";
-            this.category_id.MinimumWidth = 6;
-            this.category_id.Name = "category_id";
-            this.category_id.ReadOnly = true;
-            // 
-            // category_name
-            // 
-            this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_name.DefaultCellStyle = dataGridViewCellStyle4;
-            this.category_name.HeaderText = "CATEGORY NAME";
-            this.category_name.MinimumWidth = 6;
-            this.category_name.Name = "category_name";
-            this.category_name.ReadOnly = true;
-            // 
-            // is_archived
-            // 
-            this.is_archived.HeaderText = "DISABLED";
-            this.is_archived.MinimumWidth = 6;
-            this.is_archived.Name = "is_archived";
-            this.is_archived.ReadOnly = true;
-            this.is_archived.Width = 125;
             // 
             // panel12
             // 
@@ -321,6 +287,40 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Category";
             // 
+            // category_id
+            // 
+            this.category_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.category_id.DefaultCellStyle = dataGridViewCellStyle3;
+            this.category_id.HeaderText = "CATEGORY NO.";
+            this.category_id.MinimumWidth = 6;
+            this.category_id.Name = "category_id";
+            this.category_id.ReadOnly = true;
+            this.category_id.Visible = false;
+            // 
+            // category_name
+            // 
+            this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle4;
+            this.category_name.HeaderText = "CATEGORY NAME";
+            this.category_name.MinimumWidth = 6;
+            this.category_name.Name = "category_name";
+            this.category_name.ReadOnly = true;
+            // 
+            // is_archived
+            // 
+            this.is_archived.HeaderText = "DISABLED";
+            this.is_archived.MinimumWidth = 6;
+            this.is_archived.Name = "is_archived";
+            this.is_archived.ReadOnly = true;
+            this.is_archived.Width = 125;
+            // 
             // inventory_category
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -344,9 +344,6 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgv_category;
-        private System.Windows.Forms.DataGridViewTextBoxColumn category_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn category_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn is_archived;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_category_name;
@@ -357,5 +354,8 @@
         private System.Windows.Forms.Button btn_edit;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.DataGridViewTextBoxColumn category_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn category_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn is_archived;
     }
 }

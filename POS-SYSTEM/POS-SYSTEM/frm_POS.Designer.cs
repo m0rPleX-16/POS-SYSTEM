@@ -76,12 +76,12 @@
             // pnl_bg
             // 
             this.pnl_bg.BackColor = System.Drawing.Color.MistyRose;
-            this.pnl_bg.Controls.Add(this.flp_categories);
             this.pnl_bg.Controls.Add(this.btn_cancel);
             this.pnl_bg.Controls.Add(this.btn_exit);
-            this.pnl_bg.Controls.Add(this.flp_sales);
             this.pnl_bg.Controls.Add(this.pnl_top);
             this.pnl_bg.Controls.Add(this.txt_transaction);
+            this.pnl_bg.Controls.Add(this.flp_categories);
+            this.pnl_bg.Controls.Add(this.flp_sales);
             this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_bg.Location = new System.Drawing.Point(0, 0);
             this.pnl_bg.Name = "pnl_bg";
@@ -266,15 +266,15 @@
             // txt_transaction
             // 
             this.txt_transaction.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_transaction.Controls.Add(this.label4);
+            this.txt_transaction.Controls.Add(this.label3);
+            this.txt_transaction.Controls.Add(this.label7);
             this.txt_transaction.Controls.Add(this.line_cash);
             this.txt_transaction.Controls.Add(this.txt_change);
             this.txt_transaction.Controls.Add(this.txt_cash);
-            this.txt_transaction.Controls.Add(this.label4);
-            this.txt_transaction.Controls.Add(this.label3);
             this.txt_transaction.Controls.Add(this.flp_billDetails);
             this.txt_transaction.Controls.Add(this.label1);
             this.txt_transaction.Controls.Add(this.cmb_paymentMethod);
-            this.txt_transaction.Controls.Add(this.label7);
             this.txt_transaction.Controls.Add(this.btn_confirm);
             this.txt_transaction.Controls.Add(this.pnl_bgCash);
             this.txt_transaction.Dock = System.Windows.Forms.DockStyle.Right;

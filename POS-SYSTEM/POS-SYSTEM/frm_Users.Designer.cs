@@ -113,7 +113,6 @@
             this.dgv_users.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_users.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_users.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_users.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_users.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.DarkGoldenrod;

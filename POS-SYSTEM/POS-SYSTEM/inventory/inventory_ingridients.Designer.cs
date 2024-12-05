@@ -41,6 +41,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel13 = new System.Windows.Forms.Panel();
             this.dgv_ingridients = new System.Windows.Forms.DataGridView();
+            this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ingridient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stock_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.minimum_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.expiration_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date_updated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
             this.expire_dtp = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,14 +69,6 @@
             this.txt_ingname = new System.Windows.Forms.TextBox();
             this.txt_ingid = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ingridient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stock_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.minimum_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.expiration_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date_updated = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_ingridients)).BeginInit();
             this.panel12.SuspendLayout();
@@ -98,7 +98,6 @@
             this.dgv_ingridients.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_ingridients.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_ingridients.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_ingridients.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_ingridients.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
@@ -151,6 +150,102 @@
             this.dgv_ingridients.RowTemplate.Height = 24;
             this.dgv_ingridients.Size = new System.Drawing.Size(946, 875);
             this.dgv_ingridients.TabIndex = 2;
+            // 
+            // ingredient_id
+            // 
+            this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ingredient_id.HeaderText = "INGREDIENT ID";
+            this.ingredient_id.MinimumWidth = 6;
+            this.ingredient_id.Name = "ingredient_id";
+            this.ingredient_id.ReadOnly = true;
+            this.ingredient_id.Visible = false;
+            this.ingredient_id.Width = 125;
+            // 
+            // ingridient_name
+            // 
+            this.ingridient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.ingridient_name.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ingridient_name.HeaderText = "INGREDIENT NAME";
+            this.ingridient_name.MinimumWidth = 6;
+            this.ingridient_name.Name = "ingridient_name";
+            this.ingridient_name.ReadOnly = true;
+            this.ingridient_name.Width = 177;
+            // 
+            // unit
+            // 
+            this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.unit.DefaultCellStyle = dataGridViewCellStyle5;
+            this.unit.HeaderText = "UNIT";
+            this.unit.MinimumWidth = 6;
+            this.unit.Name = "unit";
+            this.unit.ReadOnly = true;
+            this.unit.Width = 79;
+            // 
+            // stock_quantity
+            // 
+            this.stock_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.stock_quantity.DefaultCellStyle = dataGridViewCellStyle6;
+            this.stock_quantity.HeaderText = "STOCK QUANTITY";
+            this.stock_quantity.MinimumWidth = 6;
+            this.stock_quantity.Name = "stock_quantity";
+            this.stock_quantity.ReadOnly = true;
+            this.stock_quantity.Width = 167;
+            // 
+            // minimum_quantity
+            // 
+            this.minimum_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.minimum_quantity.DefaultCellStyle = dataGridViewCellStyle7;
+            this.minimum_quantity.HeaderText = "MIN. QUANTITY";
+            this.minimum_quantity.MinimumWidth = 6;
+            this.minimum_quantity.Name = "minimum_quantity";
+            this.minimum_quantity.ReadOnly = true;
+            this.minimum_quantity.Width = 154;
+            // 
+            // expiration_date
+            // 
+            this.expiration_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.expiration_date.HeaderText = "EXPIRATION DATE";
+            this.expiration_date.MinimumWidth = 6;
+            this.expiration_date.Name = "expiration_date";
+            this.expiration_date.ReadOnly = true;
+            // 
+            // date_updated
+            // 
+            this.date_updated.HeaderText = "DATE MODIFIED";
+            this.date_updated.MinimumWidth = 6;
+            this.date_updated.Name = "date_updated";
+            this.date_updated.ReadOnly = true;
+            this.date_updated.Width = 125;
+            // 
+            // is_archived
+            // 
+            this.is_archived.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.is_archived.DefaultCellStyle = dataGridViewCellStyle8;
+            this.is_archived.HeaderText = "DISABLED";
+            this.is_archived.MinimumWidth = 6;
+            this.is_archived.Name = "is_archived";
+            this.is_archived.ReadOnly = true;
+            this.is_archived.Width = 121;
             // 
             // panel12
             // 
@@ -396,102 +491,6 @@
             this.label1.Size = new System.Drawing.Size(195, 46);
             this.label1.TabIndex = 14;
             this.label1.Text = "Ingredients";
-            // 
-            // ingredient_id
-            // 
-            this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle3;
-            this.ingredient_id.HeaderText = "INGREDIENT ID";
-            this.ingredient_id.MinimumWidth = 6;
-            this.ingredient_id.Name = "ingredient_id";
-            this.ingredient_id.ReadOnly = true;
-            this.ingredient_id.Visible = false;
-            this.ingredient_id.Width = 139;
-            // 
-            // ingridient_name
-            // 
-            this.ingridient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.ingridient_name.DefaultCellStyle = dataGridViewCellStyle4;
-            this.ingridient_name.HeaderText = "INGREDIENT NAME";
-            this.ingridient_name.MinimumWidth = 6;
-            this.ingridient_name.Name = "ingridient_name";
-            this.ingridient_name.ReadOnly = true;
-            this.ingridient_name.Width = 177;
-            // 
-            // unit
-            // 
-            this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.unit.DefaultCellStyle = dataGridViewCellStyle5;
-            this.unit.HeaderText = "UNIT";
-            this.unit.MinimumWidth = 6;
-            this.unit.Name = "unit";
-            this.unit.ReadOnly = true;
-            this.unit.Width = 79;
-            // 
-            // stock_quantity
-            // 
-            this.stock_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.stock_quantity.DefaultCellStyle = dataGridViewCellStyle6;
-            this.stock_quantity.HeaderText = "STOCK QUANTITY";
-            this.stock_quantity.MinimumWidth = 6;
-            this.stock_quantity.Name = "stock_quantity";
-            this.stock_quantity.ReadOnly = true;
-            this.stock_quantity.Width = 167;
-            // 
-            // minimum_quantity
-            // 
-            this.minimum_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.minimum_quantity.DefaultCellStyle = dataGridViewCellStyle7;
-            this.minimum_quantity.HeaderText = "MIN. QUANTITY";
-            this.minimum_quantity.MinimumWidth = 6;
-            this.minimum_quantity.Name = "minimum_quantity";
-            this.minimum_quantity.ReadOnly = true;
-            this.minimum_quantity.Width = 154;
-            // 
-            // expiration_date
-            // 
-            this.expiration_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.expiration_date.HeaderText = "EXPIRATION DATE";
-            this.expiration_date.MinimumWidth = 6;
-            this.expiration_date.Name = "expiration_date";
-            this.expiration_date.ReadOnly = true;
-            // 
-            // date_updated
-            // 
-            this.date_updated.HeaderText = "DATE MODIFIED";
-            this.date_updated.MinimumWidth = 6;
-            this.date_updated.Name = "date_updated";
-            this.date_updated.ReadOnly = true;
-            this.date_updated.Width = 125;
-            // 
-            // is_archived
-            // 
-            this.is_archived.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.is_archived.DefaultCellStyle = dataGridViewCellStyle8;
-            this.is_archived.HeaderText = "DISABLED";
-            this.is_archived.MinimumWidth = 6;
-            this.is_archived.Name = "is_archived";
-            this.is_archived.ReadOnly = true;
-            this.is_archived.Width = 121;
             // 
             // inventory_ingridients
             // 

@@ -28,15 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle68 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle69 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle70 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle67 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_transact = new System.Windows.Forms.DataGridView();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.dtp_trans = new System.Windows.Forms.DateTimePicker();
+            this.cb_ingredients = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txt_notes = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txt_quantity = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cb_trans = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -49,13 +56,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txt_transid = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txt_quantity = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txt_notes = new System.Windows.Forms.TextBox();
-            this.cb_ingredients = new System.Windows.Forms.ComboBox();
-            this.dtp_trans = new System.Windows.Forms.DateTimePicker();
             this.transaction_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ingredient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.transaction_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,25 +71,24 @@
             // 
             this.dgv_transact.AllowUserToAddRows = false;
             this.dgv_transact.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle64.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle64.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle64.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle64.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle64.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_transact.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_transact.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgv_transact.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_transact.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_transact.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_transact.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle65.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle65.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle65.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle65.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle65.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle65.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle65.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transact.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle65;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_transact.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgv_transact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_transact.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.transaction_id,
@@ -98,36 +97,36 @@
             this.quantity,
             this.transaction_date,
             this.note});
-            dataGridViewCellStyle68.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle68.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle68.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle68.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle68.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle68.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle68.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_transact.DefaultCellStyle = dataGridViewCellStyle68;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_transact.DefaultCellStyle = dataGridViewCellStyle12;
             this.dgv_transact.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_transact.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_transact.Location = new System.Drawing.Point(470, 0);
             this.dgv_transact.Name = "dgv_transact";
             this.dgv_transact.ReadOnly = true;
-            dataGridViewCellStyle69.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle69.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle69.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle69.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle69.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle69.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle69.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transact.RowHeadersDefaultCellStyle = dataGridViewCellStyle69;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_transact.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgv_transact.RowHeadersVisible = false;
             this.dgv_transact.RowHeadersWidth = 51;
-            dataGridViewCellStyle70.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle70.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle70.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle70.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle70.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle70.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_transact.RowsDefaultCellStyle = dataGridViewCellStyle70;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_transact.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.dgv_transact.RowTemplate.Height = 24;
             this.dgv_transact.Size = new System.Drawing.Size(857, 861);
             this.dgv_transact.TabIndex = 36;
@@ -154,6 +153,76 @@
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(470, 861);
             this.panel12.TabIndex = 35;
+            // 
+            // dtp_trans
+            // 
+            this.dtp_trans.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.dtp_trans.Location = new System.Drawing.Point(235, 362);
+            this.dtp_trans.Name = "dtp_trans";
+            this.dtp_trans.Size = new System.Drawing.Size(203, 22);
+            this.dtp_trans.TabIndex = 48;
+            // 
+            // cb_ingredients
+            // 
+            this.cb_ingredients.BackColor = System.Drawing.Color.FloralWhite;
+            this.cb_ingredients.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.cb_ingredients.FormattingEnabled = true;
+            this.cb_ingredients.Location = new System.Drawing.Point(235, 152);
+            this.cb_ingredients.Name = "cb_ingredients";
+            this.cb_ingredients.Size = new System.Drawing.Size(203, 36);
+            this.cb_ingredients.TabIndex = 47;
+            this.cb_ingredients.Text = "Select Ingredient";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label4.Location = new System.Drawing.Point(29, 428);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 28);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "Remarks";
+            // 
+            // txt_notes
+            // 
+            this.txt_notes.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_notes.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_notes.Location = new System.Drawing.Point(235, 422);
+            this.txt_notes.Name = "txt_notes";
+            this.txt_notes.Size = new System.Drawing.Size(203, 34);
+            this.txt_notes.TabIndex = 45;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label3.Location = new System.Drawing.Point(27, 356);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(172, 28);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "Transaction Date";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label2.Location = new System.Drawing.Point(27, 289);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 28);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Quantity";
+            // 
+            // txt_quantity
+            // 
+            this.txt_quantity.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_quantity.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_quantity.Location = new System.Drawing.Point(235, 289);
+            this.txt_quantity.Name = "txt_quantity";
+            this.txt_quantity.Size = new System.Drawing.Size(203, 34);
+            this.txt_quantity.TabIndex = 41;
             // 
             // label8
             // 
@@ -314,96 +383,27 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Transactions";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label2.Location = new System.Drawing.Point(27, 289);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 28);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Quantity";
-            // 
-            // txt_quantity
-            // 
-            this.txt_quantity.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_quantity.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_quantity.Location = new System.Drawing.Point(235, 289);
-            this.txt_quantity.Name = "txt_quantity";
-            this.txt_quantity.Size = new System.Drawing.Size(203, 34);
-            this.txt_quantity.TabIndex = 41;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(27, 356);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 28);
-            this.label3.TabIndex = 44;
-            this.label3.Text = "Transaction Date";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(29, 428);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 28);
-            this.label4.TabIndex = 46;
-            this.label4.Text = "Remarks";
-            // 
-            // txt_notes
-            // 
-            this.txt_notes.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_notes.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_notes.Location = new System.Drawing.Point(235, 422);
-            this.txt_notes.Name = "txt_notes";
-            this.txt_notes.Size = new System.Drawing.Size(203, 34);
-            this.txt_notes.TabIndex = 45;
-            // 
-            // cb_ingredients
-            // 
-            this.cb_ingredients.BackColor = System.Drawing.Color.FloralWhite;
-            this.cb_ingredients.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.cb_ingredients.FormattingEnabled = true;
-            this.cb_ingredients.Location = new System.Drawing.Point(235, 152);
-            this.cb_ingredients.Name = "cb_ingredients";
-            this.cb_ingredients.Size = new System.Drawing.Size(203, 36);
-            this.cb_ingredients.TabIndex = 47;
-            this.cb_ingredients.Text = "Select Ingredient";
-            // 
-            // dtp_trans
-            // 
-            this.dtp_trans.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.dtp_trans.Location = new System.Drawing.Point(235, 362);
-            this.dtp_trans.Name = "dtp_trans";
-            this.dtp_trans.Size = new System.Drawing.Size(203, 22);
-            this.dtp_trans.TabIndex = 48;
-            // 
             // transaction_id
             // 
             this.transaction_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle66.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle66.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle66.SelectionForeColor = System.Drawing.Color.White;
-            this.transaction_id.DefaultCellStyle = dataGridViewCellStyle66;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
+            this.transaction_id.DefaultCellStyle = dataGridViewCellStyle10;
             this.transaction_id.HeaderText = "TRANSACTION ID";
             this.transaction_id.MinimumWidth = 6;
             this.transaction_id.Name = "transaction_id";
             this.transaction_id.ReadOnly = true;
+            this.transaction_id.Visible = false;
             // 
             // ingredient_name
             // 
             this.ingredient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle67.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle67.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle67.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle67;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle11;
             this.ingredient_name.HeaderText = "INGREDIENT NAME";
             this.ingredient_name.MinimumWidth = 6;
             this.ingredient_name.Name = "ingredient_name";
@@ -420,27 +420,28 @@
             // 
             // quantity
             // 
+            this.quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.quantity.HeaderText = "QUANTITY";
             this.quantity.MinimumWidth = 6;
             this.quantity.Name = "quantity";
             this.quantity.ReadOnly = true;
-            this.quantity.Width = 125;
+            this.quantity.Width = 124;
             // 
             // transaction_date
             // 
+            this.transaction_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.transaction_date.HeaderText = "TRANSACTION DATE";
             this.transaction_date.MinimumWidth = 6;
             this.transaction_date.Name = "transaction_date";
             this.transaction_date.ReadOnly = true;
-            this.transaction_date.Width = 125;
             // 
             // note
             // 
+            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.note.HeaderText = "REMARKS";
             this.note.MinimumWidth = 6;
             this.note.Name = "note";
             this.note.ReadOnly = true;
-            this.note.Width = 125;
             // 
             // inventory_transactions
             // 

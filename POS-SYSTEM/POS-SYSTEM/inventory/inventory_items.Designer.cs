@@ -102,7 +102,6 @@
             this.dgv_items.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
             this.dgv_items.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_items.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_items.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
             this.dgv_items.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
@@ -438,6 +437,7 @@
             this.item_id.MinimumWidth = 6;
             this.item_id.Name = "item_id";
             this.item_id.ReadOnly = true;
+            this.item_id.Visible = false;
             // 
             // item_name
             // 
