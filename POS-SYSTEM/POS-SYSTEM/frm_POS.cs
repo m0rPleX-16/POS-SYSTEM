@@ -78,5 +78,15 @@ namespace POS_SYSTEM
         {
             this.Close();
         }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flp_sales_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

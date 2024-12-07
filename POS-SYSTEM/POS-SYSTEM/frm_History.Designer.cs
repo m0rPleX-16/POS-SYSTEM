@@ -307,7 +307,7 @@
             // 
             // action_module
             // 
-            this.action_module.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.action_module.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 10F);
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -316,7 +316,6 @@
             this.action_module.MinimumWidth = 6;
             this.action_module.Name = "action_module";
             this.action_module.ReadOnly = true;
-            this.action_module.Width = 164;
             // 
             // action
             // 
@@ -342,7 +341,8 @@
             this.item_id.MinimumWidth = 6;
             this.item_id.Name = "item_id";
             this.item_id.ReadOnly = true;
-            this.item_id.Width = 94;
+            this.item_id.Visible = false;
+            this.item_id.Width = 102;
             // 
             // quantity
             // 

@@ -282,7 +282,7 @@ namespace POS_SYSTEM
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Menu item saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogAction("Menu Management", "Add Menu Item", null, null, price, "Added menu item:" + txt_itemname.Text);
+                LogAction("Menu Management", "Add Menu Item", Convert.ToInt32(txt_itemID.Text), null, price, "Added menu item:" + txt_itemname.Text);
                 LoadDataGridView();
             }
             catch (MySqlException ex)
