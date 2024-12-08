@@ -87,6 +87,7 @@ namespace POS_SYSTEM
             {
                 conn.Close();
                 LoadDataGridView();
+                ClearFields();
             }
         }
 
@@ -124,12 +125,16 @@ namespace POS_SYSTEM
             }
         }
 
-        private void btn_clear_Click(object sender, EventArgs e)
+        private void ClearFields()
         {
             txt_category_id.Clear();
             txt_category_name.Clear();
             dgv_category.Refresh();
             btn_save.Enabled = true;
+        }
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            ClearFields();
         }
 
         private void btn_archive_Click(object sender, EventArgs e)
@@ -165,6 +170,7 @@ namespace POS_SYSTEM
                     {
                         conn.Close();
                         LoadDataGridView();
+                        ClearFields();
                     }
                 }
             }

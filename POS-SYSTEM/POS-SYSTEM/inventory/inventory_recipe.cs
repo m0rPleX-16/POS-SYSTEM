@@ -112,6 +112,11 @@ namespace POS_SYSTEM
                 MySqlDataReader reader = cmd.ExecuteReader();
                 dgv_recipe.Rows.Clear();
 
+                if (!reader.HasRows)
+                {
+                    MessageBox.Show("No data found in the recipe table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 while (reader.Read())
                 {
                     dgv_recipe.Rows.Add(

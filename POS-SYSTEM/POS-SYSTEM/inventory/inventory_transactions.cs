@@ -104,6 +104,11 @@ namespace POS_SYSTEM
                 MySqlDataReader reader = cmd.ExecuteReader();
                 dgv_transact.Rows.Clear();
 
+                if (!reader.HasRows)
+                {
+                    MessageBox.Show("No data found in the transactions table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 while (reader.Read())
                 {
                     dgv_transact.Rows.Add(

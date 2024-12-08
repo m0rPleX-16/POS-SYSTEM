@@ -85,6 +85,7 @@ namespace POS_SYSTEM
                 MySqlCommand cmdItems = new MySqlCommand("SELECT category_id, category_name FROM categories_tb WHERE is_archived = 0", conn);
                 MySqlDataReader drCat = cmdItems.ExecuteReader();
                 cb_category.Items.Clear();
+
                 while (drCat.Read())
                 {
                     cb_category.Items.Add(drCat["category_name"].ToString());
@@ -123,6 +124,11 @@ namespace POS_SYSTEM
                     {
                         MessageBox.Show("Error loading image: " + imgEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                }
+
+                if (!reader.HasRows)
+                {
+                    MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 dgv_items.Rows.Add(
@@ -282,7 +288,7 @@ namespace POS_SYSTEM
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Menu item saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogAction("Menu Management", "Add Menu Item", Convert.ToInt32(txt_itemID.Text), null, price, "Added menu item:" + txt_itemname.Text);
+                LogAction("Menu Management", "Add Menu Item", null, null, price, "Added menu item:" + txt_itemname.Text);
                 LoadDataGridView();
             }
             catch (MySqlException ex)

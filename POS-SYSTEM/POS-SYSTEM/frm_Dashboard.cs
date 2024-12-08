@@ -73,18 +73,25 @@ namespace POS_SYSTEM
 
         private void btn_logout_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            using (frm_Login login = new frm_Login())
+            DialogResult result = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
             {
-                if (login.ShowDialog() == DialogResult.OK)
+                this.Hide();
+
+                using (frm_Login login = new frm_Login())
                 {
-                    this.Show();
-                }
-                else
-                {
-                    this.Close();
+                    if (login.ShowDialog() == DialogResult.OK)
+                    {
+                        this.Show();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
             }
         }
+
     }
 }

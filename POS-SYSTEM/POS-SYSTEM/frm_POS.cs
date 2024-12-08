@@ -21,6 +21,7 @@ namespace POS_SYSTEM
             AutoGenerateTransactionNumber();
             LoadProducts();
             LoadCategory();
+            txt_cash.TextChanged += TxtCash_TextChanged;
         }
 
 
@@ -119,13 +120,14 @@ namespace POS_SYSTEM
         {
             flp_sales.Controls.Clear();
 
+
             using (var conn = new MySqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
                     string query = @"
-                SELECT 
+                SELECT  
                     m.item_id, m.item_name, m.price, m.image_base64, 
                     c.category_name, m.is_available 
                 FROM 
@@ -253,114 +255,110 @@ namespace POS_SYSTEM
 
             return productPanel;
         }
-
         private void DisplayProductInSales(string itemId, string itemName, string categoryName, decimal price, byte[] imageArray, bool isAvailable)
         {
             if (!isAvailable)
             {
-                MessageBox.Show("This item is currently unavailable.", "Unavailable Item", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowUnavailableItemMessage();
                 return;
             }
 
-            foreach (RoundedPanel panel in flp_sales.Controls.OfType<RoundedPanel>())
+            if (TryUpdateExistingProduct(itemId, price))
+                return;
+
+            RoundedPanel saleProductPanel = CreateProductPanel(itemId, itemName, categoryName, price, imageArray);
+            flp_billDetails.Controls.Add(saleProductPanel);
+            flp_billDetails.AutoScroll = true;
+
+            UpdateOrderNumber();
+            UpdateTotal();
+        }
+
+        private void ShowUnavailableItemMessage()
+        {
+            MessageBox.Show("This item is currently unavailable.", "Unavailable Item", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        private bool TryUpdateExistingProduct(string itemId, decimal price)
+        {
+            foreach (RoundedPanel panel in flp_billDetails.Controls.OfType<RoundedPanel>())
             {
                 PictureBox existingPictureBox = panel.Controls.OfType<PictureBox>()
                     .FirstOrDefault(pb => pb.Tag.ToString() == itemId);
 
                 if (existingPictureBox != null)
                 {
-                    Label lblExistingQuantity = panel.Controls.OfType<Label>()
+                    Label lblQuantity = panel.Controls.OfType<Label>()
                         .FirstOrDefault(lbl => lbl.Tag != null && lbl.Tag.ToString() == "Quantity");
-                    Label lblExistingItemTotal = panel.Controls.OfType<Label>()
-                        .FirstOrDefault(lbl => lbl.Tag != null && lbl.Tag.ToString() == "Item Total");
 
-                    if (lblExistingQuantity != null && lblExistingItemTotal != null)
+                    if (lblQuantity != null && int.TryParse(lblQuantity.Text, out int existingQuantity))
                     {
-                        int existingQuantity = int.Parse(lblExistingQuantity.Text);
                         int newQuantity = existingQuantity + 1;
-
-                        lblExistingQuantity.Text = newQuantity.ToString();
-                        lblExistingItemTotal.Text = "₱" + (newQuantity * price).ToString("F2");
-
+                        lblQuantity.Text = newQuantity.ToString();
                         UpdateTotal();
-                        return;
+                        return true;
                     }
                 }
             }
+            return false;
+        }
 
+        private RoundedPanel CreateProductPanel(string itemId, string itemName, string categoryName, decimal price, byte[] imageArray)
+        {
             RoundedPanel saleProductPanel = new RoundedPanel
-            {
-                Width = 350,
-                Height = 40,
+            {   
+                Width = flp_billDetails.Width - 20, 
+                Height = 60,
                 BackColor = Color.FloralWhite,
-                Margin = new Padding(35, 20, 0, 0)
+                Margin = new Padding(5), 
+                BorderStyle = BorderStyle.None 
             };
 
+            PictureBox productImage = CreateProductImage(itemId, imageArray);
+            Label lblItemName = CreateLabel(itemName, FontStyle.Bold, 90, ContentAlignment.MiddleCenter);
+            Label lblCategory = CreateLabel(categoryName, FontStyle.Regular, 55, ContentAlignment.MiddleCenter, Color.Gray);
+            Label lblQuantity = CreateLabel("1", FontStyle.Bold, 65, ContentAlignment.MiddleCenter, tag: "Quantity");
+            Label lblPrice = CreateLabel("₱" + price.ToString("F2"), FontStyle.Regular, 85, ContentAlignment.MiddleCenter);
+            Button btnRemove = CreateRemoveButton(saleProductPanel);
+
+            saleProductPanel.Controls.AddRange(new Control[] { btnRemove, lblPrice, lblQuantity, lblCategory, lblItemName, productImage });
+            return saleProductPanel;
+        }
+
+        private PictureBox CreateProductImage(string itemId, byte[] imageArray)
+        {
             PictureBox productImage = new PictureBox
             {
-                Width = 35,
+                Width = 45,
                 Height = 32,
                 BackgroundImageLayout = ImageLayout.Stretch,
                 Dock = DockStyle.Left,
                 Tag = itemId
             };
+
             using (MemoryStream ms = new MemoryStream(imageArray))
             {
                 productImage.BackgroundImage = Image.FromStream(ms);
             }
 
-            Label lblItemName = new Label
-            {
-                Text = itemName,
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                Width = 100,
-                Dock = DockStyle.Left,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
+            return productImage;
+        }
 
-            Label lblCategory = new Label
+        private Label CreateLabel(string text, FontStyle fontStyle, int width, ContentAlignment textAlign, Color? foreColor = null, string tag = null)
+        {
+            return new Label
             {
-                Text = categoryName,
-                ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 8),
-                Width = 80,
+                Text = text,
+                ForeColor = foreColor ?? Color.Black,
+                Font = new Font("Segoe UI", 8, fontStyle),
+                Width = width,
                 Dock = DockStyle.Left,
-                TextAlign = ContentAlignment.MiddleCenter
+                TextAlign = textAlign,
+                Tag = tag
             };
+        }
 
-            Label lblQuantity = new Label
-            {
-                Text = "1",
-                Tag = "Quantity",
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                Width = 50,
-                Dock = DockStyle.Left,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            Label lblPrice = new Label
-            {
-                Text = "₱" + price.ToString("F2"),
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 8),
-                Width = 80,
-                Dock = DockStyle.Left,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            Label lblItemTotal = new Label
-            {
-                Text = "₱" + price.ToString("F2"),
-                Tag = "ItemTotal",
-                ForeColor = Color.Black,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                Width = 100,
-                Dock = DockStyle.Left,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
+        private Button CreateRemoveButton(RoundedPanel panel)
+        {
             Button btnRemove = new Button
             {
                 Text = "X",
@@ -370,25 +368,60 @@ namespace POS_SYSTEM
                 Dock = DockStyle.Right,
                 FlatStyle = FlatStyle.Flat
             };
+
             btnRemove.FlatAppearance.BorderSize = 0;
 
             btnRemove.Click += (s, e) =>
             {
-                flp_sales.Controls.Remove(saleProductPanel);
+                flp_billDetails.Controls.Remove(panel);
+                flp_billDetails.Refresh();
                 UpdateTotal();
+                UpdateOrderNumber();
             };
 
-            saleProductPanel.Controls.Add(btnRemove);
-            saleProductPanel.Controls.Add(lblItemTotal);
-            saleProductPanel.Controls.Add(lblPrice);
-            saleProductPanel.Controls.Add(lblQuantity);
-            saleProductPanel.Controls.Add(lblCategory);
-            saleProductPanel.Controls.Add(lblItemName);
-            saleProductPanel.Controls.Add(productImage);
+            return btnRemove;
+        }
 
-            flp_billDetails.Controls.Add(saleProductPanel);
+        private void UpdateOrderNumber()
+        {
+            int totalItems = 0;
 
-            UpdateTotal();
+            foreach (Control control in flp_billDetails.Controls)
+            {
+                if (control is RoundedPanel panel)
+                {
+                    Label lblQuantity = panel.Controls.OfType<Label>()
+                        .FirstOrDefault(lbl => lbl.Tag != null && lbl.Tag.ToString() == "Quantity");
+
+                    if (lblQuantity != null && int.TryParse(lblQuantity.Text, out int quantity))
+                    {
+                        totalItems += quantity;
+                    }
+                }
+            }
+
+            lbl_order.Text = totalItems.ToString(); 
+        }
+
+        private void UpdateChange()
+        {
+            decimal totalAmount = 0;
+            decimal cashInput = 0;
+
+            if (decimal.TryParse(lbl_total.Text.Replace("₱", ""), out totalAmount) &&
+                decimal.TryParse(txt_cash.Text, out cashInput))
+            {
+                decimal change = cashInput - totalAmount;
+                txt_change.Text = change >= 0 ? $"₱{change:F2}" : "Insufficient Cash";
+            }
+            else
+            {
+                txt_change.Text = "Invalid Input";
+            }
+        }
+        private void TxtCash_TextChanged(object sender, EventArgs e)
+        {
+            UpdateChange();
         }
 
 
@@ -396,16 +429,20 @@ namespace POS_SYSTEM
         {
             decimal totalAmount = 0;
 
-            foreach (Control control in flp_sales.Controls)
+            foreach (Control control in flp_billDetails.Controls)
             {
                 if (control is RoundedPanel panel)
                 {
-                    Label lblItemTotal = panel.Controls.OfType<Label>()
-                        .FirstOrDefault(lbl => lbl.Tag != null && lbl.Tag.ToString() == "ItemTotal");
+                    Label lblQuantity = panel.Controls.OfType<Label>()
+                        .FirstOrDefault(lbl => lbl.Tag != null && lbl.Tag.ToString() == "Quantity");
+                    Label lblPrice = panel.Controls.OfType<Label>()
+                        .FirstOrDefault(lbl => lbl.Text.StartsWith("₱"));
 
-                    if (lblItemTotal != null && decimal.TryParse(lblItemTotal.Text.Replace("₱", ""), out decimal itemTotal))
+                    if (lblQuantity != null && lblPrice != null &&
+                        int.TryParse(lblQuantity.Text, out int quantity) &&
+                        decimal.TryParse(lblPrice.Text.Replace("₱", ""), out decimal price))
                     {
-                        totalAmount += itemTotal;
+                        totalAmount += quantity * price;
                     }
                 }
             }
@@ -415,6 +452,8 @@ namespace POS_SYSTEM
         private void LoadCategory(string categoryName = null)
         {
             flp_category.Controls.Clear();
+            flp_category.VerticalScroll.Visible = false;
+            flp_category.VerticalScroll.Enabled = false;
             flp_category.AutoScroll = true;
 
             using (var conn = new MySqlConnection(connectionString))
@@ -422,7 +461,6 @@ namespace POS_SYSTEM
                 try
                 {
                     conn.Open();
-
                     Panel allCategoryPanel = CreateCategoryPanel("ALL CATEGORY", null);
                     flp_category.Controls.Add(allCategoryPanel);
 
@@ -450,6 +488,7 @@ namespace POS_SYSTEM
                 }
             }
         }
+
 
         private Panel CreateCategoryPanel(string labelText, string categoryName)
         {
@@ -493,11 +532,17 @@ namespace POS_SYSTEM
             LoadProducts(categoryName);
         }
 
-
         private void btn_exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
+
+
     }
     public class RoundedPanel : Panel
     {
