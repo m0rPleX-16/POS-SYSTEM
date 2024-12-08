@@ -12,7 +12,7 @@ namespace POS_SYSTEM
 {
     public partial class frm_DashboardContents : Form
     {
-        public frm_DashboardContents()
+        public frm_DashboardContents(Employee _currentEmployee)
         {
             InitializeComponent();
             timerClock.Start();

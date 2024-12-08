@@ -7,7 +7,6 @@ namespace POS_SYSTEM
     {
         private Employee _currentEmployee;
 
-        // Accept Employee object in the constructor
         public frm_Dashboard(Employee currentEmployee)
         {
             InitializeComponent();
@@ -18,7 +17,7 @@ namespace POS_SYSTEM
 
         private void LoadDashboardContent()
         {
-            OpenNewForm(new frm_DashboardContents());
+            OpenNewForm(new frm_DashboardContents(_currentEmployee));
         }
 
         private void OpenNewForm(Form newForm)
@@ -38,12 +37,12 @@ namespace POS_SYSTEM
 
         private void btn_dashboard_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_DashboardContents());
+            OpenNewForm(new frm_DashboardContents(_currentEmployee));
         }
 
         private void btn_inventory_Click(object sender, EventArgs e)
         {
-            OpenNewForm(new frm_Inventory());
+            OpenNewForm(new frm_Inventory(_currentEmployee));
         }
 
         private void btn_POS_Click(object sender, EventArgs e)

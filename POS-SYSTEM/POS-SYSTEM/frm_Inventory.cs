@@ -17,7 +17,7 @@ namespace POS_SYSTEM
         private Employee _currentEmployee;
         private MySqlConnection conn;
 
-        public frm_Inventory()
+        public frm_Inventory(Employee _currentEmployee)
         {
             InitializeComponent();
             InitializeDatabaseConnection();

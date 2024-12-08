@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_POS));
             this.pnl_bg = new System.Windows.Forms.Panel();
+            this.pnl_flp = new System.Windows.Forms.Panel();
+            this.flp_sales = new System.Windows.Forms.FlowLayoutPanel();
+            this.flp_category = new System.Windows.Forms.FlowLayoutPanel();
             this.pnl_top = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.linepanel_transact = new System.Windows.Forms.Panel();
@@ -42,11 +45,13 @@
             this.btn_search = new System.Windows.Forms.Button();
             this.line_username = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.pnl_bottom = new System.Windows.Forms.Panel();
             this.btn_history = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.btn_confirm = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pnl_details = new System.Windows.Forms.Panel();
             this.cb_availtb = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -67,35 +72,60 @@
             this.Total = new System.Windows.Forms.Label();
             this.Subtotal = new System.Windows.Forms.Label();
             this.Discount = new System.Windows.Forms.Label();
-            this.pnl_flp = new System.Windows.Forms.Panel();
-            this.flp_categories = new System.Windows.Forms.FlowLayoutPanel();
-            this.flp_sales = new System.Windows.Forms.FlowLayoutPanel();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.pnl_bg.SuspendLayout();
+            this.pnl_flp.SuspendLayout();
             this.pnl_top.SuspendLayout();
             this.pnl_bottom.SuspendLayout();
             this.pnl_details.SuspendLayout();
             this.pnl_bgCash.SuspendLayout();
             this.pnl_totalBG.SuspendLayout();
-            this.pnl_flp.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_bg
             // 
             this.pnl_bg.BackColor = System.Drawing.Color.MistyRose;
-            this.pnl_bg.Controls.Add(this.panel1);
-            this.pnl_bg.Controls.Add(this.panel2);
-            this.pnl_bg.Controls.Add(this.pnl_top);
             this.pnl_bg.Controls.Add(this.pnl_flp);
+            this.pnl_bg.Controls.Add(this.pnl_top);
+            this.pnl_bg.Controls.Add(this.panel2);
             this.pnl_bg.Controls.Add(this.pnl_bottom);
+            this.pnl_bg.Controls.Add(this.panel1);
             this.pnl_bg.Controls.Add(this.pnl_details);
             this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_bg.Location = new System.Drawing.Point(0, 0);
             this.pnl_bg.Name = "pnl_bg";
             this.pnl_bg.Size = new System.Drawing.Size(1942, 1102);
             this.pnl_bg.TabIndex = 3;
+            // 
+            // pnl_flp
+            // 
+            this.pnl_flp.Controls.Add(this.flp_sales);
+            this.pnl_flp.Controls.Add(this.flp_category);
+            this.pnl_flp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_flp.Location = new System.Drawing.Point(25, 129);
+            this.pnl_flp.Name = "pnl_flp";
+            this.pnl_flp.Size = new System.Drawing.Size(1328, 847);
+            this.pnl_flp.TabIndex = 24;
+            // 
+            // flp_sales
+            // 
+            this.flp_sales.AutoScroll = true;
+            this.flp_sales.BackColor = System.Drawing.Color.NavajoWhite;
+            this.flp_sales.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flp_sales.Location = new System.Drawing.Point(0, 0);
+            this.flp_sales.Name = "flp_sales";
+            this.flp_sales.Size = new System.Drawing.Size(1328, 747);
+            this.flp_sales.TabIndex = 26;
+            // 
+            // flp_category
+            // 
+            this.flp_category.AutoScroll = true;
+            this.flp_category.BackColor = System.Drawing.Color.Bisque;
+            this.flp_category.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flp_category.Location = new System.Drawing.Point(0, 747);
+            this.flp_category.Name = "flp_category";
+            this.flp_category.Size = new System.Drawing.Size(1328, 100);
+            this.flp_category.TabIndex = 27;
             // 
             // pnl_top
             // 
@@ -110,9 +140,9 @@
             this.pnl_top.Controls.Add(this.line_username);
             this.pnl_top.Controls.Add(this.txt_search);
             this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_top.Location = new System.Drawing.Point(0, 0);
+            this.pnl_top.Location = new System.Drawing.Point(25, 0);
             this.pnl_top.Name = "pnl_top";
-            this.pnl_top.Size = new System.Drawing.Size(1378, 129);
+            this.pnl_top.Size = new System.Drawing.Size(1328, 129);
             this.pnl_top.TabIndex = 20;
             // 
             // label2
@@ -121,7 +151,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(723, 25);
+            this.label2.Location = new System.Drawing.Point(727, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(127, 35);
             this.label2.TabIndex = 6;
@@ -131,7 +161,7 @@
             // 
             this.linepanel_transact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linepanel_transact.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.linepanel_transact.Location = new System.Drawing.Point(922, 58);
+            this.linepanel_transact.Location = new System.Drawing.Point(872, 58);
             this.linepanel_transact.Name = "linepanel_transact";
             this.linepanel_transact.Size = new System.Drawing.Size(390, 1);
             this.linepanel_transact.TabIndex = 22;
@@ -143,7 +173,7 @@
             this.txt_transactNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.txt_transactNo.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_transactNo.Location = new System.Drawing.Point(922, 22);
+            this.txt_transactNo.Location = new System.Drawing.Point(872, 22);
             this.txt_transactNo.Name = "txt_transactNo";
             this.txt_transactNo.Size = new System.Drawing.Size(382, 34);
             this.txt_transactNo.TabIndex = 27;
@@ -199,7 +229,7 @@
             this.btn_search.FlatAppearance.BorderColor = System.Drawing.Color.FloralWhite;
             this.btn_search.FlatAppearance.BorderSize = 0;
             this.btn_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_search.Location = new System.Drawing.Point(853, 63);
+            this.btn_search.Location = new System.Drawing.Point(803, 63);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(51, 46);
             this.btn_search.TabIndex = 22;
@@ -209,7 +239,7 @@
             // 
             this.line_username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_username.Location = new System.Drawing.Point(922, 113);
+            this.line_username.Location = new System.Drawing.Point(872, 113);
             this.line_username.Name = "line_username";
             this.line_username.Size = new System.Drawing.Size(390, 1);
             this.line_username.TabIndex = 21;
@@ -221,11 +251,19 @@
             this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_search.Location = new System.Drawing.Point(922, 73);
+            this.txt_search.Location = new System.Drawing.Point(872, 73);
             this.txt_search.Name = "txt_search";
             this.txt_search.Size = new System.Drawing.Size(382, 34);
             this.txt_search.TabIndex = 20;
             this.txt_search.Text = "Search";
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(1353, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(25, 976);
+            this.panel2.TabIndex = 26;
             // 
             // pnl_bottom
             // 
@@ -234,14 +272,14 @@
             this.pnl_bottom.Controls.Add(this.btn_cancel);
             this.pnl_bottom.Controls.Add(this.btn_confirm);
             this.pnl_bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnl_bottom.Location = new System.Drawing.Point(0, 976);
+            this.pnl_bottom.Location = new System.Drawing.Point(25, 976);
             this.pnl_bottom.Name = "pnl_bottom";
-            this.pnl_bottom.Size = new System.Drawing.Size(1378, 126);
+            this.pnl_bottom.Size = new System.Drawing.Size(1353, 126);
             this.pnl_bottom.TabIndex = 23;
             // 
             // btn_history
             // 
-            this.btn_history.BackColor = System.Drawing.Color.NavajoWhite;
+            this.btn_history.BackColor = System.Drawing.Color.Peru;
             this.btn_history.FlatAppearance.BorderSize = 0;
             this.btn_history.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_history.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
@@ -255,7 +293,7 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.BackColor = System.Drawing.Color.DarkRed;
+            this.btn_exit.BackColor = System.Drawing.Color.OrangeRed;
             this.btn_exit.FlatAppearance.BorderSize = 0;
             this.btn_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_exit.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
@@ -270,7 +308,7 @@
             // 
             // btn_cancel
             // 
-            this.btn_cancel.BackColor = System.Drawing.Color.Goldenrod;
+            this.btn_cancel.BackColor = System.Drawing.Color.Peru;
             this.btn_cancel.FlatAppearance.BorderSize = 0;
             this.btn_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_cancel.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
@@ -281,11 +319,10 @@
             this.btn_cancel.TabIndex = 22;
             this.btn_cancel.Text = "New Order";
             this.btn_cancel.UseVisualStyleBackColor = false;
-            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // btn_confirm
             // 
-            this.btn_confirm.BackColor = System.Drawing.Color.Green;
+            this.btn_confirm.BackColor = System.Drawing.Color.OliveDrab;
             this.btn_confirm.FlatAppearance.BorderSize = 0;
             this.btn_confirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_confirm.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
@@ -296,6 +333,14 @@
             this.btn_confirm.TabIndex = 1;
             this.btn_confirm.Text = "Confirm Order";
             this.btn_confirm.UseVisualStyleBackColor = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(25, 1102);
+            this.panel1.TabIndex = 25;
             // 
             // pnl_details
             // 
@@ -551,51 +596,6 @@
             this.Discount.TabIndex = 0;
             this.Discount.Text = "No. of Orders";
             // 
-            // pnl_flp
-            // 
-            this.pnl_flp.Controls.Add(this.flp_sales);
-            this.pnl_flp.Controls.Add(this.flp_categories);
-            this.pnl_flp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_flp.Location = new System.Drawing.Point(0, 0);
-            this.pnl_flp.Name = "pnl_flp";
-            this.pnl_flp.Size = new System.Drawing.Size(1378, 976);
-            this.pnl_flp.TabIndex = 24;
-            // 
-            // flp_categories
-            // 
-            this.flp_categories.BackColor = System.Drawing.Color.Bisque;
-            this.flp_categories.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flp_categories.Location = new System.Drawing.Point(0, 823);
-            this.flp_categories.Name = "flp_categories";
-            this.flp_categories.Size = new System.Drawing.Size(1378, 153);
-            this.flp_categories.TabIndex = 27;
-            // 
-            // flp_sales
-            // 
-            this.flp_sales.BackColor = System.Drawing.Color.NavajoWhite;
-            this.flp_sales.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flp_sales.Location = new System.Drawing.Point(0, 0);
-            this.flp_sales.Name = "flp_sales";
-            this.flp_sales.Size = new System.Drawing.Size(1378, 823);
-            this.flp_sales.TabIndex = 26;
-            this.flp_sales.Paint += new System.Windows.Forms.PaintEventHandler(this.flp_sales_Paint);
-            // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 129);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(25, 847);
-            this.panel1.TabIndex = 25;
-            // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1353, 129);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(25, 847);
-            this.panel2.TabIndex = 26;
-            // 
             // frm_POS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -610,6 +610,7 @@
             this.Text = "Cashier Module";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_bg.ResumeLayout(false);
+            this.pnl_flp.ResumeLayout(false);
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
             this.pnl_bottom.ResumeLayout(false);
@@ -619,14 +620,12 @@
             this.pnl_bgCash.PerformLayout();
             this.pnl_totalBG.ResumeLayout(false);
             this.pnl_totalBG.PerformLayout();
-            this.pnl_flp.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Panel pnl_bg;
-        private System.Windows.Forms.Panel pnl_top;
         private System.Windows.Forms.Panel pnl_details;
         private System.Windows.Forms.Button btn_confirm;
         private System.Windows.Forms.Panel pnl_bgCash;
@@ -639,20 +638,10 @@
         private System.Windows.Forms.Label lbl_total;
         private System.Windows.Forms.Button btn_cancel;
         private System.Windows.Forms.Button btn_exit;
-        private System.Windows.Forms.TextBox txt_search;
-        private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.Timer timerClock;
-        private System.Windows.Forms.Panel pnl_clock;
-        private System.Windows.Forms.Panel pnl_calendar;
-        private System.Windows.Forms.Label lbl_time;
-        private System.Windows.Forms.Label lbl_date;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmb_paymentMethod;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txt_transactNo;
-        private System.Windows.Forms.Panel linepanel_transact;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel line_username;
         private System.Windows.Forms.FlowLayoutPanel flp_billDetails;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -661,12 +650,23 @@
         private System.Windows.Forms.Panel line_cash;
         private System.Windows.Forms.Panel pnl_bottom;
         private System.Windows.Forms.Panel pnl_flp;
-        private System.Windows.Forms.FlowLayoutPanel flp_categories;
         private System.Windows.Forms.FlowLayoutPanel flp_sales;
         private System.Windows.Forms.ComboBox cb_availtb;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btn_history;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnl_top;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel linepanel_transact;
+        private System.Windows.Forms.TextBox txt_transactNo;
+        private System.Windows.Forms.Panel pnl_clock;
+        private System.Windows.Forms.Panel pnl_calendar;
+        private System.Windows.Forms.Label lbl_time;
+        private System.Windows.Forms.Label lbl_date;
+        private System.Windows.Forms.Button btn_search;
+        private System.Windows.Forms.Panel line_username;
+        private System.Windows.Forms.TextBox txt_search;
+        private System.Windows.Forms.FlowLayoutPanel flp_category;
     }
 }

@@ -53,23 +53,33 @@ namespace POS_SYSTEM
         }
         private string GenerateTableNo()
         {
-            string datePart = DateTime.Now.ToString("yyyyMMdd");
-            string tableNoPrefix = datePart + "000";
-
-            string query = "SELECT MAX(CAST(SUBSTRING(table_number, 9, 4) AS UNSIGNED)) FROM tables_tb WHERE table_number LIKE @tableNoPrefix";
-
             using (var conn = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@tableNoPrefix", datePart + "%");
-
                 try
                 {
                     conn.Open();
+
+                    string query = @"
+                SELECT MAX(CAST(SUBSTRING(table_number, 9) AS UNSIGNED)) 
+                FROM tables_tb";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
                     object result = cmd.ExecuteScalar();
 
-                    int nextNumber = result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1; 
-                    return datePart + nextNumber.ToString("D4"); 
+                    int nextNumber;
+                    if (result != DBNull.Value && result != null)
+                    {
+                        nextNumber = Convert.ToInt32(result) + 1;
+                    }
+                    else
+                    {
+                        nextNumber = 1;
+                    }
+
+                    string datePrefix = DateTime.Now.ToString("yyyyMMdd");
+
+                    return datePrefix + nextNumber.ToString("D3");
                 }
                 catch (MySqlException ex)
                 {
@@ -78,6 +88,7 @@ namespace POS_SYSTEM
                 }
             }
         }
+
         private void LoadDataGridView()
         {
             try
@@ -144,7 +155,6 @@ namespace POS_SYSTEM
             return true;
         }
 
-
         private void btn_save_Click_1(object sender, EventArgs e)
         {
             string generatedTableNo = GenerateTableNo();
@@ -153,7 +163,7 @@ namespace POS_SYSTEM
             txt_tableno.Text = generatedTableNo;
 
             if (!ValidateInput()) return;
-                
+
             try
             {
                 conn.Open();
@@ -184,6 +194,7 @@ namespace POS_SYSTEM
                 LoadDataGridView();
             }
         }
+
 
 
         private void btn_clear_Click_1(object sender, EventArgs e)
