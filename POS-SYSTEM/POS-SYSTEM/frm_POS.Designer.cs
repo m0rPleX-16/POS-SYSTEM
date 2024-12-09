@@ -313,6 +313,7 @@
             this.btn_history.TabIndex = 23;
             this.btn_history.Text = "Order History";
             this.btn_history.UseVisualStyleBackColor = false;
+            this.btn_history.Click += new System.EventHandler(this.btn_history_Click);
             // 
             // btn_exit
             // 
@@ -342,6 +343,7 @@
             this.btn_cancel.TabIndex = 22;
             this.btn_cancel.Text = "New Order";
             this.btn_cancel.UseVisualStyleBackColor = false;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // btn_confirm
             // 
@@ -356,6 +358,7 @@
             this.btn_confirm.TabIndex = 1;
             this.btn_confirm.Text = "Confirm Order";
             this.btn_confirm.UseVisualStyleBackColor = false;
+            this.btn_confirm.Click += new System.EventHandler(this.btn_confirm_Click);
             // 
             // panel1
             // 
@@ -501,7 +504,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.tableLayoutPanel1.Controls.Add(this.panel8, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel7, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel6, 3, 0);
@@ -520,9 +523,9 @@
             this.panel8.BackColor = System.Drawing.Color.FloralWhite;
             this.panel8.Controls.Add(this.label12);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(419, 3);
+            this.panel8.Location = new System.Drawing.Point(418, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(88, 44);
+            this.panel8.Size = new System.Drawing.Size(89, 44);
             this.panel8.TabIndex = 5;
             // 
             // label12
@@ -541,7 +544,7 @@
             this.panel7.BackColor = System.Drawing.Color.FloralWhite;
             this.panel7.Controls.Add(this.label11);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(336, 3);
+            this.panel7.Location = new System.Drawing.Point(335, 3);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(77, 44);
             this.panel7.TabIndex = 4;
@@ -562,7 +565,7 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.Controls.Add(this.label10);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(254, 3);
+            this.panel6.Location = new System.Drawing.Point(253, 3);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(76, 44);
             this.panel6.TabIndex = 3;
@@ -583,7 +586,7 @@
             this.panel5.BackColor = System.Drawing.Color.FloralWhite;
             this.panel5.Controls.Add(this.label9);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(157, 3);
+            this.panel5.Location = new System.Drawing.Point(156, 3);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(91, 44);
             this.panel5.TabIndex = 2;
@@ -606,7 +609,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(81, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(70, 44);
+            this.panel4.Size = new System.Drawing.Size(69, 44);
             this.panel4.TabIndex = 1;
             // 
             // label8

@@ -101,46 +101,58 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-    
         private void LoadDataGridView()
         {
             const string query = @"
-                SELECT m.*, c.category_name 
-                FROM menu_items_tb m
-                JOIN categories_tb c ON m.category_id = c.category_id
-                WHERE m.is_archived = 0";
+    SELECT m.*, c.category_name 
+    FROM menu_items_tb m
+    JOIN categories_tb c ON m.category_id = c.category_id
+    WHERE m.is_archived = 0";
 
             dgv_items.Rows.Clear();
             ExecuteQuery(query, null, reader =>
             {
-                Image productImage = null;
-                if (reader["image_base64"] != DBNull.Value)
+                while (reader.Read())
                 {
-                    try
-                    {
-                        productImage = ImageFromByteArray((byte[])reader["image_base64"]);
-                    }
-                    catch (Exception imgEx)
-                    {
-                        MessageBox.Show("Error loading image: " + imgEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                    Image productImage = null;
 
-                if (!reader.HasRows)
-                {
-                    MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    if (reader["image_base64"] != DBNull.Value)
+                    {
+                        try
+                        {
+                            long len = reader.GetBytes(reader.GetOrdinal("image_base64"), 0, null, 0, 0);
+                            byte[] imageArray = new byte[len];
+                            reader.GetBytes(reader.GetOrdinal("image_base64"), 0, imageArray, 0, (int)len);
 
-                dgv_items.Rows.Add(
-                    productImage,
-                    reader["item_id"],
-                    reader["item_name"],
-                    reader["category_name"],
-                    reader["price"],
-                    reader["date_added"],
-                    reader.GetBoolean("is_available") ? "Active" : "Inactive",
-                    reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
-                );
+                            using (MemoryStream ms = new MemoryStream(imageArray))
+                            {
+                                var originalImage = Image.FromStream(ms);
+                                productImage = ResizeImageToFitDGV(originalImage, 80, 80);
+                            }
+                        }
+                        catch (Exception imgEx)
+                        {
+                            MessageBox.Show($"Error loading image: {imgEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Console.WriteLine($"Error Details: {imgEx}");
+                        }
+                    }
+
+                    if (!reader.HasRows)
+                    {
+                        MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    dgv_items.Rows.Add(
+                        productImage,
+                        reader["item_id"],
+                        reader["item_name"],
+                        reader["category_name"],
+                        reader["price"],
+                        reader["date_added"],
+                        reader.GetBoolean("is_available") ? "Active" : "Inactive",
+                        reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
+                    );
+                }
             });
         }
         private void DgvInventoryItems_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -151,16 +163,14 @@ namespace POS_SYSTEM
 
                 txt_itemID.Text = row.Cells["item_id"].Value?.ToString();
                 txt_itemname.Text = row.Cells["item_name"].Value?.ToString();
-                cb_category.SelectedItem = row.Cells["category_id"].Value.ToString();
+                cb_category.SelectedItem = row.Cells["category_name"].Value?.ToString();
                 txt_price.Text = row.Cells["price"].Value?.ToString();
                 chk_available.Checked = row.Cells["is_available"].Value?.ToString() == "Active";
 
-                if (row.Cells["image_base64"].Value != DBNull.Value && row.Cells["image_base64"].Value is byte[] imageBytes)
+
+                if (row.Cells["image_base64"].Value is Image cellImage)
                 {
-                    using (var ms = new MemoryStream(imageBytes))
-                    {
-                        pic_ProdImg.Image = Image.FromStream(ms);
-                    }
+                    pic_ProdImg.Image = cellImage;
                 }
                 else
                 {
@@ -171,39 +181,6 @@ namespace POS_SYSTEM
                 btn_edit.Enabled = true;
             }
         }
-
-        private static Image ImageFromByteArray(byte[] imageData)
-        {
-            using (var ms = new MemoryStream(imageData))
-            {
-                return Image.FromStream(ms);
-            }
-        }
-        private void pic_ProdImg_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                openFileDialog.Title = "Select an Image";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        using (Image originalImage = Image.FromFile(openFileDialog.FileName))
-                        {
-                            Image resizedImage = ResizeImageToFitDGV(originalImage, 120, 120);
-                            pic_ProdImg.Image = resizedImage;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
         private Image ResizeImageToFitDGV(Image img, int width, int height)
         {
             int newWidth, newHeight;
@@ -238,8 +215,33 @@ namespace POS_SYSTEM
 
             using (var ms = new MemoryStream())
             {
-                pic_ProdImg.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                pic_ProdImg.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                 return ms.ToArray();
+            }
+        }
+
+        private void pic_ProdImg_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Select an Image";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (Image originalImage = Image.FromFile(openFileDialog.FileName))
+                        {
+                            Image resizedImage = ResizeImageToFitDGV(originalImage, 120, 120);
+                            pic_ProdImg.Image = resizedImage;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error loading image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 

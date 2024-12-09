@@ -22,6 +22,7 @@ namespace POS_SYSTEM
             LoadProducts();
             LoadCategory();
             txt_cash.TextChanged += TxtCash_TextChanged;
+            LoadComboBoxes();
         }
 
 
@@ -115,6 +116,37 @@ namespace POS_SYSTEM
                 }
             }
         }
+        private void LoadComboBoxes()
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    MySqlCommand cmdIngredients = new MySqlCommand("SELECT table_id, table_number FROM tables_tb WHERE is_active = 'Active'", conn);
+                    MySqlDataReader drIngredients = cmdIngredients.ExecuteReader();
+                    cb_availtb.Items.Clear();
+
+                    while (drIngredients.Read())
+                    {
+                        cb_availtb.Items.Add(new { TableId = drIngredients["table_id"], TableNumber = drIngredients["table_number"] });
+                    }
+                    drIngredients.Close();
+
+                    cb_availtb.DisplayMember = "TableNumber";
+                    cb_availtb.ValueMember = "TableId";
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Error loading combo boxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
 
         private void LoadProducts(string categoryFilter = "ALL CATEGORY")
         {
@@ -541,8 +573,179 @@ namespace POS_SYSTEM
                 this.Close();
             }
         }
+        private void btn_confirm_Click(object sender, EventArgs e)
+        {
+            if (flp_billDetails.Controls.Count == 0)
+            {
+                MessageBox.Show("No items in the order. Please add items before confirming.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            if (cb_availtb.SelectedItem == null || !int.TryParse(cb_availtb.SelectedValue?.ToString(), out int tableId))
+            {
+                MessageBox.Show("Please select a valid table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            string orderNo = GenerateOrderNumber();
+            if (string.IsNullOrEmpty(orderNo))
+            {
+                MessageBox.Show("Failed to generate order number. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        string orderInsertQuery = @"
+                    INSERT INTO orders_tb (table_id, employee_id, total_price, orderNo, status) 
+                    VALUES (@table_id, @employee_id, @total_price, @orderNo, @status);
+                    SELECT LAST_INSERT_ID();";
+                        int orderId;
+
+                        using (var cmd = new MySqlCommand(orderInsertQuery, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@table_id", tableId);
+                            cmd.Parameters.AddWithValue("@employee_id", _currentEmployee.Userid);
+                            cmd.Parameters.AddWithValue("@total_price", decimal.Parse(lbl_total.Text.Replace("₱", "")));
+                            cmd.Parameters.AddWithValue("@orderNo", orderNo);
+                            cmd.Parameters.AddWithValue("@status", "Pending");
+
+                            orderId = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+                        foreach (RoundedPanel panel in flp_billDetails.Controls.OfType<RoundedPanel>())
+                        {
+                            string itemId = panel.Tag.ToString();
+                            Label lblQuantity = panel.Controls.OfType<Label>().FirstOrDefault(lbl => lbl.Tag?.ToString() == "Quantity");
+                            Label lblPrice = panel.Controls.OfType<Label>().FirstOrDefault(lbl => lbl.Text.StartsWith("₱"));
+
+                            if (lblQuantity != null && lblPrice != null &&
+                                int.TryParse(lblQuantity.Text, out int quantity) &&
+                                decimal.TryParse(lblPrice.Text.Replace("₱", ""), out decimal price))
+                            {
+                                string orderDetailsQuery = @"
+                            INSERT INTO order_details_tb (order_id, item_id, quantity, price_at_time, subtotal) 
+                            VALUES (@order_id, @item_id, @quantity, @price_at_time, @subtotal);";
+
+                                using (var cmd = new MySqlCommand(orderDetailsQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@order_id", orderId);
+                                    cmd.Parameters.AddWithValue("@item_id", itemId);
+                                    cmd.Parameters.AddWithValue("@quantity", quantity);
+                                    cmd.Parameters.AddWithValue("@price_at_time", price / quantity);
+                                    cmd.Parameters.AddWithValue("@subtotal", price);
+
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                        transaction.Commit();
+
+                        MessageBox.Show("Order confirmed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearOrderDetails();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"Failed to confirm order: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+        private string GenerateOrderNumber()
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT orderNo FROM orders_tb ORDER BY order_id DESC LIMIT 1";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows && reader.Read())
+                        {
+                            return (Convert.ToInt32(reader["orderNo"]) + 1).ToString();
+                        }
+                        else
+                        {
+                            return DateTime.Now.ToString("yyyyMM") + "-001";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generating order number: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        private void ClearOrderDetails()
+        {
+            flp_billDetails.Controls.Clear();
+            lbl_total.Text = "₱0.00";
+            cb_availtb.SelectedIndex = -1;
+            lbl_order.Text = "0";
+        }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to cancel this order?", "Confirm Cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                ClearOrderDetails();
+                MessageBox.Show("Order canceled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btn_history_Click(object sender, EventArgs e)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                SELECT 
+                    o.order_id, o.orderNo, o.order_date, o.status, o.total_price, 
+                    GROUP_CONCAT(CONCAT(od.quantity, 'x ', i.item_name) SEPARATOR ', ') AS items 
+                FROM orders_tb o
+                LEFT JOIN order_details_tb od ON o.order_id = od.order_id
+                LEFT JOIN menu_items_tb i ON od.item_id = i.item_id
+                GROUP BY o.order_id
+                ORDER BY o.order_date DESC;";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var historyForm = new frm_OderHistory();
+
+                        while (reader.Read())
+                        {
+                            historyForm.AddOrderToHistory(
+                                reader["orderNo"].ToString(),
+                                reader["order_date"].ToString(),
+                                reader["status"].ToString(),
+                                reader["total_price"].ToString(),
+                                reader["items"].ToString()
+                            );
+                        }
+
+                        historyForm.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error fetching order history: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
     public class RoundedPanel : Panel
     {

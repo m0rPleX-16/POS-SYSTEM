@@ -7,7 +7,6 @@ namespace POS_SYSTEM
 {
     public partial class inventory_tables : UserControl
     {
-        private readonly MySqlConnection conn = new MySqlConnection("server=localhost;userid=root;password=;database=posresto_db");
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private Employee _currentEmployee;
 
@@ -51,6 +50,7 @@ namespace POS_SYSTEM
                 }
             }
         }
+
         private string GenerateTableNo()
         {
             using (var conn = new MySqlConnection(connectionString))
@@ -60,22 +60,14 @@ namespace POS_SYSTEM
                     conn.Open();
 
                     string query = @"
-                SELECT MAX(CAST(SUBSTRING(table_number, 9) AS UNSIGNED)) 
-                FROM tables_tb";
+                    SELECT MAX(CAST(SUBSTRING(table_number, 9) AS UNSIGNED)) 
+                    FROM tables_tb";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
                     object result = cmd.ExecuteScalar();
 
-                    int nextNumber;
-                    if (result != DBNull.Value && result != null)
-                    {
-                        nextNumber = Convert.ToInt32(result) + 1;
-                    }
-                    else
-                    {
-                        nextNumber = 1;
-                    }
+                    int nextNumber = (result != DBNull.Value && result != null) ? Convert.ToInt32(result) + 1 : 1;
 
                     string datePrefix = DateTime.Now.ToString("yyyyMMdd");
 
@@ -93,31 +85,27 @@ namespace POS_SYSTEM
         {
             try
             {
-                if (conn.State == ConnectionState.Open)
-                    conn.Close();
-
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT table_id, table_number, is_active, is_archived FROM tables_tb", conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                dgv_tables.Rows.Clear();
-
-                if (!reader.HasRows)
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    MessageBox.Show("No data found in the Tables table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("SELECT table_id, table_number, is_active, is_archived FROM tables_tb", conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    dgv_tables.Rows.Clear();
 
-                while (reader.Read())
-                {
-                    dgv_tables.Rows.Add(reader["table_id"], reader["table_number"], reader["is_active"], reader.GetBoolean("is_archived") ? "Archived" : "Unarchived");
+                    if (!reader.HasRows)
+                    {
+                        MessageBox.Show("No data found in the Tables table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    while (reader.Read())
+                    {
+                        dgv_tables.Rows.Add(reader["table_id"], reader["table_number"], reader["is_active"], reader.GetBoolean("is_archived") ? "Archived" : "Unarchived");
+                    }
                 }
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show("Error loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
             }
         }
 
@@ -166,22 +154,25 @@ namespace POS_SYSTEM
 
             try
             {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO tables_tb (table_number, is_active) VALUES (@table_number, @is_active)", conn);
-                cmd.Parameters.AddWithValue("@table_number", generatedTableNo);
-                cmd.Parameters.AddWithValue("@is_active", cb_is_active.SelectedItem.ToString());
-
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    MessageBox.Show("Table saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LogAction("Inventory Table", "Saved new table", null, null, null, "Table Number: " + generatedTableNo);
-                }
-                else
-                {
-                    MessageBox.Show("Error saving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO tables_tb (table_number, is_active) VALUES (@table_number, @is_active)", conn);
+                    cmd.Parameters.AddWithValue("@table_number", generatedTableNo);
+                    cmd.Parameters.AddWithValue("@is_active", cb_is_active.SelectedItem.ToString());
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Table saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LogAction("Inventory Table", "Saved new table", null, null, null, "Table Number: " + generatedTableNo);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error saving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (MySqlException ex)
@@ -190,12 +181,9 @@ namespace POS_SYSTEM
             }
             finally
             {
-                conn.Close();
                 LoadDataGridView();
             }
         }
-
-
 
         private void btn_clear_Click_1(object sender, EventArgs e)
         {
@@ -212,23 +200,26 @@ namespace POS_SYSTEM
 
             try
             {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET table_number = @table_number, is_active = @is_active WHERE table_id = @table_id", conn);
-        cmd.Parameters.AddWithValue("@table_id", txt_tableid.Text);
-                cmd.Parameters.AddWithValue("@table_number", txt_tableno.Text);
-                cmd.Parameters.AddWithValue("@is_active", cb_is_active.SelectedItem.ToString());
-
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    MessageBox.Show("Table updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LogAction("Inventory Table", "Updated table", Convert.ToInt32(txt_tableid.Text), null, null, "Updated Table Number: " + txt_tableno.Text);
-    }
-                else
-                {
-                    MessageBox.Show("Error updating table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET table_number = @table_number, is_active = @is_active WHERE table_id = @table_id", conn);
+                    cmd.Parameters.AddWithValue("@table_id", txt_tableid.Text);
+                    cmd.Parameters.AddWithValue("@table_number", txt_tableno.Text);
+                    cmd.Parameters.AddWithValue("@is_active", cb_is_active.SelectedItem.ToString());
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Table updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LogAction("Inventory Table", "Updated table", Convert.ToInt32(txt_tableid.Text), null, null, "Updated Table Number: " + txt_tableno.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error updating table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (MySqlException ex)
@@ -237,9 +228,8 @@ namespace POS_SYSTEM
             }
             finally
             {
-            conn.Close();
-            LoadDataGridView();
-}
+                LoadDataGridView();
+            }
         }
 
         private void btn_archive_Click_1(object sender, EventArgs e)
@@ -251,20 +241,23 @@ namespace POS_SYSTEM
                 {
                     try
                     {
-                        conn.Open();
-                        MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET is_archived = 1 WHERE table_id = @table_id", conn);
-                        cmd.Parameters.AddWithValue("@table_id", dgv_tables.CurrentRow.Cells[0].Value);
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
+                        using (var conn = new MySqlConnection(connectionString))
                         {
-                            MessageBox.Show("Table archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LogAction("Inventory Table", "Archived table", Convert.ToInt32(dgv_tables.CurrentRow.Cells[0].Value), null, null, "Archived Table ID: " + dgv_tables.CurrentRow.Cells[0].Value);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error archiving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            conn.Open();
+                            MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET is_archived = 1 WHERE table_id = @table_id", conn);
+                            cmd.Parameters.AddWithValue("@table_id", dgv_tables.CurrentRow.Cells[0].Value);
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Table archived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LogAction("Inventory Table", "Archived table", Convert.ToInt32(dgv_tables.CurrentRow.Cells[0].Value), null, null, "Archived Table ID: " + dgv_tables.CurrentRow.Cells[0].Value);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error archiving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                     catch (MySqlException ex)
@@ -273,7 +266,6 @@ namespace POS_SYSTEM
                     }
                     finally
                     {
-                        conn.Close();
                         LoadDataGridView();
                     }
                 }
@@ -284,25 +276,28 @@ namespace POS_SYSTEM
         {
             if (dgv_tables.CurrentRow != null)
             {
-                DialogResult result = MessageBox.Show("Are you sure you want to unarchive this table", "Unarchive Table", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("Are you sure you want to unarchive this table?", "Unarchive Table", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
                     try
                     {
-                        conn.Open();
-                        MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET is_archived = 0 WHERE table_id = @table_id", conn);
-                        cmd.Parameters.AddWithValue("@table_id", dgv_tables.CurrentRow.Cells[0].Value);
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
+                        using (var conn = new MySqlConnection(connectionString))
                         {
-                            MessageBox.Show("Table unarchived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LogAction("Inventory Table", "Unarchived table", Convert.ToInt32(dgv_tables.CurrentRow.Cells[0].Value), null, null, "Unarchived Table ID: " + dgv_tables.CurrentRow.Cells[0].Value);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error unarchiving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            conn.Open();
+                            MySqlCommand cmd = new MySqlCommand("UPDATE tables_tb SET is_archived = 0 WHERE table_id = @table_id", conn);
+                            cmd.Parameters.AddWithValue("@table_id", dgv_tables.CurrentRow.Cells[0].Value);
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Table unarchived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LogAction("Inventory Table", "Unarchived table", Convert.ToInt32(dgv_tables.CurrentRow.Cells[0].Value), null, null, "Unarchived Table ID: " + dgv_tables.CurrentRow.Cells[0].Value);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error unarchiving table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                     catch (MySqlException ex)
@@ -311,7 +306,6 @@ namespace POS_SYSTEM
                     }
                     finally
                     {
-                        conn.Close();
                         LoadDataGridView();
                     }
                 }

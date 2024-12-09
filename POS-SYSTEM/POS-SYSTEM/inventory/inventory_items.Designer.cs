@@ -66,7 +66,7 @@
             this.image_base64 = new System.Windows.Forms.DataGridViewImageColumn();
             this.item_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.item_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date_added = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.is_available = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -117,7 +117,7 @@
             this.image_base64,
             this.item_id,
             this.item_name,
-            this.category_id,
+            this.category_name,
             this.price,
             this.date_added,
             this.is_available,
@@ -451,17 +451,17 @@
             this.item_name.Name = "item_name";
             this.item_name.ReadOnly = true;
             // 
-            // category_id
+            // category_name
             // 
-            this.category_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_id.DefaultCellStyle = dataGridViewCellStyle6;
-            this.category_id.HeaderText = "CATEGORY";
-            this.category_id.MinimumWidth = 6;
-            this.category_id.Name = "category_id";
-            this.category_id.ReadOnly = true;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle6;
+            this.category_name.HeaderText = "CATEGORY";
+            this.category_name.MinimumWidth = 6;
+            this.category_name.Name = "category_name";
+            this.category_name.ReadOnly = true;
             // 
             // price
             // 
@@ -554,7 +554,7 @@
         private System.Windows.Forms.DataGridViewImageColumn image_base64;
         private System.Windows.Forms.DataGridViewTextBoxColumn item_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn item_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn category_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn category_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
         private System.Windows.Forms.DataGridViewTextBoxColumn date_added;
         private System.Windows.Forms.DataGridViewTextBoxColumn is_available;
