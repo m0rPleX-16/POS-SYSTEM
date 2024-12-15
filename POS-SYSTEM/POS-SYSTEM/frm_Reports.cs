@@ -30,7 +30,8 @@ namespace POS_SYSTEM
             timerClock.Start();
             LoadDailySales();
             LoadMonthlySales();
-            LoadInventoryReport(DateTime.MinValue, DateTime.MaxValue);
+            LoadSalesReport();
+            LoadInventoryReport();
         }
         private void TimerClock_Tick(object sender, EventArgs e)
         {
@@ -46,6 +47,26 @@ namespace POS_SYSTEM
             lbl_time.Text = now.ToString("hh:mm:ss tt");
         }
 
+        private bool EnsureConnectionOpen()
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex, "Failed to open database connection");
+                return false;
+            }
+        }
+        private void HandleError(Exception ex, string message)
+        {
+            MessageBox.Show($"{message}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         private void LoadDailySales()
         {
             try
@@ -104,7 +125,7 @@ namespace POS_SYSTEM
             }
         }
 
-        private void LoadInventoryReport(DateTime startDate, DateTime endDate)
+        private void LoadInventoryReport()
         {
             string query = @"
     SELECT 
@@ -117,10 +138,9 @@ namespace POS_SYSTEM
         it.note
     FROM `inventory_transactions_tb` it
     JOIN `ingredients_tb` i ON it.ingredient_id = i.ingredient_id
-    WHERE it.transaction_date BETWEEN @startDate AND @endDate
     ORDER BY it.transaction_date DESC";
 
-            LoadFilteredData(query, startDate, endDate, dgv_inventory, new string[]
+            LoadFilteredData(query, null, null, dgv_inventory, new string[]
             {
         "transaction_id",
         "ingredient_id",
@@ -132,16 +152,45 @@ namespace POS_SYSTEM
             });
         }
 
-        private void LoadFilteredData(string query, DateTime startDate, DateTime endDate, DataGridView dgv, string[] columnNames)
+        private void LoadSalesReport()
+        {
+            string query = @"
+    SELECT o.order_id, o.order_date,
+           SUM(od.quantity * od.price_at_time) AS total_sale, 
+           p.payment_method, p.payment_date
+    FROM `orders_tb` o
+    JOIN `order_details_tb` od ON o.order_id = od.order_id
+    JOIN `payments_tb` p ON o.order_id = p.order_id
+    GROUP BY o.order_id, p.payment_method, p.payment_date
+    ORDER BY o.order_date DESC";
+
+            LoadFilteredData(query, null, null, dgv_sales, new string[]
+            {
+        "order_id",
+        "order_date",
+        "total_sale",
+        "payment_method",
+        "payment_date"
+            });
+        }
+        private void LoadFilteredData(string query, DateTime? startDate, DateTime? endDate, DataGridView dgv, string[] columnNames)
         {
             try
             {
                 dgv.Rows.Clear();
                 if (!EnsureConnectionOpen()) return;
 
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    query += " WHERE DATE(o.order_date) BETWEEN @startDate AND @endDate";
+                }
+
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@startDate", startDate);
-                cmd.Parameters.AddWithValue("@endDate", endDate);
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@startDate", startDate.Value.Date);
+                    cmd.Parameters.AddWithValue("@endDate", endDate.Value.Date);
+                }
 
                 using (MySqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -169,27 +218,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-        private void HandleError(Exception ex, string message)
-        {
-            MessageBox.Show($"{message}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
 
-        private bool EnsureConnectionOpen()
-        {
-            try
-            {
-                if (conn.State != ConnectionState.Open)
-                {
-                    conn.Open();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                HandleError(ex, "Failed to open database connection");
-                return false;
-            }
-        }
         private void btn_Filter_Click_1(object sender, EventArgs e)
         {
             DateTime startDate = start_dtp.Value.Date;
@@ -203,29 +232,11 @@ namespace POS_SYSTEM
 
             if (reports_control.SelectedTab.Name == "sales_tab")
             {
-                string query = @"
-        SELECT o.order_id, o.order_date,
-               SUM(od.quantity * od.price_at_time) AS total_sale, 
-               p.payment_method, p.payment_date
-        FROM `orders_tb` o
-        JOIN `order_details_tb` od ON o.order_id = od.order_id
-        JOIN `payments_tb` p ON o.order_id = p.order_id
-        WHERE DATE(o.order_date) BETWEEN @startDate AND @endDate
-        GROUP BY o.order_id, p.payment_method, p.payment_date
-        ORDER BY o.order_date DESC";
-
-                LoadFilteredData(query, startDate, endDate, dgv_sales, new string[]
-                {
-            "order_id",
-            "order_date",
-            "total_sale",
-            "payment_method",
-            "payment_date"
-                });
+                LoadSalesReport();
             }
             else if (reports_control.SelectedTab.Name == "inv_tab")
             {
-                LoadInventoryReport(startDate, endDate);
+                LoadInventoryReport();
             }
         }
 
@@ -322,7 +333,6 @@ namespace POS_SYSTEM
                 {
                     var worksheet = workbook.AddWorksheet("Inventory Report");
 
-                    // Define column headers
                     string[] headers = {
                 "Transaction ID",
                 "Ingredient ID",
@@ -369,8 +379,6 @@ namespace POS_SYSTEM
                 HandleError(ex, "Error exporting inventory report to Excel");
             }
         }
-
-
         private void ExportSalesReportToPDF()
         {
             try
@@ -384,24 +392,36 @@ namespace POS_SYSTEM
                     float[] columnWidths = { 2f, 4f, 3f, 3f, 3f };
                     var table = new iText.Layout.Element.Table(columnWidths);
 
+                    // Add header row
                     table.AddCell("Order ID");
                     table.AddCell("Order Date");
                     table.AddCell("Total Sale");
                     table.AddCell("Payment Method");
                     table.AddCell("Payment Date");
 
+                    // Add data rows
                     foreach (DataGridViewRow row in dgv_sales.Rows)
                     {
-                        table.AddCell(row.Cells[0].Value?.ToString() ?? string.Empty);
-                        table.AddCell(row.Cells[1].Value?.ToString() ?? string.Empty);
-                        table.AddCell(row.Cells[2].Value?.ToString() ?? string.Empty);
-                        table.AddCell(row.Cells[3].Value?.ToString() ?? string.Empty);
-                        table.AddCell(row.Cells[4].Value?.ToString() ?? string.Empty);
+                        try
+                        {
+                            table.AddCell(row.Cells[0].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells[1].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells[2].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells[3].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells[4].Value?.ToString() ?? "No Data");
+                        }
+                        catch (Exception rowEx)
+                        {
+                            // Log row-specific errors for debugging
+                            MessageBox.Show($"Error processing row: {rowEx.Message}", "Row Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            continue;
+                        }
                     }
 
                     pdfDoc.Add(table);
                     pdfDoc.Close();
 
+                    // Save the PDF to file
                     SaveFileDialog saveFileDialog = new SaveFileDialog
                     {
                         Filter = "PDF Files (*.pdf)|*.pdf",
@@ -415,9 +435,15 @@ namespace POS_SYSTEM
                     }
                 }
             }
+            catch (iText.Kernel.Exceptions.PdfException pdfEx)
+            {
+                // Log the full exception message and stack trace for further debugging
+                MessageBox.Show($"Error generating PDF: {pdfEx.Message}\n{pdfEx.StackTrace}", "PDF Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                HandleError(ex, "Error exporting sales report to PDF");
+                // Log a more generic error for debugging
+                MessageBox.Show($"Error exporting sales report to PDF: {ex.Message}\n{ex.StackTrace}", "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -444,14 +470,15 @@ namespace POS_SYSTEM
 
                     foreach (DataGridViewRow row in dgv_inventory.Rows)
                     {
-                        table.AddCell(row.Cells["transaction_id"].Value.ToString());
-                        table.AddCell(row.Cells["ingredient_id"].Value.ToString());
-                        table.AddCell(row.Cells["ingredient_name"].Value.ToString());
-                        table.AddCell(row.Cells["transaction_type"].Value.ToString());
-                        table.AddCell(row.Cells["quantity"].Value.ToString());
+                        table.AddCell(row.Cells["transaction_id"].Value?.ToString() ?? "No Data");
+                        table.AddCell(row.Cells["ingredient_id"].Value?.ToString() ?? "No Data");
+                        table.AddCell(row.Cells["ingredient_name"].Value?.ToString() ?? "No Data");
+                        table.AddCell(row.Cells["transaction_type"].Value?.ToString() ?? "No Data");
+                        table.AddCell(row.Cells["quantity"].Value?.ToString() ?? "No Data");
                         table.AddCell(Convert.ToDateTime(row.Cells["transaction_date"].Value).ToString("yyyy-MM-dd HH:mm:ss"));
                         table.AddCell(row.Cells["note"].Value?.ToString() ?? "No notes");
                     }
+
                     pdfDoc.Add(table);
                     pdfDoc.Close();
 
@@ -473,7 +500,6 @@ namespace POS_SYSTEM
                 HandleError(ex, "Error exporting inventory report to PDF");
             }
         }
-
 
     }
 }
