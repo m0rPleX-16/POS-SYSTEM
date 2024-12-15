@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -11,6 +12,7 @@ namespace POS_SYSTEM
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private DataTable orderHistoryTable;
         private Employee _currentEmployee;
+
         public frm_OrderHistory(Employee currentEmployee)
         {
             InitializeComponent();
@@ -34,21 +36,21 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-        SELECT 
-            o.orderNo AS 'Order No',
-            t.table_number AS 'Table Number',
-            e.username AS 'Employee',
-            o.total_price AS 'Total Price',
-            o.status AS 'Status',
-            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-        FROM 
-            orders_tb o
-        INNER JOIN 
-            tables_tb t ON o.table_id = t.table_id
-        INNER JOIN 
-            employee_tb e ON o.employee_id = e.employee_id
-        ORDER BY 
-            o.order_date DESC;";
+                SELECT 
+                    o.orderNo AS 'Order No',
+                    t.table_number AS 'Table Number',
+                    e.username AS 'Employee',
+                    o.total_price AS 'Total Price',
+                    o.status AS 'Status',
+                    DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+                FROM 
+                    orders_tb o
+                INNER JOIN 
+                    tables_tb t ON o.table_id = t.table_id
+                INNER JOIN 
+                    employee_tb e ON o.employee_id = e.employee_id
+                ORDER BY 
+                    o.order_date DESC;";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -70,6 +72,7 @@ namespace POS_SYSTEM
                         reader["Order Date"]
                     );
                 }
+
                 if (_currentEmployee != null && _currentEmployee.Role == "Admin")
                 {
                     if (!dgv_orderHist.Columns.Contains("Cancel"))
@@ -93,6 +96,126 @@ namespace POS_SYSTEM
             catch (MySqlException ex)
             {
                 MessageBox.Show("Error loading order history: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void ReturnIngredientsStock(int orderId)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
+                conn.Open();
+
+                string query = @"
+                SELECT 
+                    od.ingredient_id, 
+                    od.quantity 
+                FROM 
+                    order_details_tb od
+                WHERE 
+                    od.order_id = @order_id";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@order_id", orderId);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                var ingredientsToUpdate = new List<(int IngredientId, decimal Quantity)>();
+
+                while (reader.Read())
+                {
+                    ingredientsToUpdate.Add((
+                        Convert.ToInt32(reader["ingredient_id"]),
+                        Convert.ToDecimal(reader["quantity"])
+                    ));
+                }
+                reader.Close();
+
+                foreach (var (ingredientId, quantity) in ingredientsToUpdate)
+                {
+                    string updateQuery = @"
+                    UPDATE ingredients_tb 
+                    SET stock_quantity = stock_quantity + @quantity
+                    WHERE ingredient_id = @ingredient_id";
+
+                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
+                    updateCmd.Parameters.AddWithValue("@quantity", quantity);
+                    updateCmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
+                    updateCmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error returning ingredients stock: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void dgv_orderHist_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgv_orderHist.Columns[e.ColumnIndex].Name == "Cancel")
+            {
+                int orderNo = Convert.ToInt32(dgv_orderHist.Rows[e.RowIndex].Cells["orderNo"].Value);
+                string currentStatus = dgv_orderHist.Rows[e.RowIndex].Cells["status"].Value.ToString();
+
+                if (currentStatus == "Canceled")
+                {
+                    MessageBox.Show("This order is already canceled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                DialogResult confirmResult = MessageBox.Show(
+                    $"Are you sure you want to cancel Order No: {orderNo}?",
+                    "Confirm Cancel",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    CancelOrder(orderNo);
+                }
+            }
+        }
+
+        private void CancelOrder(int orderNo)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
+                conn.Open();
+
+                string query = "UPDATE orders_tb SET status = 'Canceled' WHERE orderNo = @orderNo";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@orderNo", orderNo);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    ReturnIngredientsStock(orderNo);
+
+                    MessageBox.Show("Order has been successfully canceled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadOrderHistory();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to cancel the order. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error canceling the order: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -163,68 +286,6 @@ namespace POS_SYSTEM
             catch (MySqlException ex)
             {
                 MessageBox.Show("Error performing search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        private void dgv_orderHist_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dgv_orderHist.Columns[e.ColumnIndex].Name == "Cancel")
-            {
-                string orderNo = dgv_orderHist.Rows[e.RowIndex].Cells["orderNo"].Value.ToString();
-                string currentStatus = dgv_orderHist.Rows[e.RowIndex].Cells["status"].Value.ToString();
-
-                if (currentStatus == "Canceled")
-                {
-                    MessageBox.Show("This order is already canceled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                DialogResult confirmResult = MessageBox.Show(
-                    $"Are you sure you want to cancel Order No: {orderNo}?",
-                    "Confirm Cancel",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirmResult == DialogResult.Yes)
-                {
-                    CancelOrder(orderNo);
-                }
-            }
-        }
-
-        private void CancelOrder(string orderNo)
-        {
-            try
-            {
-                if (conn.State == ConnectionState.Open)
-                    conn.Close();
-
-                conn.Open();
-
-                string query = "UPDATE orders_tb SET status = 'Canceled' WHERE orderNo = @orderNo";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@orderNo", orderNo);
-
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
-                {
-                    MessageBox.Show("Order has been successfully canceled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadOrderHistory();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to cancel the order. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Error canceling the order: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

@@ -66,7 +66,8 @@ namespace POS_SYSTEM
             JOIN 
                 `order_details_tb` od ON o.order_id = od.order_id
             WHERE 
-                DATE(o.order_date) = CURDATE()";
+                DATE(o.order_date) = CURDATE()
+                AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
@@ -81,7 +82,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void LoadMonthlySales()
         {
             try
@@ -95,7 +95,9 @@ namespace POS_SYSTEM
             JOIN 
                 `order_details_tb` od ON o.order_id = od.order_id
             WHERE 
-                MONTH(o.order_date) = MONTH(CURDATE()) AND YEAR(o.order_date) = YEAR(CURDATE())";
+                MONTH(o.order_date) = MONTH(CURDATE()) 
+                AND YEAR(o.order_date) = YEAR(CURDATE())
+                AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
@@ -123,7 +125,8 @@ namespace POS_SYSTEM
             JOIN 
                 `order_details_tb` od ON o.order_id = od.order_id
             WHERE 
-                YEAR(o.order_date) = YEAR(CURDATE())";
+                YEAR(o.order_date) = YEAR(CURDATE())
+                AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
@@ -138,7 +141,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void DGV_loadBestCategory()
         {
             dgv_bestCat.Rows.Clear();
@@ -157,6 +159,7 @@ namespace POS_SYSTEM
         JOIN categories_tb c ON mi.category_id = c.category_id
         WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE) 
         AND YEAR(o.order_date) = YEAR(CURRENT_DATE)
+        AND o.status != 'Canceled'
         GROUP BY c.category_id, c.category_name
         ORDER BY qty_sold DESC
         LIMIT 5";
@@ -167,9 +170,9 @@ namespace POS_SYSTEM
                 while (dr.Read())
                 {
                     dgv_bestCat.Rows.Add(
-                        dr["cat_name"],       
-                        dr["qty_sold"],        
-                        dr["total_sales"]    
+                        dr["cat_name"],
+                        dr["qty_sold"],
+                        dr["total_sales"]
                     );
                 }
 
@@ -184,36 +187,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
-        private void LoadStockLevels()
-        {
-            try
-            {
-                conn.Open();
-
-                string query = @"
-            SELECT 
-                SUM(stock_quantity) AS total_stock
-            FROM 
-                ingredients_tb";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                object result = cmd.ExecuteScalar();
-
-                decimal totalStock = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
-                lbl_stocks.Text = $"{(totalStock < 0 ? 0 : totalStock)} units";
-            }
-            catch (MySqlException ex)
-            {
-                HandleError(ex, "Error loading total stock levels for ingredients");
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-
         private void DGV_load()
         {
             dgv_bestSellers.Rows.Clear();
@@ -234,6 +207,7 @@ namespace POS_SYSTEM
         JOIN categories_tb c ON mi.category_id = c.category_id
         WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE) 
         AND YEAR(o.order_date) = YEAR(CURRENT_DATE)
+        AND o.status != 'Canceled' -- Exclude canceled orders
         GROUP BY mi.item_id, mi.item_name, c.category_name, od.price_at_time
         ORDER BY quantity_sold DESC
         LIMIT 5";
@@ -266,11 +240,11 @@ namespace POS_SYSTEM
                     }
 
                     dgv_bestSellers.Rows.Add(
-                        itemImage,                 
-                        dr["item_name"],              
-                        dr["category_name"],       
-                        dr["quantity_sold"],         
-                        dr["price_at_time"]                
+                        itemImage,
+                        dr["item_name"],   
+                        dr["category_name"], 
+                        dr["quantity_sold"],
+                        dr["price_at_time"]
                     );
                 }
 
@@ -285,8 +259,34 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+        private void LoadStockLevels()
+        {
+            try
+            {
+                conn.Open();
 
+                string query = @"
+            SELECT 
+                SUM(stock_quantity) AS total_stock
+            FROM 
+                ingredients_tb";
 
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                object result = cmd.ExecuteScalar();
+
+                decimal totalStock = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+                lbl_stocks.Text = $"{(totalStock < 0 ? 0 : totalStock)} units";
+            }
+            catch (MySqlException ex)
+            {
+                HandleError(ex, "Error loading total stock levels for ingredients");
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+    
         private void CalculateSalesAndProfitForEachDay()
         {
             try

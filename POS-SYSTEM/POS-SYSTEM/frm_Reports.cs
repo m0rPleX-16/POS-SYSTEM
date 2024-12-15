@@ -150,14 +150,24 @@ namespace POS_SYSTEM
         private void LoadSalesReport()
         {
             string query = @"
-    SELECT o.order_id, o.order_date,
-           SUM(od.quantity * od.price_at_time) AS total_sale, 
-           p.payment_method, p.payment_date
-    FROM `orders_tb` o
-    JOIN `order_details_tb` od ON o.order_id = od.order_id
-    JOIN `payments_tb` p ON o.order_id = p.order_id
-    GROUP BY o.order_id, p.payment_method, p.payment_date
-    ORDER BY o.order_date DESC";
+    SELECT 
+        o.order_id, 
+        o.order_date,
+        SUM(od.quantity * od.price_at_time) AS total_sale, 
+        p.payment_method, 
+        p.payment_date
+    FROM 
+        `orders_tb` o
+    JOIN 
+        `order_details_tb` od ON o.order_id = od.order_id
+    JOIN 
+        `payments_tb` p ON o.order_id = p.order_id
+    WHERE 
+        o.status != 'Canceled' -- Exclude canceled orders
+    GROUP BY 
+        o.order_id, p.payment_method, p.payment_date
+    ORDER BY 
+        o.order_date DESC";
 
             LoadFilteredData(query, null, null, dgv_sales, new string[]
             {
