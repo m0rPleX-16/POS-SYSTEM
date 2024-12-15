@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM
@@ -338,31 +339,6 @@ namespace POS_SYSTEM
             return false;
         }
 
-        private RoundedPanel CreateProductPanel(string itemId, string itemName, string categoryName, decimal price, byte[] imageArray)
-        {
-            RoundedPanel saleProductPanel = new RoundedPanel
-            {   
-                Width = flp_billDetails.Width - 20, 
-                Height = 60,
-                BackColor = Color.FloralWhite,
-                Margin = new Padding(5), 
-                BorderStyle = BorderStyle.None,
-                Tag = itemId
-            };
-
-            PictureBox productImage = CreateProductImage(itemId, imageArray);
-            productImage.Tag = itemId;
-
-            Label lblItemName = CreateLabel(itemName, FontStyle.Bold, 90, ContentAlignment.MiddleCenter);
-            Label lblCategory = CreateLabel(categoryName, FontStyle.Regular, 55, ContentAlignment.MiddleCenter, Color.Gray);
-            Label lblQuantity = CreateLabel("1", FontStyle.Bold, 65, ContentAlignment.MiddleCenter, tag: "Quantity");
-            Label lblPrice = CreateLabel("₱" + price.ToString("F2"), FontStyle.Regular, 85, ContentAlignment.MiddleCenter);
-            Button btnRemove = CreateRemoveButton(saleProductPanel);
-
-            saleProductPanel.Controls.AddRange(new Control[] { btnRemove, lblPrice, lblQuantity, lblCategory, lblItemName, productImage });
-            return saleProductPanel;
-        }
-
         private PictureBox CreateProductImage(string itemId, byte[] imageArray)
         {
             PictureBox productImage = new PictureBox
@@ -402,7 +378,7 @@ namespace POS_SYSTEM
             {
                 Text = "X",
                 ForeColor = Color.Red,
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Width = 30,
                 Dock = DockStyle.Right,
                 FlatStyle = FlatStyle.Flat
@@ -412,15 +388,102 @@ namespace POS_SYSTEM
 
             btnRemove.Click += (s, e) =>
             {
-                flp_billDetails.Controls.Remove(panel);
-                flp_billDetails.Refresh();
-                UpdateTotal();
-                UpdateOrderNumber();
+                if (_currentEmployee.Role != "Admin")
+                {
+                    using (frm_InputApproval approvalForm = new frm_InputApproval())
+                    {
+                        if (approvalForm.ShowDialog() == DialogResult.OK)
+                        {
+                            if (ValidateAdminPassword(approvalForm.InputPassword))
+                            {
+                                flp_billDetails.Controls.Remove(panel);
+                                flp_billDetails.Refresh();
+                                UpdateTotal();
+                                UpdateOrderNumber();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Invalid admin password. Removal not authorized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    flp_billDetails.Controls.Remove(panel);
+                    flp_billDetails.Refresh();
+                    UpdateTotal();
+                    UpdateOrderNumber();
+                }
             };
 
             return btnRemove;
         }
 
+        private bool ValidateAdminPassword(string inputPassword)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM employee_tb WHERE role = 'Admin' AND password = @password";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@password", HashPassword(inputPassword));
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    return result > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error validating admin password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+        private RoundedPanel CreateProductPanel(string itemId, string itemName, string categoryName, decimal price, byte[] imageArray)
+        {
+            RoundedPanel saleProductPanel = new RoundedPanel
+            {
+                Width = flp_billDetails.Width - 20,
+                Height = 60,
+                BackColor = Color.FloralWhite,
+                Margin = new Padding(5),
+                BorderStyle = BorderStyle.None,
+                Tag = itemId
+            };
+
+            PictureBox productImage = CreateProductImage(itemId, imageArray);
+            productImage.Tag = itemId;
+
+            Label lblItemName = CreateLabel(itemName, FontStyle.Bold, 90, ContentAlignment.MiddleCenter);
+            Label lblCategory = CreateLabel(categoryName, FontStyle.Regular, 55, ContentAlignment.MiddleCenter, Color.Gray);
+            Label lblQuantity = CreateLabel("1", FontStyle.Bold, 65, ContentAlignment.MiddleCenter, tag: "Quantity");
+            Label lblPrice = CreateLabel("₱" + price.ToString("F2"), FontStyle.Regular, 85, ContentAlignment.MiddleCenter);
+            Button btnRemove = CreateRemoveButton(saleProductPanel);
+
+            saleProductPanel.Controls.AddRange(new Control[] { btnRemove, lblPrice, lblQuantity, lblCategory, lblItemName, productImage });
+            return saleProductPanel;
+        }
+         
         private void UpdateOrderNumber()
         {
             int totalItems = 0;
@@ -630,7 +693,7 @@ namespace POS_SYSTEM
                 {
                     try
                     {
-                        int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, "Finished");
+                        int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, "To be Served");
                         LogAction("Create", "Order", $"Order created with Order ID: {orderId}", null, null, totalAmount);
 
                         Dictionary<int, int> ingredientUsage = new Dictionary<int, int>();
@@ -672,6 +735,9 @@ namespace POS_SYSTEM
 
                         transaction.Commit();
                         MessageBox.Show("Order confirmed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        PrintBill printBill = new PrintBill();
+                        printBill.Main(orderNo);
 
                         ClearOrderDetails();
                     }
@@ -725,7 +791,6 @@ namespace POS_SYSTEM
                 }
             }
         }
-
         private bool ValidateIngredientStock(MySqlConnection conn, MySqlTransaction transaction, Dictionary<int, int> ingredientUsage)
         {
             foreach (var entry in ingredientUsage)
@@ -750,7 +815,6 @@ namespace POS_SYSTEM
             }
             return true;
         }
-
         private void UpdateInventoryAndLogUsage(MySqlConnection conn, MySqlTransaction transaction, Dictionary<int, int> ingredientUsage)
         {
             foreach (var entry in ingredientUsage)
@@ -779,7 +843,6 @@ namespace POS_SYSTEM
                 }
             }
         }
-
         private int GetTableId(MySqlConnection conn, string tableNumber)
         {
             string query = "SELECT table_id FROM tables_tb WHERE table_number = @table_number";
@@ -795,7 +858,6 @@ namespace POS_SYSTEM
                 return Convert.ToInt32(result);
             }
         }
-
         private int InsertOrder(MySqlConnection conn, MySqlTransaction transaction, int tableId, decimal totalPrice, string orderNo, string status)
         {
             string query = @"
@@ -812,7 +874,6 @@ namespace POS_SYSTEM
                 return Convert.ToInt32(new MySqlCommand("SELECT LAST_INSERT_ID()", conn, transaction).ExecuteScalar());
             }
         }
-
         private void InsertOrderDetails(MySqlConnection conn, MySqlTransaction transaction, int orderId, string itemId, int quantity, decimal price, string serveMode)
         {
             string query = @"
@@ -829,7 +890,6 @@ namespace POS_SYSTEM
                 cmd.ExecuteNonQuery();
             }
         }
-
         private void InsertPayment(MySqlConnection conn, MySqlTransaction transaction, int orderId, decimal totalAmount, string paymentMethod)
         {
             string query = @"
@@ -844,7 +904,6 @@ namespace POS_SYSTEM
                 cmd.ExecuteNonQuery();
             }
         }
-
         private void ClearOrderDetails()
         {
             foreach (Control control in flp_billDetails.Controls.OfType<Control>().ToList())
@@ -862,8 +921,6 @@ namespace POS_SYSTEM
             txt_cash.Text = "";
             txt_change.Text = "0.00";
         }
-
-
         private void btn_history_Click(object sender, EventArgs e)
         {
             using (frm_OrderHistory orders = new frm_OrderHistory(_currentEmployee))
@@ -871,7 +928,6 @@ namespace POS_SYSTEM
                 orders.ShowDialog();
             }
         }
-
         private void btn_newOrder_Click(object sender, EventArgs e)
         {
             ClearOrderDetails();

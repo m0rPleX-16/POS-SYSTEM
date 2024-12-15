@@ -70,17 +70,19 @@ namespace POS_SYSTEM
                         reader["Order Date"]
                     );
                 }
-
-                if (!dgv_orderHist.Columns.Contains("Cancel"))
+                if (_currentEmployee != null && _currentEmployee.Role == "Admin")
                 {
-                    DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
+                    if (!dgv_orderHist.Columns.Contains("Cancel"))
                     {
-                        Name = "Cancel",
-                        HeaderText = "Action",
-                        Text = "Cancel",
-                        UseColumnTextForButtonValue = true,
-                    };
-                    dgv_orderHist.Columns.Add(cancelButtonColumn);
+                        DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
+                        {
+                            Name = "Cancel",
+                            HeaderText = "Action",
+                            Text = "Cancel",
+                            UseColumnTextForButtonValue = true,
+                        };
+                        dgv_orderHist.Columns.Add(cancelButtonColumn);
+                    }
                 }
 
                 dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -97,7 +99,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void txt_search_TextChanged(object sender, EventArgs e)
         {
             try

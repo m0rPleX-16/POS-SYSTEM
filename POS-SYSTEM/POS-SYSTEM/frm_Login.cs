@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -6,14 +8,13 @@ namespace POS_SYSTEM
 {
     public partial class frm_Login : Form
     {
-        private string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
+        private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         public static Employee CurrentEmployee { get; private set; }
+
         public string userid = "";
         public string userRole = "";
         public string firstname = "";
         public string lastname = "";
-
-        public string UserRole { get; private set; }
 
         public frm_Login()
         {
@@ -24,10 +25,11 @@ namespace POS_SYSTEM
         {
             using (var conn = new MySqlConnection(connectionString))
             {
-                string query = "SELECT employee_id, firstname, lastname, username, role FROM employee_tb WHERE username = @username AND password = @password AND is_archived = 0 AND status = 'Active'";
+                string query = "SELECT employee_id, firstname, lastname, username, role, password " +
+                               "FROM employee_tb " +
+                               "WHERE username = @username AND is_archived = 0 AND status = 'Active'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@username", username);
-                cmd.Parameters.AddWithValue("@password", password);
 
                 try
                 {
@@ -38,22 +40,48 @@ namespace POS_SYSTEM
                         {
                             while (reader.Read())
                             {
-                                userid = reader["employee_id"].ToString();
-                                userRole = reader["role"].ToString();
-                                firstname = reader["firstname"].ToString();
-                                lastname = reader["lastname"].ToString();
+                                string storedHashedPassword = reader["password"].ToString();
+                                string inputHashedPassword = HashPassword(password);
+
+                                if (storedHashedPassword == inputHashedPassword)
+                                {
+                                    userid = reader["employee_id"].ToString();
+                                    userRole = reader["role"].ToString();
+                                    firstname = reader["firstname"].ToString();
+                                    lastname = reader["lastname"].ToString();
+                                    return true;
+                                }
                             }
-                            return true;
                         }
                     }
                 }
-                catch (MySqlException ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Database connection error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error during login validation: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.Close();
                 }
             }
             return false;
         }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hash = sha256.ComputeHash(bytes);
+                StringBuilder result = new StringBuilder();
+                foreach (byte b in hash)
+                {
+                    result.Append(b.ToString("x2"));
+                }
+                return result.ToString();
+            }
+        }
+
         private void LogAction(string action, string module, string details = null, string itemId = null, int? quantity = null, decimal? amount = null)
         {
             using (var conn = new MySqlConnection(connectionString))
@@ -75,17 +103,21 @@ namespace POS_SYSTEM
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (MySqlException ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Error logging action: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.Close();
                 }
             }
         }
 
         private void Btn_login_Click(object sender, EventArgs e)
         {
-            string username = txt_username.Text;
-            string password = txt_password.Text;
+            string username = txt_username.Text.Trim();
+            string password = txt_password.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
@@ -128,7 +160,7 @@ namespace POS_SYSTEM
             }
             else
             {
-                MessageBox.Show("Invalid username or password, or the account is inactive and archived.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid username or password, or the account is inactive/archived.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txt_password.Clear();
                 txt_password.Focus();
             }

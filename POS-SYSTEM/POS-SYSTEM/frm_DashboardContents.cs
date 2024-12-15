@@ -29,6 +29,7 @@ namespace POS_SYSTEM
             LoadDailySales();
             LoadMonthlySales();
             LoadAnnualSales();
+            LoadStockLevels();
             CalculateSalesAndProfitForEachDay();
             DGV_load();
             DGV_loadBestCategory();
@@ -184,6 +185,39 @@ namespace POS_SYSTEM
             }
         }
 
+        private void LoadStockLevels()
+        {
+            try
+            {
+                conn.Open();
+
+                string query = @"
+        SELECT 
+            SUM(CASE WHEN it.transaction_type = 'Restock' THEN it.quantity ELSE 0 END) - 
+            SUM(CASE WHEN it.transaction_type = 'Usage' THEN it.quantity ELSE 0 END) AS current_stock
+        FROM 
+            inventory_transactions_tb it
+        JOIN    
+            ingredients_tb i ON it.ingredient_id = i.ingredient_id
+        GROUP BY 
+            i.ingredient_id
+        ";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                object result = cmd.ExecuteScalar();
+
+                decimal stock = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+                lbl_stocks.Text = $"{(stock < 0 ? 0 : stock):N2} units";
+            }
+            catch (MySqlException ex)
+            {
+                HandleError(ex, "Error loading stock levels for ingredients");
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
         private void DGV_load()
         {
@@ -226,7 +260,7 @@ namespace POS_SYSTEM
                                 using (var ms = new MemoryStream(imageBytes))
                                 {
                                     Image originalImage = Image.FromStream(ms);
-                                    itemImage = new Bitmap(originalImage, new Size(85, 120));
+                                    itemImage = new Bitmap(originalImage, 80, 80);
                                 }
                             }
                             catch (Exception imgEx)
@@ -272,7 +306,7 @@ namespace POS_SYSTEM
     FROM orders_tb o
     JOIN order_details_tb od ON o.order_id = od.order_id
         JOIN menu_items_tb mi ON od.item_id = mi.item_id
-    WHERE o.status = 'Finished'
+    WHERE o.status = 'To be Served'
     GROUP BY DATE(o.order_date)
     ORDER BY order_date";
 

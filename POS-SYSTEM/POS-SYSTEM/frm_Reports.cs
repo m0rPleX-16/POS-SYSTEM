@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using ClosedXML.Excel;
+using iText.Kernel.Exceptions;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
-using iText.Kernel.Pdf.Canvas;
-using iText.Layout.Properties;
-using MySqlX.XDevAPI.Relational;
-using System.Xml.Linq;
-using Table = iText.Layout.Element.Table;
+using MySql.Data.MySqlClient;
 
 namespace POS_SYSTEM
 {
@@ -288,35 +283,39 @@ namespace POS_SYSTEM
         {
             try
             {
-                using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                var wb = new XLWorkbook();
+                var ws = wb.AddWorksheet("Sales Report");
+
+                ws.Cell(1, 1).Value = "Order ID";
+                ws.Cell(1, 2).Value = "Order Date";
+                ws.Cell(1, 3).Value = "Total Sale";
+                ws.Cell(1, 4).Value = "Payment Method";
+                ws.Cell(1, 5).Value = "Payment Date";
+
+                int row = 2; 
+                foreach (DataGridViewRow dgvRow in dgv_sales.Rows)
                 {
-                    var worksheet = workbook.AddWorksheet("Sales Report");
-                    worksheet.Cell(1, 1).Value = "Order ID";
-                    worksheet.Cell(1, 2).Value = "Order Date";
-                    worksheet.Cell(1, 3).Value = "Total Sale";
-                    worksheet.Cell(1, 4).Value = "Payment Method";
-                    worksheet.Cell(1, 5).Value = "Payment Date";
-
-                    for (int i = 0; i < dgv_sales.Rows.Count; i++)
+                    if (!dgvRow.IsNewRow)
                     {
-                        worksheet.Cell(i + 2, 1).Value = (ClosedXML.Excel.XLCellValue)dgv_sales.Rows[i].Cells[0].Value;
-                        worksheet.Cell(i + 2, 2).Value = (ClosedXML.Excel.XLCellValue)dgv_sales.Rows[i].Cells[1].Value;
-                        worksheet.Cell(i + 2, 3).Value = (ClosedXML.Excel.XLCellValue)dgv_sales.Rows[i].Cells[2].Value;
-                        worksheet.Cell(i + 2, 4).Value = (ClosedXML.Excel.XLCellValue)dgv_sales.Rows[i].Cells[3].Value;
-                        worksheet.Cell(i + 2, 5).Value = (ClosedXML.Excel.XLCellValue)dgv_sales.Rows[i].Cells[4].Value;
+                        ws.Cell(row, 1).Value = dgvRow.Cells["order_id"].Value.ToString();
+                        ws.Cell(row, 2).Value = dgvRow.Cells["order_date"].Value.ToString();
+                        ws.Cell(row, 3).Value = decimal.TryParse(dgvRow.Cells["total_sale"].Value.ToString(), out decimal totalSale) ? totalSale : 0;
+                        ws.Cell(row, 4).Value = dgvRow.Cells["payment_method"].Value.ToString();
+                        ws.Cell(row, 5).Value = dgvRow.Cells["payment_date"].Value.ToString();
+                        row++;
                     }
+                }
 
-                    SaveFileDialog saveFileDialog = new SaveFileDialog
-                    {
-                        Filter = "Excel Files (*.xlsx)|*.xlsx",
-                        FileName = "Sales_Report.xlsx"
-                    };
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    FileName = "Sales_Report.xlsx"
+                };
 
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        workbook.SaveAs(saveFileDialog.FileName);
-                        MessageBox.Show("Sales report has been successfully exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Sales Report has been exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -329,49 +328,43 @@ namespace POS_SYSTEM
         {
             try
             {
-                using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                var wb = new XLWorkbook();
+                var ws = wb.AddWorksheet("Inventory Report");
+
+                ws.Cell(1, 1).Value = "Transaction ID";
+                ws.Cell(1, 2).Value = "Ingredient ID";
+                ws.Cell(1, 3).Value = "Ingredient Name";
+                ws.Cell(1, 4).Value = "Transaction Type";
+                ws.Cell(1, 5).Value = "Quantity";
+                ws.Cell(1, 6).Value = "Transaction Date";
+                ws.Cell(1, 7).Value = "Remarks";
+
+                int row = 2;
+                foreach (DataGridViewRow dgvRow in dgv_inventory.Rows)
                 {
-                    var worksheet = workbook.AddWorksheet("Inventory Report");
-
-                    string[] headers = {
-                "Transaction ID",
-                "Ingredient ID",
-                "Ingredient Name",
-                "Transaction Type",
-                "Quantity",
-                "Transaction Date",
-                "Note"
-            };
-                    for (int col = 0; col < headers.Length; col++)
+                    if (!dgvRow.IsNewRow)
                     {
-                        worksheet.Cell(1, col + 1).Value = headers[col];
+                        ws.Cell(row, 1).Value = dgvRow.Cells["transaction_id"].Value?.ToString() ?? "No Data";
+                        ws.Cell(row, 2).Value = dgvRow.Cells["ingredient_id"].Value?.ToString() ?? "No Data";
+                        ws.Cell(row, 3).Value = dgvRow.Cells["ingredient_name"].Value?.ToString() ?? "No Data";
+                        ws.Cell(row, 4).Value = dgvRow.Cells["transaction_type"].Value?.ToString() ?? "No Data";
+                        ws.Cell(row, 5).Value = decimal.TryParse(dgvRow.Cells["quantity"].Value?.ToString(), out decimal quantity) ? quantity : 0;
+                        ws.Cell(row, 6).Value = dgvRow.Cells["transaction_date"].Value?.ToString() ?? "No Data";
+                        ws.Cell(row, 7).Value = dgvRow.Cells["notes"].Value?.ToString() ?? "No Data";
+                        row++;
                     }
-                    for (int i = 0; i < dgv_inventory.Rows.Count; i++)
-                    {
-                        for (int j = 0; j < headers.Length; j++)
-                        {
-                            worksheet.Cell(i + 2, j + 1).Value = dgv_inventory.Rows[i].Cells[j].Value?.ToString() ?? "No Data";
-                        }
-                    }
+                }
 
-                    var headerRow = worksheet.Range(1, 1, 1, headers.Length);
-                    headerRow.Style.Font.Bold = true;
-                    headerRow.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.LightGray;
-                    headerRow.Style.Alignment.Horizontal = ClosedXML.Excel.XLAlignmentHorizontalValues.Center;
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    FileName = "Inventory_Report.xlsx"
+                };
 
-                    worksheet.Columns().AdjustToContents();
-
-                    SaveFileDialog saveFileDialog = new SaveFileDialog
-                    {
-                        Filter = "Excel Files (*.xlsx)|*.xlsx",
-                        FileName = "Inventory_Report.xlsx"
-                    };
-
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        workbook.SaveAs(saveFileDialog.FileName);
-                        MessageBox.Show("Inventory report has been successfully exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                    MessageBox.Show("Inventory Report has been exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -387,66 +380,57 @@ namespace POS_SYSTEM
                 {
                     PdfWriter writer = new PdfWriter(ms);
                     PdfDocument pdf = new PdfDocument(writer);
-                    var pdfDoc = new iText.Layout.Document(pdf);
+                    Document document = new Document(pdf);
 
-                    float[] columnWidths = { 2f, 4f, 3f, 3f, 3f };
-                    var table = new iText.Layout.Element.Table(columnWidths);
+                    document.Add(new Paragraph("Sales Report").SetFontSize(18));
 
-                    // Add header row
-                    table.AddCell("Order ID");
-                    table.AddCell("Order Date");
-                    table.AddCell("Total Sale");
-                    table.AddCell("Payment Method");
-                    table.AddCell("Payment Date");
+                    float[] columnWidths = { 1, 2, 2, 2, 2 };
+                    Table table = new Table(columnWidths)
+                        .AddHeaderCell("Order ID")
+                        .AddHeaderCell("Order Date")
+                        .AddHeaderCell("Total Sale")
+                        .AddHeaderCell("Payment Method")
+                        .AddHeaderCell("Payment Date");
 
-                    // Add data rows
                     foreach (DataGridViewRow row in dgv_sales.Rows)
                     {
-                        try
+                        if (!row.IsNewRow)
                         {
-                            table.AddCell(row.Cells[0].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells[1].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells[2].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells[3].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells[4].Value?.ToString() ?? "No Data");
-                        }
-                        catch (Exception rowEx)
-                        {
-                            // Log row-specific errors for debugging
-                            MessageBox.Show($"Error processing row: {rowEx.Message}", "Row Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            continue;
+                            table.AddCell(row.Cells["order_id"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["order_date"].Value?.ToString() ?? "No Data");
+                            table.AddCell(decimal.TryParse(row.Cells["total_sale"].Value?.ToString(), out decimal totalSale) ? totalSale.ToString("0.00") : "0.00");
+                            table.AddCell(row.Cells["payment_method"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["payment_date"].Value?.ToString() ?? "No Data");
                         }
                     }
 
-                    pdfDoc.Add(table);
-                    pdfDoc.Close();
+                    document.Add(table);
+                    document.Close();
 
-                    // Save the PDF to file
                     SaveFileDialog saveFileDialog = new SaveFileDialog
                     {
-                        Filter = "PDF Files (*.pdf)|*.pdf",
+                        Filter = "PDF Files|*.pdf",
                         FileName = "Sales_Report.pdf"
                     };
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
-                        MessageBox.Show("Sales report has been successfully exported to PDF.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Sales Report has been exported to PDF.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
-            catch (iText.Kernel.Exceptions.PdfException pdfEx)
+            catch (PdfException ex)
             {
-                // Log the full exception message and stack trace for further debugging
-                MessageBox.Show($"Error generating PDF: {pdfEx.Message}\n{pdfEx.StackTrace}", "PDF Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"PdfException Details: {ex.Message}");
+                HandleError(ex, "PDF Error: Invalid PDF generation");
             }
+
             catch (Exception ex)
             {
-                // Log a more generic error for debugging
-                MessageBox.Show($"Error exporting sales report to PDF: {ex.Message}\n{ex.StackTrace}", "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                HandleError(ex, "Error exporting sales report to PDF");
             }
         }
-
         private void ExportInventoryReportToPDF()
         {
             try
@@ -455,51 +439,59 @@ namespace POS_SYSTEM
                 {
                     PdfWriter writer = new PdfWriter(ms);
                     PdfDocument pdf = new PdfDocument(writer);
-                    var pdfDoc = new iText.Layout.Document(pdf);
+                    Document document = new Document(pdf);
 
-                    float[] columnWidths = { 3f, 3f, 5f, 3f, 3f, 3f, 4f };
-                    var table = new iText.Layout.Element.Table(columnWidths);
+                    document.Add(new Paragraph("Inventory Report").SetFontSize(18));
 
-                    table.AddCell("Transaction ID");
-                    table.AddCell("Ingredient ID");
-                    table.AddCell("Ingredient Name");
-                    table.AddCell("Transaction Type");
-                    table.AddCell("Quantity");
-                    table.AddCell("Transaction Date");
-                    table.AddCell("Note");
+                    float[] columnWidths = { 1, 2, 2, 2, 2, 2, 3 };
+                    Table table = new Table(columnWidths)
+                        .AddHeaderCell("Transaction ID")
+                        .AddHeaderCell("Ingredient ID")
+                        .AddHeaderCell("Ingredient Name")
+                        .AddHeaderCell("Transaction Type")
+                        .AddHeaderCell("Quantity")
+                        .AddHeaderCell("Transaction Date")
+                        .AddHeaderCell("Note");
 
                     foreach (DataGridViewRow row in dgv_inventory.Rows)
                     {
-                        table.AddCell(row.Cells["transaction_id"].Value?.ToString() ?? "No Data");
-                        table.AddCell(row.Cells["ingredient_id"].Value?.ToString() ?? "No Data");
-                        table.AddCell(row.Cells["ingredient_name"].Value?.ToString() ?? "No Data");
-                        table.AddCell(row.Cells["transaction_type"].Value?.ToString() ?? "No Data");
-                        table.AddCell(row.Cells["quantity"].Value?.ToString() ?? "No Data");
-                        table.AddCell(Convert.ToDateTime(row.Cells["transaction_date"].Value).ToString("yyyy-MM-dd HH:mm:ss"));
-                        table.AddCell(row.Cells["note"].Value?.ToString() ?? "No notes");
+                        if (!row.IsNewRow)
+                        {
+                            table.AddCell(row.Cells["transaction_id"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["ingredient_id"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["ingredient_name"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["transaction_type"].Value?.ToString() ?? "No Data");
+                            table.AddCell(decimal.TryParse(row.Cells["quantity"].Value?.ToString(), out decimal quantity) ? quantity.ToString() : "0");
+                            table.AddCell(row.Cells["transaction_date"].Value?.ToString() ?? "No Data");
+                            table.AddCell(row.Cells["notes"].Value?.ToString() ?? "No Data");
+                        }
                     }
 
-                    pdfDoc.Add(table);
-                    pdfDoc.Close();
+                    document.Add(table);
+                    document.Close();
 
                     SaveFileDialog saveFileDialog = new SaveFileDialog
                     {
-                        Filter = "PDF Files (*.pdf)|*.pdf",
+                        Filter = "PDF Files|*.pdf",
                         FileName = "Inventory_Report.pdf"
                     };
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         File.WriteAllBytes(saveFileDialog.FileName, ms.ToArray());
-                        MessageBox.Show("Inventory report has been successfully exported to PDF.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Inventory Report has been exported to PDF.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+            }
+            catch (PdfException ex)
+            {
+                Console.WriteLine($"PdfException Details: {ex.Message}");
+                HandleError(ex, "PDF Error: Invalid PDF generation");
             }
             catch (Exception ex)
             {
                 HandleError(ex, "Error exporting inventory report to PDF");
             }
         }
-
     }
 }

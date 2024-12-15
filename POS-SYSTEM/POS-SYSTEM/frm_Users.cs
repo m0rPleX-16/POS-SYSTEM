@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -305,13 +306,14 @@ namespace POS_SYSTEM
                     if (resetPasswordForm.ShowDialog() == DialogResult.OK)
                     {
                         string newPassword = resetPasswordForm.NewPassword;
+                        string hashedPassword = HashPassword(newPassword);
 
                         try
                         {
                             conn.Open();
                             string query = "UPDATE `employee_tb` SET `password` = @newPassword WHERE `employee_id` = @employee_id";
                             MySqlCommand cmd = new MySqlCommand(query, conn);
-                            cmd.Parameters.AddWithValue("@newPassword", newPassword);
+                            cmd.Parameters.AddWithValue("@newPassword", hashedPassword);
                             cmd.Parameters.AddWithValue("@employee_id", dgv_users.CurrentRow.Cells[0].Value);
 
                             int rowsAffected = cmd.ExecuteNonQuery();
@@ -342,6 +344,19 @@ namespace POS_SYSTEM
                 MessageBox.Show("Please select a user to reset the password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder hashStringBuilder = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    hashStringBuilder.Append(b.ToString("x2"));
+                }
+                return hashStringBuilder.ToString();
+            }
+        }
         private bool ValidateFields()
         {
             if (string.IsNullOrWhiteSpace(txt_firstname.Text) ||
@@ -357,5 +372,12 @@ namespace POS_SYSTEM
             return true;
         }
 
+        private void btn_backupRestore_Click(object sender, EventArgs e)
+        {
+            using (frm_BackupRestore backRestore = new frm_BackupRestore(_currentEmployee))
+            {
+                backRestore.ShowDialog();
+            }
+        }
     }
 }

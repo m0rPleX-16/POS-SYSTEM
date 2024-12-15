@@ -236,6 +236,7 @@
             // 
             this.dgv_bestSellers.AllowUserToAddRows = false;
             this.dgv_bestSellers.AllowUserToDeleteRows = false;
+            this.dgv_bestSellers.AllowUserToResizeColumns = false;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
@@ -325,11 +326,11 @@
             // lbl_stocks
             // 
             this.lbl_stocks.AutoSize = true;
-            this.lbl_stocks.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
+            this.lbl_stocks.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
             this.lbl_stocks.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_stocks.Location = new System.Drawing.Point(30, 73);
+            this.lbl_stocks.Location = new System.Drawing.Point(18, 81);
             this.lbl_stocks.Name = "lbl_stocks";
-            this.lbl_stocks.Size = new System.Drawing.Size(85, 46);
+            this.lbl_stocks.Size = new System.Drawing.Size(63, 35);
             this.lbl_stocks.TabIndex = 17;
             this.lbl_stocks.Text = "0.00";
             // 
@@ -359,7 +360,7 @@
             this.lbl_annual.AutoSize = true;
             this.lbl_annual.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.lbl_annual.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_annual.Location = new System.Drawing.Point(28, 73);
+            this.lbl_annual.Location = new System.Drawing.Point(21, 73);
             this.lbl_annual.Name = "lbl_annual";
             this.lbl_annual.Size = new System.Drawing.Size(85, 46);
             this.lbl_annual.TabIndex = 16;
@@ -391,7 +392,7 @@
             this.lbl_monthly.AutoSize = true;
             this.lbl_monthly.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.lbl_monthly.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_monthly.Location = new System.Drawing.Point(30, 78);
+            this.lbl_monthly.Location = new System.Drawing.Point(16, 78);
             this.lbl_monthly.Name = "lbl_monthly";
             this.lbl_monthly.Size = new System.Drawing.Size(85, 46);
             this.lbl_monthly.TabIndex = 15;
@@ -423,7 +424,7 @@
             this.lbl_daily.AutoSize = true;
             this.lbl_daily.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.lbl_daily.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_daily.Location = new System.Drawing.Point(28, 78);
+            this.lbl_daily.Location = new System.Drawing.Point(21, 78);
             this.lbl_daily.Name = "lbl_daily";
             this.lbl_daily.Size = new System.Drawing.Size(85, 46);
             this.lbl_daily.TabIndex = 14;

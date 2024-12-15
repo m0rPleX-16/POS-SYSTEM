@@ -1,17 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM
 {
-public class PrintBill
+    public class PrintBill
     {
         private readonly string connectionString = "server=localhost;port=3306;username=root;password=;database=posresto_db";
         private MySqlConnection conn;
@@ -21,11 +17,7 @@ public class PrintBill
         private int longPaper;
         private decimal t_price;
         private int t_qty;
-        private decimal vatAmount;
-        private const decimal vatRate = 0.12m;
         private decimal grandTotal;
-        private decimal netTotal;
-
         private string transNo;
         private DateTime transDate;
         private string paymentMethod;
@@ -56,7 +48,14 @@ public class PrintBill
 
         private void LoadTransactionData(string transNumber)
         {
-            string query = "SELECT transno, transdate, ProdCode, ProdName, qty, price, vat, totalprice, paymentMethod FROM tbl_pos WHERE transno = @transno";
+            string query = @"
+                SELECT o.orderNo, o.order_date, od.item_id, i.item_name, od.quantity, od.price_at_time, od.subtotal, p.payment_method
+                FROM orders_tb o
+                JOIN order_details_tb od ON o.order_id = od.order_id
+                JOIN payments_tb p ON o.order_id = p.order_id
+                JOIN menu_items_tb i ON od.item_id = i.item_id
+                WHERE o.orderNo = @transno";
+
             using (conn = new MySqlConnection(connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
@@ -74,14 +73,14 @@ public class PrintBill
                             {
                                 products.Add(new Product
                                 {
-                                    ProdName = reader["ProdName"].ToString(),
-                                    Quantity = Convert.ToInt32(reader["qty"]),
-                                    TotalPrice = Convert.ToDecimal(reader["totalprice"])
+                                    ProdName = reader["item_name"].ToString(),
+                                    Quantity = Convert.ToInt32(reader["quantity"]),
+                                    TotalPrice = Convert.ToDecimal(reader["subtotal"])
                                 });
                             }
 
-                            paymentMethod = reader["paymentMethod"].ToString();
-                            transDate = Convert.ToDateTime(reader["transdate"]);
+                            paymentMethod = reader["payment_method"].ToString();
+                            transDate = Convert.ToDateTime(reader["order_date"]);
 
                             SumPrice();
                         }
@@ -161,11 +160,11 @@ public class PrintBill
             int centerX = PD.DefaultPageSettings.PaperSize.Width / 2;
             int headerHeight = 10;
 
-            g.DrawString("RK WORKS", headerFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("Restaurant Name", headerFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 20;
-            g.DrawString("RICHKIDS13 RACING PARTS AND TUNING", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("Restaurant Name", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 20;
-            g.DrawString("Sandawa, Davao City", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("University of Mindanao, Davao City", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 15;
             g.DrawString("Tel: +1111-2222-333", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
         }
@@ -208,14 +207,6 @@ public class PrintBill
             Font regularFont = new Font("Segoe UI Semibold", 10, FontStyle.Regular);
             int height = 200 + (products.Count * 20);
 
-            g.DrawString("Net Total:", regularFont, Brushes.Black, 10, height);
-            g.DrawString(netTotal.ToString("C2"), regularFont, Brushes.Black, 180, height);
-            height += 20;
-
-            g.DrawString("VAT (12%):", regularFont, Brushes.Black, 10, height);
-            g.DrawString(vatAmount.ToString("C2"), regularFont, Brushes.Black, 180, height);
-            height += 20;
-
             g.DrawString("Grand Total:", regularFont, Brushes.Black, 10, height);
             g.DrawString(grandTotal.ToString("C2"), regularFont, Brushes.Black, 180, height);
         }
@@ -230,10 +221,7 @@ public class PrintBill
                 t_qty += product.Quantity;
                 t_price += product.TotalPrice;
             }
-
-            vatAmount = t_price * vatRate;
-            grandTotal = t_price + vatAmount;
-            netTotal = grandTotal - vatAmount;
+            grandTotal = t_price;
         }
 
         private void ShowError(string message)
@@ -241,6 +229,4 @@ public class PrintBill
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
-
 }
-

@@ -87,20 +87,25 @@ namespace POS_SYSTEM
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader dr = cmd.ExecuteReader();
-
                 while (dr.Read())
                 {
+                    string transactionType = dr["last_transaction_type"]?.ToString();
+                    if (transactionType != "Restock" && transactionType != "Usage")
+                    {
+                        transactionType = "None";
+                    }
+
                     dgv_inventory.Rows.Add(
                         dr["ingredient_id"],
                         dr["ingredient_name"],
                         dr["unit"],
                         dr["stock_quantity"],
                         dr["minimum_quantity"],
-                        dr["expiration_date"] == DBNull.Value ? "N/A" : Convert.ToDateTime(dr["expiration_date"]).ToString("yyyy-MM-dd"),
-                        dr["last_transaction_type"] ?? "None",
-                        dr["last_transaction_quantity"] ?? 0,
-                        dr["last_transaction_date"] == DBNull.Value ? "N/A" : Convert.ToDateTime(dr["last_transaction_date"]).ToString("yyyy-MM-dd HH:mm:ss"),
-                        dr["last_transaction_note"] ?? "No Notes"
+                        dr["expiration_date"] is DBNull ? "N/A" : Convert.ToDateTime(dr["expiration_date"]).ToString("yyyy-MM-dd"),
+                        transactionType,
+                        dr["last_transaction_quantity"] is DBNull ? 0 : Convert.ToInt32(dr["last_transaction_quantity"]),
+                        dr["last_transaction_date"] is DBNull ? "N/A" : Convert.ToDateTime(dr["last_transaction_date"]).ToString("yyyy-MM-dd HH:mm:ss"),
+                        dr["last_transaction_note"]?.ToString() ?? "No Notes"
                     );
                 }
 

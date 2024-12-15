@@ -76,6 +76,7 @@
             this.line_username = new System.Windows.Forms.Panel();
             this.btn_search = new System.Windows.Forms.Button();
             this.pnl_bgStats = new System.Windows.Forms.Panel();
+            this.btn_backupRestore = new System.Windows.Forms.Button();
             this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_clock = new System.Windows.Forms.Panel();
             this.pnl_calendar = new System.Windows.Forms.Panel();
@@ -554,6 +555,7 @@
             // pnl_bgStats
             // 
             this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
+            this.pnl_bgStats.Controls.Add(this.btn_backupRestore);
             this.pnl_bgStats.Controls.Add(this.btn_search);
             this.pnl_bgStats.Controls.Add(this.line_username);
             this.pnl_bgStats.Controls.Add(this.txt_search);
@@ -562,6 +564,22 @@
             this.pnl_bgStats.Name = "pnl_bgStats";
             this.pnl_bgStats.Size = new System.Drawing.Size(1924, 119);
             this.pnl_bgStats.TabIndex = 29;
+            // 
+            // btn_backupRestore
+            // 
+            this.btn_backupRestore.BackColor = System.Drawing.Color.Wheat;
+            this.btn_backupRestore.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_backupRestore.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_backupRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_backupRestore.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.btn_backupRestore.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_backupRestore.Location = new System.Drawing.Point(32, 14);
+            this.btn_backupRestore.Name = "btn_backupRestore";
+            this.btn_backupRestore.Size = new System.Drawing.Size(166, 85);
+            this.btn_backupRestore.TabIndex = 38;
+            this.btn_backupRestore.Text = "Backup and Restore";
+            this.btn_backupRestore.UseVisualStyleBackColor = false;
+            this.btn_backupRestore.Click += new System.EventHandler(this.btn_backupRestore_Click);
             // 
             // pnl_top
             // 
@@ -702,5 +720,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn role;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn disable;
+        private System.Windows.Forms.Button btn_backupRestore;
     }
 }
