@@ -107,11 +107,19 @@ namespace POS_SYSTEM
     SELECT m.*, c.category_name 
     FROM menu_items_tb m
     JOIN categories_tb c ON m.category_id = c.category_id
-    WHERE m.is_archived = 0";
+    WHERE m.is_archived = 0
+    ORDER BY m.date_added DESC";
 
             dgv_items.Rows.Clear();
+
             ExecuteQuery(query, null, reader =>
             {
+                if (!reader.HasRows)
+                {
+                    MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 while (reader.Read())
                 {
                     Image productImage = null;
@@ -137,11 +145,6 @@ namespace POS_SYSTEM
                         }
                     }
 
-                    if (!reader.HasRows)
-                    {
-                        MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-
                     dgv_items.Rows.Add(
                         productImage,
                         reader["item_id"],
@@ -155,6 +158,7 @@ namespace POS_SYSTEM
                 }
             });
         }
+
         private void DgvInventoryItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < dgv_items.Rows.Count)
@@ -423,7 +427,7 @@ namespace POS_SYSTEM
             }
         }
 
-        private void btn_unarchive_Click(object sender, EventArgs e)
+       private void btn_unarchive_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txt_itemID.Text))
             {

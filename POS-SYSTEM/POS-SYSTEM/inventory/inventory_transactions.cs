@@ -155,37 +155,10 @@ namespace POS_SYSTEM
                 {
                     conn.Open();
 
-
-                    int ingredientId = 0;
                     string selectedIngredientName = cb_ingredients.SelectedItem.ToString();
-                    MySqlCommand cmdIngredient = new MySqlCommand("SELECT ingredient_id FROM ingredients_tb WHERE ingredient_name = @ingredient_name", conn);
-                    cmdIngredient.Parameters.AddWithValue("@ingredient_name", selectedIngredientName);
-                    var ingredientResult = cmdIngredient.ExecuteScalar();
+                    decimal transactionQuantity = Convert.ToDecimal(txt_quantity.Text.Trim());
 
-                    if (ingredientResult != null)
-                    {
-                        ingredientId = Convert.ToInt32(ingredientResult);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ingredient not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    string query = @"
-                INSERT INTO inventory_transactions_tb 
-                    (ingredient_id, transaction_type, quantity, transaction_date, note) 
-                VALUES 
-                    (@ingredient_id, @transaction_type, @quantity, @transaction_date, @note)";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
-                    cmd.Parameters.AddWithValue("@transaction_type", cb_trans.SelectedItem.ToString());
-                    cmd.Parameters.AddWithValue("@quantity", Convert.ToDecimal(txt_quantity.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@transaction_date", dtp_trans.Value);
-                    cmd.Parameters.AddWithValue("@note", string.IsNullOrWhiteSpace(txt_notes.Text) ? (object)DBNull.Value : txt_notes.Text.Trim());
-
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Transaction saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    UpdateStockAndSaveTransaction(conn, selectedIngredientName, transactionQuantity);
 
                     LogAction("Inventory Transactions", "Add Transaction", null, Convert.ToInt32(txt_quantity.Text), null, "Added transaction for ingredient: " + selectedIngredientName);
                     LoadDataGridView();
@@ -197,6 +170,64 @@ namespace POS_SYSTEM
                 MessageBox.Show("Error saving transaction: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void UpdateStockAndSaveTransaction(MySqlConnection conn, string selectedIngredientName, decimal transactionQuantity)
+        {
+            try
+            {
+                int ingredientId = 0;
+                decimal currentStockQuantity = 0;
+
+                MySqlCommand cmdIngredient = new MySqlCommand("SELECT ingredient_id, stock_quantity FROM ingredients_tb WHERE ingredient_name = @ingredient_name", conn);
+                cmdIngredient.Parameters.AddWithValue("@ingredient_name", selectedIngredientName);
+
+                using (var ingredientResult = cmdIngredient.ExecuteReader())
+                {
+                    if (ingredientResult.Read())
+                    {
+                        ingredientId = ingredientResult.GetInt32("ingredient_id");
+                        currentStockQuantity = ingredientResult.GetDecimal("stock_quantity");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ingredient not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                string transactionType = cb_trans.SelectedItem.ToString();
+
+                if (transactionType == "Restock")
+                {
+                    decimal newStockQuantity = currentStockQuantity + transactionQuantity;
+
+                    MySqlCommand cmdUpdateStock = new MySqlCommand("UPDATE ingredients_tb SET stock_quantity = @newStockQuantity WHERE ingredient_id = @ingredient_id", conn);
+                    cmdUpdateStock.Parameters.AddWithValue("@newStockQuantity", newStockQuantity);
+                    cmdUpdateStock.Parameters.AddWithValue("@ingredient_id", ingredientId);
+                    cmdUpdateStock.ExecuteNonQuery();
+                }
+
+                string query = @"
+            INSERT INTO inventory_transactions_tb 
+                (ingredient_id, transaction_type, quantity, transaction_date, note) 
+            VALUES 
+                (@ingredient_id, @transaction_type, @quantity, @transaction_date, @note)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
+                cmd.Parameters.AddWithValue("@transaction_type", transactionType);
+                cmd.Parameters.AddWithValue("@quantity", transactionQuantity);
+                cmd.Parameters.AddWithValue("@transaction_date", dtp_trans.Value);
+                cmd.Parameters.AddWithValue("@note", string.IsNullOrWhiteSpace(txt_notes.Text) ? (object)DBNull.Value : txt_notes.Text.Trim());
+
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Transaction saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error updating stock or saving transaction: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void btn_clear_Click(object sender, EventArgs e)
         {

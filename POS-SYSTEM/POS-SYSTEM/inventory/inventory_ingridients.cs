@@ -143,6 +143,8 @@ namespace POS_SYSTEM.inventory
                 expire_dtp.Value = dgv_ingridients.CurrentRow.Cells[5].Value == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dgv_ingridients.CurrentRow.Cells[5].Value);
 
                 btn_save.Enabled = false;
+                txt_stockquan.ReadOnly = true;
+                txt_minquan.ReadOnly = true;
             }
         }
 
@@ -173,7 +175,7 @@ namespace POS_SYSTEM.inventory
                 cmd.Parameters.AddWithValue("@stock_quantity", txt_stockquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@minimum_quantity", txt_minquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@expiration_date", expire_dtp.Value.Date == DateTime.MinValue ? (object)DBNull.Value : expire_dtp.Value.Date);
-                cmd.Parameters.AddWithValue("@is_active", true);
+                cmd.Parameters.AddWithValue("@is_active", false);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Ingredient saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -230,7 +232,7 @@ namespace POS_SYSTEM.inventory
                 cmd.Parameters.AddWithValue("@stock_quantity", txt_stockquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@minimum_quantity", txt_minquan.Text.Trim());
                 cmd.Parameters.AddWithValue("@expiration_date", expire_dtp.Value.Date == DateTime.MinValue ? (object)DBNull.Value : expire_dtp.Value.Date);
-                cmd.Parameters.AddWithValue("@is_active", true);
+                cmd.Parameters.AddWithValue("@is_active", false);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Ingredient updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

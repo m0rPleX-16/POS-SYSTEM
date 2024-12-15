@@ -192,32 +192,27 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-        SELECT 
-            SUM(CASE WHEN it.transaction_type = 'Restock' THEN it.quantity ELSE 0 END) - 
-            SUM(CASE WHEN it.transaction_type = 'Usage' THEN it.quantity ELSE 0 END) AS current_stock
-        FROM 
-            inventory_transactions_tb it
-        JOIN    
-            ingredients_tb i ON it.ingredient_id = i.ingredient_id
-        GROUP BY 
-            i.ingredient_id
-        ";
+            SELECT 
+                SUM(stock_quantity) AS total_stock
+            FROM 
+                ingredients_tb";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
 
-                decimal stock = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
-                lbl_stocks.Text = $"{(stock < 0 ? 0 : stock):N2} units";
+                decimal totalStock = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+                lbl_stocks.Text = $"{(totalStock < 0 ? 0 : totalStock)} units";
             }
             catch (MySqlException ex)
             {
-                HandleError(ex, "Error loading stock levels for ingredients");
+                HandleError(ex, "Error loading total stock levels for ingredients");
             }
             finally
             {
                 conn.Close();
             }
         }
+
 
         private void DGV_load()
         {

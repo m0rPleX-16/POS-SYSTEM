@@ -884,8 +884,8 @@ namespace POS_SYSTEM
                 cmd.Parameters.AddWithValue("@order_id", orderId);
                 cmd.Parameters.AddWithValue("@item_id", itemId);
                 cmd.Parameters.AddWithValue("@quantity", quantity);
-                cmd.Parameters.AddWithValue("@price_at_time", price / quantity);
-                cmd.Parameters.AddWithValue("@subtotal", price);
+                cmd.Parameters.AddWithValue("@price_at_time", price);
+                cmd.Parameters.AddWithValue("@subtotal", price * quantity);
                 cmd.Parameters.AddWithValue("@dine_mode", serveMode);
                 cmd.ExecuteNonQuery();
             }
