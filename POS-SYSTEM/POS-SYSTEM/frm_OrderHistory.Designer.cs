@@ -145,6 +145,8 @@
             // 
             this.dgv_orderHist.AllowUserToAddRows = false;
             this.dgv_orderHist.AllowUserToDeleteRows = false;
+            this.dgv_orderHist.AllowUserToResizeColumns = false;
+            this.dgv_orderHist.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
@@ -154,7 +156,7 @@
             this.dgv_orderHist.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_orderHist.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -183,7 +185,7 @@
             this.dgv_orderHist.Name = "dgv_orderHist";
             this.dgv_orderHist.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
@@ -193,9 +195,11 @@
             this.dgv_orderHist.RowHeadersVisible = false;
             this.dgv_orderHist.RowHeadersWidth = 51;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
             this.dgv_orderHist.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgv_orderHist.RowTemplate.Height = 24;
             this.dgv_orderHist.Size = new System.Drawing.Size(1344, 664);
