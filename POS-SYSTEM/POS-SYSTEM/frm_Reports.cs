@@ -75,11 +75,12 @@ namespace POS_SYSTEM
             JOIN 
                 `order_details_tb` od ON o.order_id = od.order_id
             WHERE 
-                DATE(o.order_date) = CURDATE()";
+                DATE(o.order_date) = CURDATE()
+                AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
-                lbl_daily_sales.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
+               lbl_daily_sales.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
             }
             catch (MySqlException ex)
             {
@@ -90,7 +91,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void LoadMonthlySales()
         {
             try
@@ -104,7 +104,9 @@ namespace POS_SYSTEM
             JOIN 
                 `order_details_tb` od ON o.order_id = od.order_id
             WHERE 
-                MONTH(o.order_date) = MONTH(CURDATE()) AND YEAR(o.order_date) = YEAR(CURDATE())";
+                MONTH(o.order_date) = MONTH(CURDATE()) 
+                AND YEAR(o.order_date) = YEAR(CURDATE())
+                AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();

@@ -104,59 +104,64 @@ namespace POS_SYSTEM
         private void LoadDataGridView()
         {
             const string query = @"
-    SELECT m.*, c.category_name 
-    FROM menu_items_tb m
-    JOIN categories_tb c ON m.category_id = c.category_id
-    WHERE m.is_archived = 0
-    ORDER BY m.date_added DESC";
+        SELECT m.*, c.category_name 
+        FROM menu_items_tb m
+        JOIN categories_tb c ON m.category_id = c.category_id
+        WHERE m.is_archived = 0
+        ORDER BY m.date_added DESC";
 
             dgv_items.Rows.Clear();
 
-            ExecuteQuery(query, null, reader =>
+            using (var conn = new MySqlConnection(_connectionString))
             {
-                if (!reader.HasRows)
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                while (reader.Read())
-                {
-                    Image productImage = null;
-
-                    if (reader["image_base64"] != DBNull.Value)
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        try
+                        if (!reader.HasRows)
                         {
-                            long len = reader.GetBytes(reader.GetOrdinal("image_base64"), 0, null, 0, 0);
-                            byte[] imageArray = new byte[len];
-                            reader.GetBytes(reader.GetOrdinal("image_base64"), 0, imageArray, 0, (int)len);
-
-                            using (MemoryStream ms = new MemoryStream(imageArray))
-                            {
-                                var originalImage = Image.FromStream(ms);
-                                productImage = ResizeImageToFitDGV(originalImage, 80, 80);
-                            }
+                            MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
                         }
-                        catch (Exception imgEx)
+
+                        while (reader.Read())
                         {
-                            MessageBox.Show($"Error loading image: {imgEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Console.WriteLine($"Error Details: {imgEx}");
+                            Image productImage = LoadImageFromBase64(reader["image_base64"]);
+
+                            dgv_items.Rows.Add(
+                                productImage,
+                                reader["item_id"],
+                                reader["item_name"],
+                                reader["category_name"],
+                                reader["price"],
+                                reader["date_added"],
+                                reader.GetBoolean("is_available") ? "Active" : "Inactive",
+                                reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
+                            );
                         }
                     }
-
-                    dgv_items.Rows.Add(
-                        productImage,
-                        reader["item_id"],
-                        reader["item_name"],
-                        reader["category_name"],
-                        reader["price"],
-                        reader["date_added"],
-                        reader.GetBoolean("is_available") ? "Active" : "Inactive",
-                        reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
-                    );
                 }
-            });
+            }
+        }
+
+        private Image LoadImageFromBase64(object base64Data)
+        {
+            if (base64Data == DBNull.Value) return null;
+
+            try
+            {
+                byte[] imageArray = (byte[])base64Data;
+                using (var ms = new MemoryStream(imageArray))
+                {
+                    var originalImage = Image.FromStream(ms);
+                    return ResizeImageToFitDGV(originalImage, 80, 80);
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void DgvInventoryItems_CellClick(object sender, DataGridViewCellEventArgs e)

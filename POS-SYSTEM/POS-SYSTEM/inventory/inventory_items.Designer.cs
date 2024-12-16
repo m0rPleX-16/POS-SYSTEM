@@ -43,6 +43,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel13 = new System.Windows.Forms.Panel();
             this.dgv_items = new System.Windows.Forms.DataGridView();
+            this.image_base64 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.item_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.item_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date_added = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.is_available = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
             this.chk_available = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -63,14 +71,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pic_ProdImg = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.image_base64 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.item_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.item_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date_added = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.is_available = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_items)).BeginInit();
             this.panel12.SuspendLayout();
@@ -155,6 +155,103 @@
             this.dgv_items.RowTemplate.Height = 24;
             this.dgv_items.Size = new System.Drawing.Size(1014, 874);
             this.dgv_items.TabIndex = 2;
+            // 
+            // image_base64
+            // 
+            this.image_base64.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle3.NullValue")));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.image_base64.DefaultCellStyle = dataGridViewCellStyle3;
+            this.image_base64.HeaderText = "IMAGE";
+            this.image_base64.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.image_base64.MinimumWidth = 6;
+            this.image_base64.Name = "image_base64";
+            this.image_base64.ReadOnly = true;
+            this.image_base64.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.image_base64.Width = 6;
+            // 
+            // item_id
+            // 
+            this.item_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.item_id.DefaultCellStyle = dataGridViewCellStyle4;
+            this.item_id.HeaderText = "ITEM ID";
+            this.item_id.MinimumWidth = 6;
+            this.item_id.Name = "item_id";
+            this.item_id.ReadOnly = true;
+            this.item_id.Visible = false;
+            // 
+            // item_name
+            // 
+            this.item_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.item_name.DefaultCellStyle = dataGridViewCellStyle5;
+            this.item_name.HeaderText = "ITEM NAME";
+            this.item_name.MinimumWidth = 6;
+            this.item_name.Name = "item_name";
+            this.item_name.ReadOnly = true;
+            // 
+            // category_name
+            // 
+            this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle6;
+            this.category_name.HeaderText = "CATEGORY";
+            this.category_name.MinimumWidth = 6;
+            this.category_name.Name = "category_name";
+            this.category_name.ReadOnly = true;
+            // 
+            // price
+            // 
+            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.price.DefaultCellStyle = dataGridViewCellStyle7;
+            this.price.HeaderText = "PRICE";
+            this.price.MinimumWidth = 6;
+            this.price.Name = "price";
+            this.price.ReadOnly = true;
+            // 
+            // date_added
+            // 
+            this.date_added.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.date_added.DefaultCellStyle = dataGridViewCellStyle8;
+            this.date_added.HeaderText = "ADDED AT";
+            this.date_added.MinimumWidth = 6;
+            this.date_added.Name = "date_added";
+            this.date_added.ReadOnly = true;
+            // 
+            // is_available
+            // 
+            this.is_available.HeaderText = "AVAILABILITY";
+            this.is_available.MinimumWidth = 6;
+            this.is_available.Name = "is_available";
+            this.is_available.ReadOnly = true;
+            this.is_available.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.is_available.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.is_available.Width = 144;
+            // 
+            // is_archived
+            // 
+            this.is_archived.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.is_archived.DefaultCellStyle = dataGridViewCellStyle9;
+            this.is_archived.HeaderText = "DISABLE";
+            this.is_archived.MinimumWidth = 6;
+            this.is_archived.Name = "is_archived";
+            this.is_archived.ReadOnly = true;
             // 
             // panel12
             // 
@@ -411,103 +508,6 @@
             this.label1.Size = new System.Drawing.Size(105, 46);
             this.label1.TabIndex = 13;
             this.label1.Text = "Items";
-            // 
-            // image_base64
-            // 
-            this.image_base64.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle3.NullValue")));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.image_base64.DefaultCellStyle = dataGridViewCellStyle3;
-            this.image_base64.HeaderText = "IMAGE";
-            this.image_base64.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.image_base64.MinimumWidth = 6;
-            this.image_base64.Name = "image_base64";
-            this.image_base64.ReadOnly = true;
-            this.image_base64.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.image_base64.Width = 6;
-            // 
-            // item_id
-            // 
-            this.item_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.item_id.DefaultCellStyle = dataGridViewCellStyle4;
-            this.item_id.HeaderText = "ITEM ID";
-            this.item_id.MinimumWidth = 6;
-            this.item_id.Name = "item_id";
-            this.item_id.ReadOnly = true;
-            this.item_id.Visible = false;
-            // 
-            // item_name
-            // 
-            this.item_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.item_name.DefaultCellStyle = dataGridViewCellStyle5;
-            this.item_name.HeaderText = "ITEM NAME";
-            this.item_name.MinimumWidth = 6;
-            this.item_name.Name = "item_name";
-            this.item_name.ReadOnly = true;
-            // 
-            // category_name
-            // 
-            this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_name.DefaultCellStyle = dataGridViewCellStyle6;
-            this.category_name.HeaderText = "CATEGORY";
-            this.category_name.MinimumWidth = 6;
-            this.category_name.Name = "category_name";
-            this.category_name.ReadOnly = true;
-            // 
-            // price
-            // 
-            this.price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.price.DefaultCellStyle = dataGridViewCellStyle7;
-            this.price.HeaderText = "PRICE";
-            this.price.MinimumWidth = 6;
-            this.price.Name = "price";
-            this.price.ReadOnly = true;
-            // 
-            // date_added
-            // 
-            this.date_added.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.date_added.DefaultCellStyle = dataGridViewCellStyle8;
-            this.date_added.HeaderText = "ADDED AT";
-            this.date_added.MinimumWidth = 6;
-            this.date_added.Name = "date_added";
-            this.date_added.ReadOnly = true;
-            // 
-            // is_available
-            // 
-            this.is_available.HeaderText = "AVAILABILITY";
-            this.is_available.MinimumWidth = 6;
-            this.is_available.Name = "is_available";
-            this.is_available.ReadOnly = true;
-            this.is_available.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.is_available.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.is_available.Width = 144;
-            // 
-            // is_archived
-            // 
-            this.is_archived.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.is_archived.DefaultCellStyle = dataGridViewCellStyle9;
-            this.is_archived.HeaderText = "DISABLE";
-            this.is_archived.MinimumWidth = 6;
-            this.is_archived.Name = "is_archived";
-            this.is_archived.ReadOnly = true;
             // 
             // inventory_items
             // 
