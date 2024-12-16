@@ -214,7 +214,7 @@ namespace POS_SYSTEM
                     if (rowsAffected > 0)
                     {
                         MessageBox.Show("Table updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LogAction("Inventory Table", "Updated table", Convert.ToInt32(txt_tableid.Text), null, null, "Updated Table Number: " + txt_tableno.Text);
+                        LogAction("Inventory Table", "Updated table",null, null, null, "Updated Table Number: " + txt_tableno.Text);
                     }
                     else
                     {

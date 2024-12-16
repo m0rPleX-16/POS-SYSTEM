@@ -687,17 +687,27 @@ namespace POS_SYSTEM
                 conn.Open();
                 string selectedTable = cb_availtb.SelectedItem.ToString();
                 int tableId = GetTableId(conn, selectedTable);
-                if (tableId == -1) return;
+                if (tableId == -1)
+                {
+                    MessageBox.Show("Selected table does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 using (var transaction = conn.BeginTransaction())
                 {
                     try
                     {
+                        string updateTableQuery = "UPDATE tables_tb SET is_active = 'Active' WHERE table_id = @tableId";
+                        using (var cmd = new MySqlCommand(updateTableQuery, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@tableId", tableId);
+                            cmd.ExecuteNonQuery();
+                        }
+
                         int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, "To be Served");
                         LogAction("Create", "Order", $"Order created with Order ID: {orderId}", null, null, totalAmount);
 
                         Dictionary<int, int> ingredientUsage = new Dictionary<int, int>();
-
                         foreach (RoundedPanel panel in flp_billDetails.Controls.OfType<RoundedPanel>())
                         {
                             if (panel.Tag?.ToString() != "Product")
@@ -734,11 +744,13 @@ namespace POS_SYSTEM
                         LogAction("Create", "Payment", $"Payment processed for Order ID: {orderId}.", null, null, totalAmount);
 
                         transaction.Commit();
+
                         MessageBox.Show("Order confirmed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         PrintBill printBill = new PrintBill();
                         printBill.Main(orderNo);
 
+                        LoadInactiveTables();
                         ClearOrderDetails();
                     }
                     catch (MySqlException sqlEx)
@@ -754,6 +766,7 @@ namespace POS_SYSTEM
                 }
             }
         }
+
         private void UpdateIngredientUsage(MySqlConnection conn, MySqlTransaction transaction, string itemId, int quantity, Dictionary<int, int> ingredientUsage)
         {
             string query = @"SELECT ingredient_id, quantity_required 
@@ -845,19 +858,42 @@ namespace POS_SYSTEM
         }
         private int GetTableId(MySqlConnection conn, string tableNumber)
         {
-            string query = "SELECT table_id FROM tables_tb WHERE table_number = @table_number";
+            const string query = "SELECT table_id FROM tables_tb WHERE table_number = @tableNumber AND is_archived = 0";
             using (var cmd = new MySqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@table_number", tableNumber);
-                var result = cmd.ExecuteScalar();
-                if (result == null)
-                {
-                    MessageBox.Show("Table not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return -1;
-                }
-                return Convert.ToInt32(result);
+                cmd.Parameters.AddWithValue("@tableNumber", tableNumber);
+                object result = cmd.ExecuteScalar();
+                return result == null ? -1 : Convert.ToInt32(result);
             }
         }
+        private void LoadInactiveTables()
+        {
+            const string query = "SELECT table_id, table_number FROM tables_tb WHERE is_active = 'Inactive' AND is_archived = 0";
+
+            cb_availtb.Items.Clear();
+
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string tableNumber = reader["table_number"].ToString();
+                            cb_availtb.Items.Add(tableNumber);
+                        }
+                    }
+                }
+            }
+
+            if (cb_availtb.Items.Count == 0)
+            {
+                MessageBox.Show("No inactive tables available.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private int InsertOrder(MySqlConnection conn, MySqlTransaction transaction, int tableId, decimal totalPrice, string orderNo, string status)
         {
             string query = @"
