@@ -293,6 +293,7 @@ namespace POS_SYSTEM
             {
                 conn.Open();
 
+
                 string query = @"
     SELECT 
         DATE(o.order_date) AS order_date,

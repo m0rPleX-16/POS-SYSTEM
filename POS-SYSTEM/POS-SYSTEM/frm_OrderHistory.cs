@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -36,21 +37,21 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-                SELECT 
-                    o.orderNo AS 'Order No',
-                    t.table_number AS 'Table Number',
-                    e.username AS 'Employee',
-                    o.total_price AS 'Total Price',
-                    o.status AS 'Status',
-                    DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-                FROM 
-                    orders_tb o
-                INNER JOIN 
-                    tables_tb t ON o.table_id = t.table_id
-                INNER JOIN 
-                    employee_tb e ON o.employee_id = e.employee_id
-                ORDER BY 
-                    o.order_date DESC;";
+        SELECT 
+            o.orderNo AS 'Order No',
+            t.table_number AS 'Table Number',
+            e.username AS 'Employee',
+            o.total_price AS 'Total Price',
+            o.status AS 'Status',
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+        FROM 
+            orders_tb o
+        INNER JOIN 
+            tables_tb t ON o.table_id = t.table_id
+        INNER JOIN 
+            employee_tb e ON o.employee_id = e.employee_id
+        ORDER BY 
+            o.order_date DESC;";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -73,19 +74,16 @@ namespace POS_SYSTEM
                     );
                 }
 
-                if (_currentEmployee != null && _currentEmployee.Role == "Admin")
+                if (!dgv_orderHist.Columns.Contains("Cancel"))
                 {
-                    if (!dgv_orderHist.Columns.Contains("Cancel"))
+                    DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
                     {
-                        DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
-                        {
-                            Name = "Cancel",
-                            HeaderText = "Action",
-                            Text = "Cancel",
-                            UseColumnTextForButtonValue = true,
-                        };
-                        dgv_orderHist.Columns.Add(cancelButtonColumn);
-                    }
+                        Name = "Cancel",
+                        HeaderText = "Action",
+                        Text = "Cancel",
+                        UseColumnTextForButtonValue = true,
+                    };
+                    dgv_orderHist.Columns.Add(cancelButtonColumn);
                 }
 
                 dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -102,6 +100,44 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+        private bool ValidateAdminPassword(string inputPassword)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM employee_tb WHERE role = 'Admin' AND password = @password";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@password", HashPassword(inputPassword));
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    return result > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error validating admin password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
 
         private void ReturnIngredientsStock(int orderId)
         {
@@ -113,13 +149,17 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-                SELECT 
-                    od.ingredient_id, 
-                    od.quantity 
-                FROM 
-                    order_details_tb od
-                WHERE 
-                    od.order_id = @order_id";
+            SELECT 
+                r.ingredient_id,
+                SUM(r.quantity_required * od.quantity) AS total_quantity
+            FROM 
+                order_details_tb od
+            INNER JOIN 
+                recipe_tb r ON od.item_id = r.item_id
+            WHERE 
+                od.order_id = @order_id
+            GROUP BY 
+                r.ingredient_id";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@order_id", orderId);
@@ -131,7 +171,7 @@ namespace POS_SYSTEM
                 {
                     ingredientsToUpdate.Add((
                         Convert.ToInt32(reader["ingredient_id"]),
-                        Convert.ToDecimal(reader["quantity"])
+                        Convert.ToDecimal(reader["total_quantity"])
                     ));
                 }
                 reader.Close();
@@ -139,9 +179,9 @@ namespace POS_SYSTEM
                 foreach (var (ingredientId, quantity) in ingredientsToUpdate)
                 {
                     string updateQuery = @"
-                    UPDATE ingredients_tb 
-                    SET stock_quantity = stock_quantity + @quantity
-                    WHERE ingredient_id = @ingredient_id";
+                UPDATE ingredients_tb 
+                SET stock_quantity = stock_quantity + @quantity
+                WHERE ingredient_id = @ingredient_id";
 
                     MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
                     updateCmd.Parameters.AddWithValue("@quantity", quantity);
@@ -159,34 +199,38 @@ namespace POS_SYSTEM
             }
         }
 
+
         private void dgv_orderHist_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && dgv_orderHist.Columns[e.ColumnIndex].Name == "Cancel")
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgv_orderHist.Columns[e.ColumnIndex].Name == "Cancel")
             {
-                int orderNo = Convert.ToInt32(dgv_orderHist.Rows[e.RowIndex].Cells["orderNo"].Value);
-                string currentStatus = dgv_orderHist.Rows[e.RowIndex].Cells["status"].Value.ToString();
+                string selectedOrderNo = dgv_orderHist.Rows[e.RowIndex].Cells["orderNo"].Value.ToString();
 
-                if (currentStatus == "Canceled")
+                if (_currentEmployee.Role == "Cashier")
                 {
-                    MessageBox.Show("This order is already canceled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    using (var approvalForm = new frm_InputApproval())
+                    {
+                        if (approvalForm.ShowDialog() == DialogResult.OK)
+                        {
+                            string adminPassword = approvalForm.InputPassword;
+                            if (ValidateAdminPassword(adminPassword))
+                            {
+                                CancelOrder(selectedOrderNo);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Invalid admin password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
                 }
-
-                DialogResult confirmResult = MessageBox.Show(
-                    $"Are you sure you want to cancel Order No: {orderNo}?",
-                    "Confirm Cancel",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirmResult == DialogResult.Yes)
+                else if (_currentEmployee.Role == "Admin")
                 {
-                    CancelOrder(orderNo);
+                    CancelOrder(selectedOrderNo);
                 }
             }
         }
-
-        private void CancelOrder(int orderNo)
+        private void CancelOrder(string orderNo)
         {
             try
             {
@@ -198,30 +242,30 @@ namespace POS_SYSTEM
                 string query = "UPDATE orders_tb SET status = 'Canceled' WHERE orderNo = @orderNo";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@orderNo", orderNo);
+                cmd.ExecuteNonQuery();
 
-                int rowsAffected = cmd.ExecuteNonQuery();
+                string orderIdQuery = "SELECT order_id FROM orders_tb WHERE orderNo = @orderNo";
+                MySqlCommand orderIdCmd = new MySqlCommand(orderIdQuery, conn);
+                orderIdCmd.Parameters.AddWithValue("@orderNo", orderNo);
+                int orderId = Convert.ToInt32(orderIdCmd.ExecuteScalar());
 
-                if (rowsAffected > 0)
-                {
-                    ReturnIngredientsStock(orderNo);
+                ReturnIngredientsStock(orderId);
 
-                    MessageBox.Show("Order has been successfully canceled.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadOrderHistory();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to cancel the order. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show($"Order {orderNo} has been canceled successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LoadOrderHistory();
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Error canceling the order: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error canceling order: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 conn.Close();
             }
         }
+
+
         private void txt_search_TextChanged(object sender, EventArgs e)
         {
             try

@@ -15,8 +15,6 @@ namespace POS_SYSTEM
         public PrintDocument PD = new PrintDocument();
 
         private int longPaper;
-        private decimal t_price;
-        private int t_qty;
         private decimal grandTotal;
         private string transNo;
         private DateTime transDate;
@@ -38,6 +36,13 @@ namespace POS_SYSTEM
             try
             {
                 LoadTransactionData(latestTransNo);
+
+                if (products.Count == 0)
+                {
+                    MessageBox.Show("No products found for this transaction.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 PrintBills();
             }
             catch (Exception ex)
@@ -49,8 +54,17 @@ namespace POS_SYSTEM
         private void LoadTransactionData(string transNumber)
         {
             string query = @"
-                SELECT o.orderNo, o.order_date, od.item_id, i.item_name, od.quantity, od.price_at_time, od.subtotal, p.payment_method
-                FROM orders_tb o
+                SELECT 
+                    o.orderNo, 
+                    o.order_date, 
+                    od.item_id, 
+                    i.item_name, 
+                    od.quantity, 
+                    od.price_at_time, 
+                    od.subtotal, 
+                    p.payment_method
+                FROM 
+                    orders_tb o
                 JOIN order_details_tb od ON o.order_id = od.order_id
                 JOIN payments_tb p ON o.order_id = p.order_id
                 JOIN menu_items_tb i ON od.item_id = i.item_id
@@ -81,22 +95,13 @@ namespace POS_SYSTEM
 
                             paymentMethod = reader["payment_method"].ToString();
                             transDate = Convert.ToDateTime(reader["order_date"]);
-
                             SumPrice();
-                        }
-                        else
-                        {
-                            MessageBox.Show("No transaction data found.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                 }
                 catch (MySqlException ex)
                 {
                     ShowError("Database error: " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    ShowError("Unexpected error: " + ex.Message);
                 }
             }
         }
@@ -105,14 +110,9 @@ namespace POS_SYSTEM
         {
             try
             {
-                ChangeLongPaper();
+                AdjustPaperLength();
 
-                PageSettings pageSettings = new PageSettings
-                {
-                    PaperSize = new PaperSize("Custom", 250, longPaper)
-                };
-                PD.DefaultPageSettings = pageSettings;
-
+                PD.DefaultPageSettings.PaperSize = new PaperSize("Custom", 250, longPaper);
                 PD.PrintPage += PD_PrintPage;
 
                 using (PrintPreviewDialog previewDialog = new PrintPreviewDialog { Document = PD })
@@ -131,9 +131,9 @@ namespace POS_SYSTEM
             }
         }
 
-        private void ChangeLongPaper()
+        private void AdjustPaperLength()
         {
-            longPaper = (products.Count * 25) + 500;
+            longPaper = (products.Count * 25) + 300;
         }
 
         private void PD_PrintPage(object sender, PrintPageEventArgs e)
@@ -154,49 +154,48 @@ namespace POS_SYSTEM
 
         private void DrawHeader(Graphics g)
         {
-            Font headerFont = new Font("Segoe UI Semibold", 12, FontStyle.Bold);
-            Font regularFont = new Font("Segoe UI Semibold", 8, FontStyle.Regular);
+            Font headerFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            Font regularFont = new Font("Segoe UI", 8, FontStyle.Regular);
 
-            int centerX = PD.DefaultPageSettings.PaperSize.Width / 2;
-            int headerHeight = 10;
+            float centerX = PD.DefaultPageSettings.PaperSize.Width / 2;
+            float headerHeight = 10;
 
-            g.DrawString("Restaurant Name", headerFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("RESTAURANT NAME", headerFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 20;
-            g.DrawString("Restaurant Name", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
-            headerHeight += 20;
-            g.DrawString("University of Mindanao, Davao City", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("123 Main Street, City, State", regularFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 15;
-            g.DrawString("Tel: +1111-2222-333", regularFont, Brushes.Black, new PointF(centerX, headerHeight), new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("Tel: +1-800-555-1234", regularFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
         }
 
         private void DrawTransactionDetails(Graphics g)
         {
-            Font regularFont = new Font("Segoe UI Semibold", 8, FontStyle.Regular);
+            Font regularFont = new Font("Segoe UI", 8, FontStyle.Regular);
+            float height = 80;
 
-            int transactionHeight = 80;
-            g.DrawString("Invoice #:", regularFont, Brushes.Black, 10, transactionHeight);
-            g.DrawString(transNo, regularFont, Brushes.Black, 70, transactionHeight);
-
-            transactionHeight += 15;
-            g.DrawString("Date: " + transDate.ToString("MM/dd/yyyy"), regularFont, Brushes.Black, 10, transactionHeight);
+            g.DrawString($"Invoice #: {transNo}", regularFont, Brushes.Black, 10, height);
+            height += 15;
+            g.DrawString($"Date: {transDate:MM/dd/yyyy HH:mm}", regularFont, Brushes.Black, 10, height);
+            height += 15;
+            g.DrawString($"Payment: {paymentMethod}", regularFont, Brushes.Black, 10, height);
         }
 
         private void DrawProductDetails(Graphics g)
         {
-            Font productFont = new Font("Segoe UI Semibold", 10, FontStyle.Regular);
-            Font headerFont = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+            Font productFont = new Font("Segoe UI", 8, FontStyle.Regular);
+            Font headerFont = new Font("Segoe UI", 8, FontStyle.Bold);
+            float height = 120;
 
-            int height = 140;
+            g.DrawString("Product", headerFont, Brushes.Black, 10, height);
+            g.DrawString("Qty", headerFont, Brushes.Black, 150, height);
+            g.DrawString("Total", headerFont, Brushes.Black, 200, height);
 
-            g.DrawString("Product Name", headerFont, Brushes.Black, 20, 120);
-            g.DrawString("Qty", headerFont, Brushes.Black, 145, 120);
-            g.DrawString("Price", headerFont, Brushes.Black, 180, 120);
+            height += 15;
 
-            foreach (Product product in products)
+            foreach (var product in products)
             {
-                g.DrawString(product.ProdName, productFont, Brushes.Black, 20, height);
-                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 145, height);
-                g.DrawString(product.TotalPrice.ToString("C2"), productFont, Brushes.Black, 180, height);
+                g.DrawString(product.ProdName, productFont, Brushes.Black, 10, height);
+                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 150, height);
+                g.DrawString(product.TotalPrice.ToString("C"), productFont, Brushes.Black, 200, height);
 
                 height += 20;
             }
@@ -204,24 +203,21 @@ namespace POS_SYSTEM
 
         private void DrawFooter(Graphics g)
         {
-            Font regularFont = new Font("Segoe UI Semibold", 10, FontStyle.Regular);
-            int height = 200 + (products.Count * 20);
+            Font footerFont = new Font("Segoe UI", 8, FontStyle.Bold);
+            float height = 200 + (products.Count * 20);
 
-            g.DrawString("Grand Total:", regularFont, Brushes.Black, 10, height);
-            g.DrawString(grandTotal.ToString("C2"), regularFont, Brushes.Black, 180, height);
+            g.DrawString($"Grand Total: {grandTotal:C}", footerFont, Brushes.Black, 10, height);
+            height += 20;
+            g.DrawString("Thank you for dining with us!", footerFont, Brushes.Black, PD.DefaultPageSettings.PaperSize.Width / 2, height, new StringFormat { Alignment = StringAlignment.Center });
         }
 
         private void SumPrice()
         {
-            t_qty = 0;
-            t_price = 0;
-
-            foreach (Product product in products)
+            grandTotal = 0;
+            foreach (var product in products)
             {
-                t_qty += product.Quantity;
-                t_price += product.TotalPrice;
+                grandTotal += product.TotalPrice;
             }
-            grandTotal = t_price;
         }
 
         private void ShowError(string message)
