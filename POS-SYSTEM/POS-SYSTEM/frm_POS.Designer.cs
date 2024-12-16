@@ -43,9 +43,6 @@
             this.pnl_calendar = new System.Windows.Forms.Panel();
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
-            this.btn_search = new System.Windows.Forms.Button();
-            this.line_username = new System.Windows.Forms.Panel();
-            this.txt_search = new System.Windows.Forms.TextBox();
             this.pnl_bottom = new System.Windows.Forms.Panel();
             this.btn_history = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
@@ -164,9 +161,6 @@
             this.pnl_top.Controls.Add(this.pnl_calendar);
             this.pnl_top.Controls.Add(this.lbl_time);
             this.pnl_top.Controls.Add(this.lbl_date);
-            this.pnl_top.Controls.Add(this.btn_search);
-            this.pnl_top.Controls.Add(this.line_username);
-            this.pnl_top.Controls.Add(this.txt_search);
             this.pnl_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_top.Location = new System.Drawing.Point(25, 0);
             this.pnl_top.Name = "pnl_top";
@@ -177,11 +171,11 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.label2.ForeColor = System.Drawing.Color.DarkRed;
-            this.label2.Location = new System.Drawing.Point(752, 25);
+            this.label2.Location = new System.Drawing.Point(714, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 35);
+            this.label2.Size = new System.Drawing.Size(173, 46);
             this.label2.TabIndex = 6;
             this.label2.Text = "Order No.";
             // 
@@ -189,7 +183,7 @@
             // 
             this.linepanel_transact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linepanel_transact.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.linepanel_transact.Location = new System.Drawing.Point(897, 58);
+            this.linepanel_transact.Location = new System.Drawing.Point(904, 95);
             this.linepanel_transact.Name = "linepanel_transact";
             this.linepanel_transact.Size = new System.Drawing.Size(390, 1);
             this.linepanel_transact.TabIndex = 22;
@@ -199,11 +193,12 @@
             this.txt_transactNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txt_transactNo.BackColor = System.Drawing.Color.MistyRose;
             this.txt_transactNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.txt_transactNo.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_transactNo.Location = new System.Drawing.Point(897, 22);
+            this.txt_transactNo.Location = new System.Drawing.Point(904, 46);
             this.txt_transactNo.Name = "txt_transactNo";
-            this.txt_transactNo.Size = new System.Drawing.Size(382, 34);
+            this.txt_transactNo.ReadOnly = true;
+            this.txt_transactNo.Size = new System.Drawing.Size(382, 45);
             this.txt_transactNo.TabIndex = 27;
             // 
             // pnl_clock
@@ -247,43 +242,6 @@
             this.lbl_date.Size = new System.Drawing.Size(68, 35);
             this.lbl_date.TabIndex = 23;
             this.lbl_date.Text = "Date";
-            // 
-            // btn_search
-            // 
-            this.btn_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_search.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_search.BackgroundImage")));
-            this.btn_search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_search.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_search.FlatAppearance.BorderColor = System.Drawing.Color.FloralWhite;
-            this.btn_search.FlatAppearance.BorderSize = 0;
-            this.btn_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_search.Location = new System.Drawing.Point(828, 63);
-            this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(51, 46);
-            this.btn_search.TabIndex = 22;
-            this.btn_search.UseVisualStyleBackColor = true;
-            // 
-            // line_username
-            // 
-            this.line_username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.line_username.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_username.Location = new System.Drawing.Point(897, 113);
-            this.line_username.Name = "line_username";
-            this.line_username.Size = new System.Drawing.Size(390, 1);
-            this.line_username.TabIndex = 21;
-            // 
-            // txt_search
-            // 
-            this.txt_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_search.BackColor = System.Drawing.Color.MistyRose;
-            this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_search.Location = new System.Drawing.Point(897, 73);
-            this.txt_search.Name = "txt_search";
-            this.txt_search.Size = new System.Drawing.Size(382, 34);
-            this.txt_search.TabIndex = 20;
-            this.txt_search.Text = "Search";
             // 
             // pnl_bottom
             // 
@@ -824,9 +782,6 @@
         private System.Windows.Forms.Panel pnl_calendar;
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Label lbl_date;
-        private System.Windows.Forms.Button btn_search;
-        private System.Windows.Forms.Panel line_username;
-        private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.FlowLayoutPanel flp_sales;
         private System.Windows.Forms.FlowLayoutPanel flp_category;

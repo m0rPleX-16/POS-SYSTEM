@@ -107,7 +107,7 @@ namespace POS_SYSTEM
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Category updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LogAction("Inventory Category", "Updated category", Convert.ToInt32(txt_category_id.Text), null, null, "Updated Category Name: " + txt_category_name.Text);
+                    LogAction("Inventory Category", "Updated category", null, null, null, "Updated Category Name: " + txt_category_name.Text);
                 }
                 else
                 {

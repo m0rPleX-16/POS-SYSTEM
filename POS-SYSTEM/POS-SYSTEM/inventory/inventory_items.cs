@@ -104,11 +104,16 @@ namespace POS_SYSTEM
         private void LoadDataGridView()
         {
             const string query = @"
-        SELECT m.*, c.category_name 
-        FROM menu_items_tb m
-        JOIN categories_tb c ON m.category_id = c.category_id
-        WHERE m.is_archived = 0
-        ORDER BY m.date_added DESC";
+SELECT 
+    m.*, 
+    c.category_name, 
+    CASE 
+        WHEN m.is_archived = 1 THEN 'Archived' 
+        ELSE 'Unarchived' 
+    END AS archive_status
+FROM menu_items_tb m
+JOIN categories_tb c ON m.category_id = c.category_id
+ORDER BY m.date_added DESC";
 
             dgv_items.Rows.Clear();
 

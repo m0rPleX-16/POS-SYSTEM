@@ -389,9 +389,6 @@
     <Compile Include="PrintBill.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoundedTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <EmbeddedResource Include="frm_BackupRestore.resx">
       <DependentUpon>frm_BackupRestore.cs</DependentUpon>
     </EmbeddedResource>

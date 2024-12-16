@@ -28,25 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.cb_ingridients = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cb_items = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_unarchive = new System.Windows.Forms.Button();
-            this.btn_archive = new System.Windows.Forms.Button();
-            this.btn_edit = new System.Windows.Forms.Button();
-            this.btn_clear = new System.Windows.Forms.Button();
-            this.btn_save = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txt_quantityreq = new System.Windows.Forms.TextBox();
@@ -59,20 +53,26 @@
             this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity_required = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_unarchive = new System.Windows.Forms.Button();
+            this.btn_archive = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
             this.panel12.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_recipe)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel12.Controls.Add(this.panel1);
             this.panel12.Controls.Add(this.label2);
             this.panel12.Controls.Add(this.cb_ingridients);
             this.panel12.Controls.Add(this.label8);
             this.panel12.Controls.Add(this.cb_items);
-            this.panel12.Controls.Add(this.panel1);
             this.panel12.Controls.Add(this.label6);
             this.panel12.Controls.Add(this.label7);
             this.panel12.Controls.Add(this.txt_quantityreq);
@@ -127,98 +127,6 @@
             this.cb_items.Size = new System.Drawing.Size(203, 36);
             this.cb_items.TabIndex = 39;
             this.cb_items.Text = "Select Item";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btn_unarchive);
-            this.panel1.Controls.Add(this.btn_archive);
-            this.panel1.Controls.Add(this.btn_edit);
-            this.panel1.Controls.Add(this.btn_clear);
-            this.panel1.Controls.Add(this.btn_save);
-            this.panel1.Location = new System.Drawing.Point(1, 608);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(468, 206);
-            this.panel1.TabIndex = 38;
-            // 
-            // btn_unarchive
-            // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_unarchive.FlatAppearance.BorderSize = 0;
-            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_unarchive.Location = new System.Drawing.Point(325, 75);
-            this.btn_unarchive.Name = "btn_unarchive";
-            this.btn_unarchive.Size = new System.Drawing.Size(93, 58);
-            this.btn_unarchive.TabIndex = 36;
-            this.btn_unarchive.Text = "Unarchive";
-            this.btn_unarchive.UseVisualStyleBackColor = false;
-            this.btn_unarchive.Click += new System.EventHandler(this.btn_unarchive_Click);
-            // 
-            // btn_archive
-            // 
-            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_archive.FlatAppearance.BorderSize = 0;
-            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_archive.Location = new System.Drawing.Point(195, 115);
-            this.btn_archive.Name = "btn_archive";
-            this.btn_archive.Size = new System.Drawing.Size(93, 58);
-            this.btn_archive.TabIndex = 35;
-            this.btn_archive.Text = "Archive";
-            this.btn_archive.UseVisualStyleBackColor = false;
-            this.btn_archive.Click += new System.EventHandler(this.btn_archive_Click);
-            // 
-            // btn_edit
-            // 
-            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit.FlatAppearance.BorderSize = 0;
-            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_edit.Location = new System.Drawing.Point(55, 115);
-            this.btn_edit.Name = "btn_edit";
-            this.btn_edit.Size = new System.Drawing.Size(93, 58);
-            this.btn_edit.TabIndex = 34;
-            this.btn_edit.Text = "Edit";
-            this.btn_edit.UseVisualStyleBackColor = false;
-            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
-            // 
-            // btn_clear
-            // 
-            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_clear.FlatAppearance.BorderSize = 0;
-            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_clear.Location = new System.Drawing.Point(193, 31);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(93, 58);
-            this.btn_clear.TabIndex = 33;
-            this.btn_clear.Text = "Clear";
-            this.btn_clear.UseVisualStyleBackColor = false;
-            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
-            // 
-            // btn_save
-            // 
-            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_save.FlatAppearance.BorderSize = 0;
-            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_save.Location = new System.Drawing.Point(53, 31);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(93, 58);
-            this.btn_save.TabIndex = 32;
-            this.btn_save.Text = "Add";
-            this.btn_save.UseVisualStyleBackColor = false;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
             // label6
             // 
@@ -285,24 +193,24 @@
             // 
             this.dgv_recipe.AllowUserToAddRows = false;
             this.dgv_recipe.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle25.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dgv_recipe.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_recipe.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgv_recipe.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
             this.dgv_recipe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_recipe.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.recipe_id,
@@ -310,36 +218,36 @@
             this.ingredient_id,
             this.quantity_required,
             this.is_archived});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle30;
             this.dgv_recipe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_recipe.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_recipe.Location = new System.Drawing.Point(0, 0);
             this.dgv_recipe.Name = "dgv_recipe";
             this.dgv_recipe.ReadOnly = true;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle31;
             this.dgv_recipe.RowHeadersVisible = false;
             this.dgv_recipe.RowHeadersWidth = 51;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle32;
             this.dgv_recipe.RowTemplate.Height = 24;
             this.dgv_recipe.Size = new System.Drawing.Size(819, 798);
             this.dgv_recipe.TabIndex = 2;
@@ -347,40 +255,40 @@
             // recipe_id
             // 
             this.recipe_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.Color.White;
+            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle27;
             this.recipe_id.HeaderText = "RECIPE NO.";
             this.recipe_id.MinimumWidth = 6;
             this.recipe_id.Name = "recipe_id";
             this.recipe_id.ReadOnly = true;
             this.recipe_id.Visible = false;
-            this.recipe_id.Width = 124;
+            this.recipe_id.Width = 125;
             // 
             // category_name
             // 
             this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_name.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle28;
             this.category_name.HeaderText = "ITEM NAME";
             this.category_name.MinimumWidth = 6;
             this.category_name.Name = "category_name";
             this.category_name.ReadOnly = true;
-            this.category_name.Width = 155;
+            this.category_name.Width = 142;
             // 
             // ingredient_id
             // 
             this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
-            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.White;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle29;
             this.ingredient_id.HeaderText = "INGREDIENT NAME";
             this.ingredient_id.MinimumWidth = 6;
             this.ingredient_id.Name = "ingredient_id";
@@ -404,6 +312,93 @@
             this.is_archived.ReadOnly = true;
             this.is_archived.Width = 136;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btn_unarchive);
+            this.panel1.Controls.Add(this.btn_archive);
+            this.panel1.Controls.Add(this.btn_edit);
+            this.panel1.Controls.Add(this.btn_clear);
+            this.panel1.Controls.Add(this.btn_save);
+            this.panel1.Location = new System.Drawing.Point(1, 608);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 206);
+            this.panel1.TabIndex = 55;
+            // 
+            // btn_unarchive
+            // 
+            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_unarchive.FlatAppearance.BorderSize = 0;
+            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_unarchive.Location = new System.Drawing.Point(254, 115);
+            this.btn_unarchive.Name = "btn_unarchive";
+            this.btn_unarchive.Size = new System.Drawing.Size(139, 58);
+            this.btn_unarchive.TabIndex = 36;
+            this.btn_unarchive.Text = "Unarchive";
+            this.btn_unarchive.UseVisualStyleBackColor = false;
+            // 
+            // btn_archive
+            // 
+            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_archive.FlatAppearance.BorderSize = 0;
+            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_archive.Location = new System.Drawing.Point(82, 115);
+            this.btn_archive.Name = "btn_archive";
+            this.btn_archive.Size = new System.Drawing.Size(124, 58);
+            this.btn_archive.TabIndex = 35;
+            this.btn_archive.Text = "Archive";
+            this.btn_archive.UseVisualStyleBackColor = false;
+            // 
+            // btn_edit
+            // 
+            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit.FlatAppearance.BorderSize = 0;
+            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_edit.Location = new System.Drawing.Point(334, 31);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(93, 58);
+            this.btn_edit.TabIndex = 34;
+            this.btn_edit.Text = "Edit";
+            this.btn_edit.UseVisualStyleBackColor = false;
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_clear.FlatAppearance.BorderSize = 0;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_clear.Location = new System.Drawing.Point(193, 31);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(93, 58);
+            this.btn_clear.TabIndex = 33;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.UseVisualStyleBackColor = false;
+            // 
+            // btn_save
+            // 
+            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.FlatAppearance.BorderSize = 0;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_save.Location = new System.Drawing.Point(53, 31);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(93, 58);
+            this.btn_save.TabIndex = 32;
+            this.btn_save.Text = "Add";
+            this.btn_save.UseVisualStyleBackColor = false;
+            // 
             // inventory_recipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -414,9 +409,9 @@
             this.Size = new System.Drawing.Size(1289, 798);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_recipe)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -424,12 +419,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btn_unarchive;
-        private System.Windows.Forms.Button btn_archive;
-        private System.Windows.Forms.Button btn_edit;
-        private System.Windows.Forms.Button btn_clear;
-        private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_quantityreq;
@@ -446,5 +435,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity_required;
         private System.Windows.Forms.DataGridViewTextBoxColumn is_archived;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_unarchive;
+        private System.Windows.Forms.Button btn_archive;
+        private System.Windows.Forms.Button btn_edit;
+        private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.Button btn_save;
     }
 }

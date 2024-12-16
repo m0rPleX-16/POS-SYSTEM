@@ -379,5 +379,66 @@ namespace POS_SYSTEM
                 backRestore.ShowDialog();
             }
         }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            string searchTerm = txt_search.Text.Trim();
+
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                LoadUsers();
+                return;
+            }
+
+            try
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
+                conn.Open();
+
+                string query = @"
+            SELECT * 
+            FROM employee_tb 
+            WHERE (firstname LIKE @searchTerm 
+                OR lastname LIKE @searchTerm 
+                OR username LIKE @searchTerm) 
+                AND is_archived = 0";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@searchTerm", "%" + searchTerm + "%");
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+                dgv_users.Rows.Clear(); 
+                if (!dr.HasRows)
+                {
+                    MessageBox.Show("No matching employees found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                while (dr.Read())
+                {
+                    dgv_users.Rows.Add(
+                        dr["employee_id"],
+                        dr["firstname"],
+                        dr["lastname"],
+                        dr["username"],
+                        dr["role"],
+                        dr["status"],
+                        dr.GetBoolean("is_archived") ? "Archived" : "Unarchived"
+                    );
+                }
+
+                dr.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

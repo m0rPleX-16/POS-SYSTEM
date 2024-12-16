@@ -160,5 +160,93 @@ namespace POS_SYSTEM
         {
             LoadUserControl(new inventory_transactions(_currentEmployee));
         }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            LoadInventoryData(txt_search.Text);
+        }
+
+        private void LoadInventoryData(string searchFilter = "")
+        {
+            try
+            {
+                dgv_inventory.Rows.Clear();
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                string query = @"
+        SELECT 
+            i.ingredient_id,
+            i.ingredient_name,
+            i.unit,
+            i.stock_quantity,
+            i.minimum_quantity,
+            i.expiration_date,
+            it.transaction_type AS last_transaction_type,
+            it.quantity AS last_transaction_quantity,
+            it.transaction_date AS last_transaction_date,
+            it.note AS last_transaction_note
+        FROM ingredients_tb i
+        LEFT JOIN (
+            SELECT ingredient_id, transaction_type, quantity, transaction_date, note
+            FROM inventory_transactions_tb
+            WHERE transaction_date = (
+                SELECT MAX(transaction_date) 
+                FROM inventory_transactions_tb 
+                WHERE ingredient_id = inventory_transactions_tb.ingredient_id
+            )
+        ) it ON i.ingredient_id = it.ingredient_id
+        WHERE i.is_active = 'Unarchived'";
+
+                if (!string.IsNullOrWhiteSpace(searchFilter))
+                {
+                    query += " AND (i.ingredient_name LIKE @search OR i.unit LIKE @search)";
+                }
+
+                query += " ORDER BY i.ingredient_name";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                if (!string.IsNullOrWhiteSpace(searchFilter))
+                {
+                    cmd.Parameters.AddWithValue("@search", "%" + searchFilter + "%");
+                }
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    string transactionType = dr["last_transaction_type"]?.ToString();
+                    if (transactionType != "Restock" && transactionType != "Usage")
+                    {
+                        transactionType = "None";
+                    }
+
+                    dgv_inventory.Rows.Add(
+                        dr["ingredient_id"],
+                        dr["ingredient_name"],
+                        dr["unit"],
+                        dr["stock_quantity"],
+                        dr["minimum_quantity"],
+                        dr["expiration_date"] is DBNull ? "N/A" : Convert.ToDateTime(dr["expiration_date"]).ToString("yyyy-MM-dd"),
+                        transactionType,
+                        dr["last_transaction_quantity"] is DBNull ? 0 : Convert.ToInt32(dr["last_transaction_quantity"]),
+                        dr["last_transaction_date"] is DBNull ? "N/A" : Convert.ToDateTime(dr["last_transaction_date"]).ToString("yyyy-MM-dd HH:mm:ss"),
+                        dr["last_transaction_note"]?.ToString() ?? "No Notes"
+                    );
+                }
+
+                dr.Dispose();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error loading inventory data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
     }
 }

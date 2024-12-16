@@ -36,6 +36,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_transact = new System.Windows.Forms.DataGridView();
+            this.transaction_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ingredient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transaction_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transaction_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
             this.dtp_trans = new System.Windows.Forms.DateTimePicker();
             this.cb_ingredients = new System.Windows.Forms.ComboBox();
@@ -46,22 +52,16 @@
             this.txt_quantity = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cb_trans = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txt_transid = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_unarchive = new System.Windows.Forms.Button();
             this.btn_archive = new System.Windows.Forms.Button();
             this.btn_edit = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txt_transid = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.transaction_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ingredient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transaction_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.transaction_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_transact)).BeginInit();
             this.panel12.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -131,9 +131,70 @@
             this.dgv_transact.Size = new System.Drawing.Size(857, 861);
             this.dgv_transact.TabIndex = 36;
             // 
+            // transaction_id
+            // 
+            this.transaction_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
+            this.transaction_id.DefaultCellStyle = dataGridViewCellStyle10;
+            this.transaction_id.HeaderText = "TRANSACTION ID";
+            this.transaction_id.MinimumWidth = 6;
+            this.transaction_id.Name = "transaction_id";
+            this.transaction_id.ReadOnly = true;
+            this.transaction_id.Visible = false;
+            // 
+            // ingredient_name
+            // 
+            this.ingredient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle11;
+            this.ingredient_name.HeaderText = "INGREDIENT NAME";
+            this.ingredient_name.MinimumWidth = 6;
+            this.ingredient_name.Name = "ingredient_name";
+            this.ingredient_name.ReadOnly = true;
+            // 
+            // transaction_type
+            // 
+            this.transaction_type.HeaderText = "TRANSACTION TYPE";
+            this.transaction_type.MinimumWidth = 6;
+            this.transaction_type.Name = "transaction_type";
+            this.transaction_type.ReadOnly = true;
+            this.transaction_type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.transaction_type.Width = 125;
+            // 
+            // quantity
+            // 
+            this.quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.quantity.HeaderText = "QUANTITY";
+            this.quantity.MinimumWidth = 6;
+            this.quantity.Name = "quantity";
+            this.quantity.ReadOnly = true;
+            this.quantity.Width = 124;
+            // 
+            // transaction_date
+            // 
+            this.transaction_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.transaction_date.HeaderText = "TRANSACTION DATE";
+            this.transaction_date.MinimumWidth = 6;
+            this.transaction_date.Name = "transaction_date";
+            this.transaction_date.ReadOnly = true;
+            // 
+            // note
+            // 
+            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.note.HeaderText = "REMARKS";
+            this.note.MinimumWidth = 6;
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel12.Controls.Add(this.panel1);
             this.panel12.Controls.Add(this.dtp_trans);
             this.panel12.Controls.Add(this.cb_ingredients);
             this.panel12.Controls.Add(this.label4);
@@ -143,7 +204,6 @@
             this.panel12.Controls.Add(this.txt_quantity);
             this.panel12.Controls.Add(this.label8);
             this.panel12.Controls.Add(this.cb_trans);
-            this.panel12.Controls.Add(this.panel1);
             this.panel12.Controls.Add(this.label6);
             this.panel12.Controls.Add(this.label7);
             this.panel12.Controls.Add(this.txt_transid);
@@ -249,98 +309,6 @@
             this.cb_trans.TabIndex = 39;
             this.cb_trans.Text = "Select Type";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btn_unarchive);
-            this.panel1.Controls.Add(this.btn_archive);
-            this.panel1.Controls.Add(this.btn_edit);
-            this.panel1.Controls.Add(this.btn_clear);
-            this.panel1.Controls.Add(this.btn_save);
-            this.panel1.Location = new System.Drawing.Point(1, 608);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(468, 206);
-            this.panel1.TabIndex = 38;
-            // 
-            // btn_unarchive
-            // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_unarchive.FlatAppearance.BorderSize = 0;
-            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_unarchive.Location = new System.Drawing.Point(325, 75);
-            this.btn_unarchive.Name = "btn_unarchive";
-            this.btn_unarchive.Size = new System.Drawing.Size(93, 58);
-            this.btn_unarchive.TabIndex = 36;
-            this.btn_unarchive.Text = "Unarchive";
-            this.btn_unarchive.UseVisualStyleBackColor = false;
-            this.btn_unarchive.Click += new System.EventHandler(this.btn_unarchive_Click);
-            // 
-            // btn_archive
-            // 
-            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_archive.FlatAppearance.BorderSize = 0;
-            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_archive.Location = new System.Drawing.Point(195, 115);
-            this.btn_archive.Name = "btn_archive";
-            this.btn_archive.Size = new System.Drawing.Size(93, 58);
-            this.btn_archive.TabIndex = 35;
-            this.btn_archive.Text = "Archive";
-            this.btn_archive.UseVisualStyleBackColor = false;
-            this.btn_archive.Click += new System.EventHandler(this.btn_archive_Click);
-            // 
-            // btn_edit
-            // 
-            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit.FlatAppearance.BorderSize = 0;
-            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_edit.Location = new System.Drawing.Point(53, 115);
-            this.btn_edit.Name = "btn_edit";
-            this.btn_edit.Size = new System.Drawing.Size(93, 58);
-            this.btn_edit.TabIndex = 34;
-            this.btn_edit.Text = "Edit";
-            this.btn_edit.UseVisualStyleBackColor = false;
-            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click);
-            // 
-            // btn_clear
-            // 
-            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_clear.FlatAppearance.BorderSize = 0;
-            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_clear.Location = new System.Drawing.Point(193, 31);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(93, 58);
-            this.btn_clear.TabIndex = 33;
-            this.btn_clear.Text = "Clear";
-            this.btn_clear.UseVisualStyleBackColor = false;
-            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
-            // 
-            // btn_save
-            // 
-            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
-            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_save.FlatAppearance.BorderSize = 0;
-            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_save.Location = new System.Drawing.Point(53, 31);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(93, 58);
-            this.btn_save.TabIndex = 32;
-            this.btn_save.Text = "Add";
-            this.btn_save.UseVisualStyleBackColor = false;
-            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -383,65 +351,92 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Transactions";
             // 
-            // transaction_id
+            // panel1
             // 
-            this.transaction_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
-            this.transaction_id.DefaultCellStyle = dataGridViewCellStyle10;
-            this.transaction_id.HeaderText = "TRANSACTION ID";
-            this.transaction_id.MinimumWidth = 6;
-            this.transaction_id.Name = "transaction_id";
-            this.transaction_id.ReadOnly = true;
-            this.transaction_id.Visible = false;
+            this.panel1.Controls.Add(this.btn_unarchive);
+            this.panel1.Controls.Add(this.btn_archive);
+            this.panel1.Controls.Add(this.btn_edit);
+            this.panel1.Controls.Add(this.btn_clear);
+            this.panel1.Controls.Add(this.btn_save);
+            this.panel1.Location = new System.Drawing.Point(1, 608);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 206);
+            this.panel1.TabIndex = 54;
             // 
-            // ingredient_name
+            // btn_unarchive
             // 
-            this.ingredient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle11;
-            this.ingredient_name.HeaderText = "INGREDIENT NAME";
-            this.ingredient_name.MinimumWidth = 6;
-            this.ingredient_name.Name = "ingredient_name";
-            this.ingredient_name.ReadOnly = true;
+            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_unarchive.FlatAppearance.BorderSize = 0;
+            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_unarchive.Location = new System.Drawing.Point(254, 115);
+            this.btn_unarchive.Name = "btn_unarchive";
+            this.btn_unarchive.Size = new System.Drawing.Size(139, 58);
+            this.btn_unarchive.TabIndex = 36;
+            this.btn_unarchive.Text = "Unarchive";
+            this.btn_unarchive.UseVisualStyleBackColor = false;
             // 
-            // transaction_type
+            // btn_archive
             // 
-            this.transaction_type.HeaderText = "TRANSACTION TYPE";
-            this.transaction_type.MinimumWidth = 6;
-            this.transaction_type.Name = "transaction_type";
-            this.transaction_type.ReadOnly = true;
-            this.transaction_type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.transaction_type.Width = 125;
+            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_archive.FlatAppearance.BorderSize = 0;
+            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_archive.Location = new System.Drawing.Point(82, 115);
+            this.btn_archive.Name = "btn_archive";
+            this.btn_archive.Size = new System.Drawing.Size(124, 58);
+            this.btn_archive.TabIndex = 35;
+            this.btn_archive.Text = "Archive";
+            this.btn_archive.UseVisualStyleBackColor = false;
             // 
-            // quantity
+            // btn_edit
             // 
-            this.quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.quantity.HeaderText = "QUANTITY";
-            this.quantity.MinimumWidth = 6;
-            this.quantity.Name = "quantity";
-            this.quantity.ReadOnly = true;
-            this.quantity.Width = 124;
+            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit.FlatAppearance.BorderSize = 0;
+            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_edit.Location = new System.Drawing.Point(334, 31);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(93, 58);
+            this.btn_edit.TabIndex = 34;
+            this.btn_edit.Text = "Edit";
+            this.btn_edit.UseVisualStyleBackColor = false;
             // 
-            // transaction_date
+            // btn_clear
             // 
-            this.transaction_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.transaction_date.HeaderText = "TRANSACTION DATE";
-            this.transaction_date.MinimumWidth = 6;
-            this.transaction_date.Name = "transaction_date";
-            this.transaction_date.ReadOnly = true;
+            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_clear.FlatAppearance.BorderSize = 0;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_clear.Location = new System.Drawing.Point(193, 31);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(93, 58);
+            this.btn_clear.TabIndex = 33;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.UseVisualStyleBackColor = false;
             // 
-            // note
+            // btn_save
             // 
-            this.note.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.note.HeaderText = "REMARKS";
-            this.note.MinimumWidth = 6;
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
+            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.FlatAppearance.BorderSize = 0;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_save.Location = new System.Drawing.Point(53, 31);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(93, 58);
+            this.btn_save.TabIndex = 32;
+            this.btn_save.Text = "Add";
+            this.btn_save.UseVisualStyleBackColor = false;
             // 
             // inventory_transactions
             // 
@@ -465,12 +460,6 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cb_trans;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btn_unarchive;
-        private System.Windows.Forms.Button btn_archive;
-        private System.Windows.Forms.Button btn_edit;
-        private System.Windows.Forms.Button btn_clear;
-        private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_transid;
@@ -488,5 +477,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn transaction_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_unarchive;
+        private System.Windows.Forms.Button btn_archive;
+        private System.Windows.Forms.Button btn_edit;
+        private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.Button btn_save;
     }
 }

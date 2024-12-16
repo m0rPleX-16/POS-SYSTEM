@@ -226,6 +226,7 @@
             this.txt_search.Size = new System.Drawing.Size(382, 36);
             this.txt_search.TabIndex = 23;
             this.txt_search.Text = "Search";
+            this.txt_search.TextChanged += new System.EventHandler(this.txt_search_TextChanged);
             // 
             // pnl_top
             // 
@@ -352,7 +353,7 @@
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -394,7 +395,7 @@
             this.ingredient_id.Name = "ingredient_id";
             this.ingredient_id.ReadOnly = true;
             this.ingredient_id.Visible = false;
-            this.ingredient_id.Width = 172;
+            this.ingredient_id.Width = 125;
             // 
             // ingredient_name
             // 

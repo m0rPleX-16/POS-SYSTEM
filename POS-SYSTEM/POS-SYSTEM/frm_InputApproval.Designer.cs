@@ -55,9 +55,9 @@
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
             this.label1.Location = new System.Drawing.Point(2, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(291, 46);
+            this.label1.Size = new System.Drawing.Size(268, 46);
             this.label1.TabIndex = 27;
-            this.label1.Text = "Remove Approval";
+            this.label1.Text = "Action Approval";
             // 
             // btn_cancel
             // 

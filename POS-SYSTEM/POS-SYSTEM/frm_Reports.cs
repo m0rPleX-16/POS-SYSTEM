@@ -25,8 +25,6 @@ namespace POS_SYSTEM
             timerClock.Start();
             LoadDailySales();
             LoadMonthlySales();
-            LoadSalesReport();
-            LoadInventoryReport();
         }
         private void TimerClock_Tick(object sender, EventArgs e)
         {
@@ -121,8 +119,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
-        private void LoadInventoryReport()
+        private void LoadInventoryReport(DateTime? startDate, DateTime? endDate, string searchQuery)
         {
             string query = @"
     SELECT 
@@ -134,10 +131,28 @@ namespace POS_SYSTEM
         it.transaction_date, 
         it.note
     FROM `inventory_transactions_tb` it
-    JOIN `ingredients_tb` i ON it.ingredient_id = i.ingredient_id
-    ORDER BY it.transaction_date DESC";
+    JOIN `ingredients_tb` i ON it.ingredient_id = i.ingredient_id";
 
-            LoadFilteredData(query, null, null, dgv_inventory, new string[]
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query += " WHERE (i.ingredient_name LIKE @searchQuery OR it.transaction_id LIKE @searchQuery)";
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                if (query.Contains("WHERE"))
+                {
+                    query += " AND DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
+                }
+                else
+                {
+                    query += " WHERE DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
+                }
+            }
+
+            query += " ORDER BY it.transaction_date DESC";
+
+            LoadFilteredData(query, startDate, endDate, dgv_inventory, new string[]
             {
         "transaction_id",
         "ingredient_id",
@@ -146,10 +161,9 @@ namespace POS_SYSTEM
         "quantity",
         "transaction_date",
         "note"
-            });
+            }, searchQuery);
         }
-
-        private void LoadSalesReport()
+        private void LoadSalesReport(DateTime? startDate, DateTime? endDate, string searchQuery)
         {
             string query = @"
     SELECT 
@@ -165,22 +179,31 @@ namespace POS_SYSTEM
     JOIN 
         `payments_tb` p ON o.order_id = p.order_id
     WHERE 
-        o.status != 'Canceled' -- Exclude canceled orders
-    GROUP BY 
-        o.order_id, p.payment_method, p.payment_date
-    ORDER BY 
-        o.order_date DESC";
+        o.status != 'Canceled'"; 
 
-            LoadFilteredData(query, null, null, dgv_sales, new string[]
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query += " AND (o.order_id LIKE @searchQuery OR p.payment_method LIKE @searchQuery)";
+            }
+    
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query += " AND DATE(o.order_date) BETWEEN @startDate AND @endDate";
+            }
+
+            query += " GROUP BY o.order_id, p.payment_method, p.payment_date ORDER BY o.order_date DESC";
+
+            LoadFilteredData(query, startDate, endDate, dgv_sales, new string[]
             {
         "order_id",
         "order_date",
         "total_sale",
         "payment_method",
         "payment_date"
-            });
+            }, searchQuery);
         }
-        private void LoadFilteredData(string query, DateTime? startDate, DateTime? endDate, DataGridView dgv, string[] columnNames)
+
+        private void LoadFilteredData(string query, DateTime? startDate, DateTime? endDate, DataGridView dgv, string[] columnNames, string searchQuery)
         {
             try
             {
@@ -189,14 +212,41 @@ namespace POS_SYSTEM
 
                 if (startDate.HasValue && endDate.HasValue)
                 {
-                    query += " WHERE DATE(o.order_date) BETWEEN @startDate AND @endDate";
+                    if (query.Contains("o.order_date"))
+                    {
+                        if (query.Contains("WHERE"))
+                        {
+                            query += " AND DATE(o.order_date) BETWEEN @startDate AND @endDate";
+                        }
+                        else
+                        {
+                            query += " WHERE DATE(o.order_date) BETWEEN @startDate AND @endDate";
+                        }
+                    }
+                    else if (query.Contains("it.transaction_date"))
+                    {
+                        if (query.Contains("WHERE"))
+                        {
+                            query += " AND DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
+                        }
+                        else
+                        {
+                            query += " WHERE DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
+                        }
+                    }
                 }
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+
                 if (startDate.HasValue && endDate.HasValue)
                 {
                     cmd.Parameters.AddWithValue("@startDate", startDate.Value.Date);
                     cmd.Parameters.AddWithValue("@endDate", endDate.Value.Date);
+                }
+
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    cmd.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
                 }
 
                 using (MySqlDataReader dr = cmd.ExecuteReader())
@@ -225,13 +275,12 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void btn_Filter_Click_1(object sender, EventArgs e)
         {
-            DateTime startDate = start_dtp.Value.Date;
-            DateTime endDate = end_dtp.Value.Date;
+            DateTime? startDate = start_dtp.Checked ? start_dtp.Value.Date : (DateTime?)null;
+            DateTime? endDate = end_dtp.Checked ? end_dtp.Value.Date : (DateTime?)null;
 
-            if (startDate > endDate)
+            if (startDate.HasValue && endDate.HasValue && startDate > endDate)
             {
                 MessageBox.Show("Start date cannot be later than the end date.", "Invalid Date Range", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -239,11 +288,40 @@ namespace POS_SYSTEM
 
             if (reports_control.SelectedTab.Name == "sales_tab")
             {
-                LoadSalesReport();
+                LoadSalesReport(startDate, endDate, null);
             }
             else if (reports_control.SelectedTab.Name == "inv_tab")
             {
-                LoadInventoryReport();
+                LoadInventoryReport(startDate, endDate, null);
+            }
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            string searchQuery = txt_search.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchQuery))
+            {
+                LoadReportsBasedOnTab(null);
+            }
+            else
+            {
+                LoadReportsBasedOnTab(searchQuery);
+            }
+        }
+
+        private void LoadReportsBasedOnTab(string searchQuery)
+        {
+            DateTime startDate = start_dtp.Value.Date;
+            DateTime endDate = end_dtp.Value.Date;
+
+            if (reports_control.SelectedTab.Name == "sales_tab")
+            {
+                LoadSalesReport(startDate, endDate, searchQuery);
+            }
+            else if (reports_control.SelectedTab.Name == "inv_tab")
+            {
+                LoadInventoryReport(startDate, endDate, searchQuery);
             }
         }
 

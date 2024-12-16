@@ -655,10 +655,43 @@ namespace POS_SYSTEM
                 return;
             }
 
-            if (cb_availtb.SelectedItem == null || string.IsNullOrEmpty(cb_availtb.SelectedItem.ToString()))
+            if (cmb_serveMode.SelectedItem == null || string.IsNullOrEmpty(cmb_serveMode.SelectedItem.ToString()))
             {
-                MessageBox.Show("Please select a valid table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select a valid serve mode.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            string serveMode = cmb_serveMode.SelectedItem.ToString();
+
+            string selectedTable = cb_availtb.SelectedItem?.ToString();
+            int? tableId = null; 
+
+            if (serveMode == "Takeout")
+            {
+                if (!string.IsNullOrEmpty(selectedTable))
+                {
+                    MessageBox.Show("Tables cannot be selected for 'Takeout' orders.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(selectedTable))
+                {
+                    MessageBox.Show("Please select a valid table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (var conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    tableId = GetTableId(conn, selectedTable);
+                    if (tableId == null || tableId == -1)
+                    {
+                        MessageBox.Show("Selected table does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
             }
 
             if (cmb_paymentMethod.SelectedItem == null || string.IsNullOrEmpty(cmb_paymentMethod.SelectedItem.ToString()))
@@ -667,14 +700,7 @@ namespace POS_SYSTEM
                 return;
             }
 
-            if (cmb_serveMode.SelectedItem == null || string.IsNullOrEmpty(cmb_serveMode.SelectedItem.ToString()))
-            {
-                MessageBox.Show("Please select a valid serve mode.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             string paymentMethod = cmb_paymentMethod.SelectedItem.ToString();
-            string serveMode = cmb_serveMode.SelectedItem.ToString();
 
             if (!decimal.TryParse(lbl_total.Text.Replace("₱", ""), out decimal totalAmount))
             {
@@ -685,26 +711,22 @@ namespace POS_SYSTEM
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string selectedTable = cb_availtb.SelectedItem.ToString();
-                int tableId = GetTableId(conn, selectedTable);
-                if (tableId == -1)
-                {
-                    MessageBox.Show("Selected table does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
                 using (var transaction = conn.BeginTransaction())
                 {
                     try
                     {
-                        string updateTableQuery = "UPDATE tables_tb SET is_active = 'Active' WHERE table_id = @tableId";
-                        using (var cmd = new MySqlCommand(updateTableQuery, conn, transaction))
+                        if (serveMode != "Takeout" && tableId.HasValue)
                         {
-                            cmd.Parameters.AddWithValue("@tableId", tableId);
-                            cmd.ExecuteNonQuery();
+                            string updateTableQuery = "UPDATE tables_tb SET is_active = 'Active' WHERE table_id = @tableId";
+                            using (var cmd = new MySqlCommand(updateTableQuery, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@tableId", tableId.Value);
+                                cmd.ExecuteNonQuery();
+                            }
                         }
 
-                        int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, "To be Served");
+                        int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, serveMode);
                         LogAction("Create", "Order", $"Order created with Order ID: {orderId}", null, null, totalAmount);
 
                         Dictionary<int, int> ingredientUsage = new Dictionary<int, int>();
@@ -894,22 +916,26 @@ namespace POS_SYSTEM
             }
         }
 
-        private int InsertOrder(MySqlConnection conn, MySqlTransaction transaction, int tableId, decimal totalPrice, string orderNo, string status)
+        private int InsertOrder(MySqlConnection conn, MySqlTransaction transaction, int? tableId, decimal totalPrice, string orderNo, string status)
         {
             string query = @"
         INSERT INTO orders_tb (table_id, employee_id, total_price, orderNo, status) 
         VALUES (@table_id, @employee_id, @total_price, @orderNo, @status)";
+
             using (var cmd = new MySqlCommand(query, conn, transaction))
             {
-                cmd.Parameters.AddWithValue("@table_id", tableId);
+                cmd.Parameters.AddWithValue("@table_id", (object)tableId ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@employee_id", _currentEmployee.Userid);
                 cmd.Parameters.AddWithValue("@total_price", totalPrice);
                 cmd.Parameters.AddWithValue("@orderNo", orderNo);
                 cmd.Parameters.AddWithValue("@status", status);
+
                 cmd.ExecuteNonQuery();
+
                 return Convert.ToInt32(new MySqlCommand("SELECT LAST_INSERT_ID()", conn, transaction).ExecuteScalar());
             }
         }
+
         private void InsertOrderDetails(MySqlConnection conn, MySqlTransaction transaction, int orderId, string itemId, int quantity, decimal price, string serveMode)
         {
             string query = @"
@@ -942,8 +968,9 @@ namespace POS_SYSTEM
         }
         private void ClearOrderDetails()
         {
-            foreach (Control control in flp_billDetails.Controls.OfType<Control>().ToList())
-            {
+            try { 
+                foreach (Control control in flp_billDetails.Controls.OfType<Control>().ToList())
+                 {
                 if (control.Tag != null && control.Tag.ToString() == "Product")
                 {
                     flp_billDetails.Controls.Remove(control);
@@ -956,6 +983,13 @@ namespace POS_SYSTEM
             lbl_order.Text = "0";
             txt_cash.Text = "";
             txt_change.Text = "0.00";
+
+             MessageBox.Show("Order details cleared. Ready for a new order.", "New Order", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+            MessageBox.Show($"An error occurred while clearing order details: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btn_history_Click(object sender, EventArgs e)
         {
@@ -966,7 +1000,27 @@ namespace POS_SYSTEM
         }
         private void btn_newOrder_Click(object sender, EventArgs e)
         {
-            ClearOrderDetails();
+            if (_currentEmployee.Role != "Admin") 
+            {
+                using (frm_InputApproval approvalForm = new frm_InputApproval())
+                {
+                    if (approvalForm.ShowDialog() == DialogResult.OK) 
+                    {
+                        if (ValidateAdminPassword(approvalForm.InputPassword)) 
+                        {
+                            ClearOrderDetails();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid admin password. New order creation not authorized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ClearOrderDetails();
+            }
         }
     }
     public class RoundedPanel : Panel

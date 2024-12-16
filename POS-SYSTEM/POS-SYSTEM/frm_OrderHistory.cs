@@ -37,21 +37,21 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-                SELECT 
-                    o.orderNo AS 'Order No',
-                    t.table_number AS 'Table Number',
-                    e.username AS 'Employee',
-                    o.total_price AS 'Total Price',
-                    o.status AS 'Status',
-                    DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-                FROM 
-                    orders_tb o
-                INNER JOIN 
-                    tables_tb t ON o.table_id = t.table_id
-                INNER JOIN 
-                    employee_tb e ON o.employee_id = e.employee_id
-                ORDER BY 
-                    o.order_date DESC;";
+        SELECT 
+            o.orderNo AS 'Order No',
+            IFNULL(t.table_number, 'Takeout') AS 'Table Number',
+            e.username AS 'Employee',
+            o.total_price AS 'Total Price',
+            o.status AS 'Status',
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+        FROM 
+            orders_tb o
+        LEFT JOIN 
+            tables_tb t ON o.table_id = t.table_id
+        INNER JOIN 
+            employee_tb e ON o.employee_id = e.employee_id
+        ORDER BY 
+            o.order_date DESC;";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -137,31 +137,54 @@ namespace POS_SYSTEM
 
         private void CancelOrder(string orderNo)
         {
+            MySqlTransaction transaction = null;
+
             try
             {
                 if (conn.State == ConnectionState.Open)
                     conn.Close();
 
                 conn.Open();
+                transaction = conn.BeginTransaction();
 
                 string query = "UPDATE orders_tb SET status = 'Canceled' WHERE orderNo = @orderNo";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn, transaction);
                 cmd.Parameters.AddWithValue("@orderNo", orderNo);
-                cmd.ExecuteNonQuery();
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    MessageBox.Show($"No order found with Order No: {orderNo}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    transaction.Rollback();
+                    return;
+                }
 
                 string orderIdQuery = "SELECT order_id FROM orders_tb WHERE orderNo = @orderNo";
-                MySqlCommand orderIdCmd = new MySqlCommand(orderIdQuery, conn);
+                MySqlCommand orderIdCmd = new MySqlCommand(orderIdQuery, conn, transaction);
                 orderIdCmd.Parameters.AddWithValue("@orderNo", orderNo);
-                int orderId = Convert.ToInt32(orderIdCmd.ExecuteScalar());
+                object result = orderIdCmd.ExecuteScalar();
 
-                ReturnIngredientsStock(orderId);
+                if (result == null)
+                {
+                    MessageBox.Show("Order ID not found. Cancelation aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    transaction.Rollback();
+                    return;
+                }
 
+                int orderId = Convert.ToInt32(result);
+
+                ReturnIngredientsStock(orderId, transaction);
+
+                DeactivateTable(orderId, transaction);
+
+                transaction.Commit();
                 MessageBox.Show($"Order {orderNo} has been canceled successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LoadOrderHistory();
             }
             catch (MySqlException ex)
             {
+                transaction?.Rollback();
                 MessageBox.Show("Error canceling order: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -274,30 +297,59 @@ namespace POS_SYSTEM
                 return builder.ToString();
             }
         }
-
-        private void ReturnIngredientsStock(int orderId)
+        private void DeactivateTable(int orderId, MySqlTransaction transaction)
         {
             try
             {
-                if (conn.State == ConnectionState.Open)
-                    conn.Close();
-
-                conn.Open();
-
                 string query = @"
-                SELECT 
-                    r.ingredient_id,
-                    SUM(r.quantity_required * od.quantity) AS total_quantity
-                FROM 
-                    order_details_tb od
-                INNER JOIN 
-                    recipe_tb r ON od.item_id = r.item_id
-                WHERE 
-                    od.order_id = @order_id
-                GROUP BY 
-                    r.ingredient_id";
+            SELECT t.table_id 
+            FROM tables_tb t
+            INNER JOIN orders_tb o ON t.table_id = o.table_id
+            WHERE o.order_id = @order_id";
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(query, conn, transaction);
+                cmd.Parameters.AddWithValue("@order_id", orderId);
+
+                object result = cmd.ExecuteScalar();
+
+                if (result != null)
+                {
+                    int tableId = Convert.ToInt32(result);
+
+                    string updateQuery = "UPDATE tables_tb SET is_active = 'Inactive' WHERE table_id = @table_id";
+                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn, transaction);
+                    updateCmd.Parameters.AddWithValue("@table_id", tableId);
+                    updateCmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    MessageBox.Show($"No table found for order ID {orderId}.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception($"Error deactivating table: {ex.Message}");
+            }
+        }
+
+        private void ReturnIngredientsStock(int orderId, MySqlTransaction transaction)
+        {
+            try
+            {
+                string query = @"
+            SELECT 
+                r.ingredient_id,
+                SUM(r.quantity_required * od.quantity) AS total_quantity
+            FROM 
+                order_details_tb od
+            INNER JOIN 
+                recipe_tb r ON od.item_id = r.item_id
+            WHERE 
+                od.order_id = @order_id
+            GROUP BY 
+                r.ingredient_id";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn, transaction);
                 cmd.Parameters.AddWithValue("@order_id", orderId);
 
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -315,26 +367,22 @@ namespace POS_SYSTEM
                 foreach (var (ingredientId, quantity) in ingredientsToUpdate)
                 {
                     string updateQuery = @"
-                    UPDATE ingredients_tb 
-                    SET stock_quantity = stock_quantity + @quantity
-                    WHERE ingredient_id = @ingredient_id";
+                UPDATE ingredients_tb 
+                SET stock_quantity = stock_quantity + @quantity
+                WHERE ingredient_id = @ingredient_id";
 
-                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
+                    MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn, transaction);
                     updateCmd.Parameters.AddWithValue("@quantity", quantity);
                     updateCmd.Parameters.AddWithValue("@ingredient_id", ingredientId);
+
                     updateCmd.ExecuteNonQuery();
                 }
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show($"Error returning ingredients to stock: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
+                throw new Exception($"Error returning ingredients to stock: {ex.Message}");
             }
         }
-
         private void btn_close_Click(object sender, EventArgs e)
         {
             this.Close();

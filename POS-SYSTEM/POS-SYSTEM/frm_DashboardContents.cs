@@ -302,7 +302,7 @@ namespace POS_SYSTEM
     FROM orders_tb o
     JOIN order_details_tb od ON o.order_id = od.order_id
         JOIN menu_items_tb mi ON od.item_id = mi.item_id
-    WHERE o.status = 'To be Served'
+    WHERE o.status IN ('To be Served', 'Takeout')
     GROUP BY DATE(o.order_date)
     ORDER BY order_date";
 
@@ -394,21 +394,21 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-            SELECT 
-                o.orderNo AS 'Order No',
-                t.table_number AS 'Table Number',
-                e.username AS 'Employee',
-                o.total_price AS 'Total Price',
-                o.status AS 'Status',
-                DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-            FROM 
-                orders_tb o
-            INNER JOIN 
-                tables_tb t ON o.table_id = t.table_id
-            INNER JOIN 
-                employee_tb e ON o.employee_id = e.employee_id
-            ORDER BY 
-                o.order_date DESC;";
+        SELECT 
+            o.orderNo AS 'Order No',
+            IFNULL(t.table_number, 'Takeout') AS 'Table Number',
+            e.username AS 'Employee',
+            o.total_price AS 'Total Price',
+            o.status AS 'Status',
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+        FROM 
+            orders_tb o
+        LEFT JOIN  
+            tables_tb t ON o.table_id = t.table_id
+        INNER JOIN 
+            employee_tb e ON o.employee_id = e.employee_id
+        ORDER BY 
+            o.order_date DESC;";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
