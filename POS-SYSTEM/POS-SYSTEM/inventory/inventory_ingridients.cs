@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace POS_SYSTEM.inventory
@@ -19,6 +21,9 @@ namespace POS_SYSTEM.inventory
             _currentEmployee = currentEmployee;
         }
 
+        private Timer blinkTimer = new Timer();
+        private List<int> blinkingRows = new List<int>();
+
         private void LoadDataGridView()
         {
             try
@@ -30,16 +35,16 @@ namespace POS_SYSTEM.inventory
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients_tb", conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 dgv_ingridients.Rows.Clear();
+                blinkingRows.Clear();
 
                 if (!reader.HasRows)
                 {
                     MessageBox.Show("No data found in the ingredients table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                dgv_ingridients.Rows.Clear();
                 while (reader.Read())
                 {
-                    dgv_ingridients.Rows.Add(
+                    int rowIndex = dgv_ingridients.Rows.Add(
                         reader["ingredient_id"],
                         reader["ingredient_name"],
                         reader["unit"],
@@ -48,6 +53,25 @@ namespace POS_SYSTEM.inventory
                         reader["expiration_date"],
                         reader["date_updated"],
                         reader.GetBoolean("is_active") ? "Archived" : "Unarchived");
+
+                    int stockQuantity = Convert.ToInt32(reader["stock_quantity"]);
+                    int minimumQuantity = Convert.ToInt32(reader["minimum_quantity"]);
+                    DateTime expirationDate = reader.IsDBNull(reader.GetOrdinal("expiration_date"))
+                        ? DateTime.MaxValue
+                        : Convert.ToDateTime(reader["expiration_date"]);
+
+                    if (stockQuantity <= minimumQuantity || expirationDate <= DateTime.Now.AddDays(3))
+                    {
+                        blinkingRows.Add(rowIndex);
+                        dgv_ingridients.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red; 
+                    }
+                }
+
+                if (blinkingRows.Count > 0)
+                {
+                    blinkTimer.Interval = 500; 
+                    blinkTimer.Tick += BlinkTimer_Tick;
+                    blinkTimer.Start();
                 }
             }
             catch (MySqlException ex)
@@ -57,6 +81,47 @@ namespace POS_SYSTEM.inventory
             finally
             {
                 conn.Close();
+            }
+        }
+
+        private void BlinkTimer_Tick(object sender, EventArgs e)
+        {
+            List<int> rowsToRemove = new List<int>();
+
+            foreach (int rowIndex in blinkingRows)
+            {
+                DataGridViewRow row = dgv_ingridients.Rows[rowIndex];
+                int stockQuantity = Convert.ToInt32(row.Cells["stock_quantity"].Value);
+                int minimumQuantity = Convert.ToInt32(row.Cells["minimum_quantity"].Value);
+                DateTime expirationDate = Convert.ToDateTime(row.Cells["expiration_date"].Value);
+
+                if (stockQuantity > minimumQuantity && expirationDate > DateTime.Now.AddDays(3))
+                {
+                    row.DefaultCellStyle.BackColor = Color.FloralWhite; 
+                    rowsToRemove.Add(rowIndex); 
+                }
+                else
+                {
+                    if (row.DefaultCellStyle.BackColor == Color.Red)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.FloralWhite; 
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Red; 
+                    }
+                }
+            }
+
+
+            foreach (int rowIndex in rowsToRemove)
+            {
+                blinkingRows.Remove(rowIndex);
+            }
+
+            if (blinkingRows.Count == 0)
+            {
+                blinkTimer.Stop();
             }
         }
 
