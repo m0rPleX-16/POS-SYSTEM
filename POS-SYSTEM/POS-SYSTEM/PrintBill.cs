@@ -19,15 +19,17 @@ namespace POS_SYSTEM
         private string transNo;
         private DateTime transDate;
         private string paymentMethod;
-
         private class Product
         {
             public string ProdName { get; set; }
             public int Quantity { get; set; }
-            public decimal TotalPrice { get; set; }
+            public decimal Subtotal { get; set; }
+            public decimal Discount { get; set; }
+            public decimal Tax { get; set; }
         }
 
         private List<Product> products = new List<Product>();
+        private int currentHeight = 10;  // Track the current height to prevent overflow
 
         public void Main(string latestTransNo)
         {
@@ -54,21 +56,22 @@ namespace POS_SYSTEM
         private void LoadTransactionData(string transNumber)
         {
             string query = @"
-                SELECT 
-                    o.orderNo, 
-                    o.order_date, 
-                    od.item_id, 
-                    i.item_name, 
-                    od.quantity, 
-                    od.price_at_time, 
-                    od.subtotal, 
-                    p.payment_method
-                FROM 
-                    orders_tb o
-                JOIN order_details_tb od ON o.order_id = od.order_id
-                JOIN payments_tb p ON o.order_id = p.order_id
-                JOIN menu_items_tb i ON od.item_id = i.item_id
-                WHERE o.orderNo = @transno";
+        SELECT 
+            o.orderNo, 
+            o.order_date, 
+            od.item_id, 
+            i.item_name, 
+            od.quantity, 
+            od.subtotal, 
+            od.discount,
+            od.tax,
+            p.payment_method
+        FROM 
+            orders_tb o
+        JOIN order_details_tb od ON o.order_id = od.order_id
+        JOIN payments_tb p ON o.order_id = p.order_id
+        JOIN menu_items_tb i ON od.item_id = i.item_id
+        WHERE o.orderNo = @transno";
 
             using (conn = new MySqlConnection(connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -89,7 +92,9 @@ namespace POS_SYSTEM
                                 {
                                     ProdName = reader["item_name"].ToString(),
                                     Quantity = Convert.ToInt32(reader["quantity"]),
-                                    TotalPrice = Convert.ToDecimal(reader["subtotal"])
+                                    Subtotal = Convert.ToDecimal(reader["subtotal"]),
+                                    Discount = Convert.ToDecimal(reader["discount"]),
+                                    Tax = Convert.ToDecimal(reader["tax"])
                                 });
                             }
 
@@ -133,7 +138,7 @@ namespace POS_SYSTEM
 
         private void AdjustPaperLength()
         {
-            longPaper = (products.Count * 25) + 300;
+            longPaper = (products.Count * 20) + 200; // Dynamically adjust based on content length
         }
 
         private void PD_PrintPage(object sender, PrintPageEventArgs e)
@@ -158,57 +163,69 @@ namespace POS_SYSTEM
             Font regularFont = new Font("Segoe UI", 8, FontStyle.Regular);
 
             float centerX = PD.DefaultPageSettings.PaperSize.Width / 2;
-            float headerHeight = 10;
+            float headerHeight = currentHeight;
 
             g.DrawString("RESTAURANT NAME", headerFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 20;
             g.DrawString("123 Main Street, City, State", regularFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
             headerHeight += 15;
             g.DrawString("Tel: +1-800-555-1234", regularFont, Brushes.Black, centerX, headerHeight, new StringFormat { Alignment = StringAlignment.Center });
+
+            currentHeight = (int)(headerHeight + 20); 
         }
 
         private void DrawTransactionDetails(Graphics g)
         {
             Font regularFont = new Font("Segoe UI", 8, FontStyle.Regular);
-            float height = 80;
+            float height = currentHeight;
 
             g.DrawString($"Invoice #: {transNo}", regularFont, Brushes.Black, 10, height);
             height += 15;
             g.DrawString($"Date: {transDate:MM/dd/yyyy HH:mm}", regularFont, Brushes.Black, 10, height);
             height += 15;
             g.DrawString($"Payment: {paymentMethod}", regularFont, Brushes.Black, 10, height);
+
+            currentHeight = (int)(height + 20);
         }
 
         private void DrawProductDetails(Graphics g)
         {
             Font productFont = new Font("Segoe UI", 8, FontStyle.Regular);
             Font headerFont = new Font("Segoe UI", 8, FontStyle.Bold);
-            float height = 120;
+            float height = currentHeight;
 
             g.DrawString("Product", headerFont, Brushes.Black, 10, height);
-            g.DrawString("Qty", headerFont, Brushes.Black, 150, height);
-            g.DrawString("Total", headerFont, Brushes.Black, 200, height);
+            g.DrawString("Qty", headerFont, Brushes.Black, 100, height);
+            g.DrawString("Subtotal", headerFont, Brushes.Black, 150, height);
+            g.DrawString("Discount", headerFont, Brushes.Black, 220, height);
+            g.DrawString("Tax", headerFont, Brushes.Black, 290, height);
 
             height += 15;
 
             foreach (var product in products)
             {
                 g.DrawString(product.ProdName, productFont, Brushes.Black, 10, height);
-                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 150, height);
-                g.DrawString(product.TotalPrice.ToString("C"), productFont, Brushes.Black, 200, height);
+                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 100, height);
+                g.DrawString(product.Subtotal.ToString("C"), productFont, Brushes.Black, 150, height);
+                g.DrawString(product.Discount.ToString("C"), productFont, Brushes.Black, 220, height);
+                g.DrawString(product.Tax.ToString("C"), productFont, Brushes.Black, 290, height);
 
                 height += 20;
             }
+
+            currentHeight = (int)(height + 20);
         }
 
         private void DrawFooter(Graphics g)
         {
             Font footerFont = new Font("Segoe UI", 8, FontStyle.Bold);
-            float height = 200 + (products.Count * 20);
+            float height = currentHeight;
 
             g.DrawString($"Grand Total: {grandTotal:C}", footerFont, Brushes.Black, 10, height);
             height += 20;
-            g.DrawString("Thank you for dining with us!", footerFont, Brushes.Black, PD.DefaultPageSettings.PaperSize.Width / 2, height, new StringFormat { Alignment = StringAlignment.Center });
+            g.DrawString("Thank you for dining with us!", footerFont, Brushes.Black,
+                PD.DefaultPageSettings.PaperSize.Width / 2, height,
+                new StringFormat { Alignment = StringAlignment.Center });
         }
 
         private void SumPrice()
@@ -216,7 +233,8 @@ namespace POS_SYSTEM
             grandTotal = 0;
             foreach (var product in products)
             {
-                grandTotal += product.TotalPrice;
+                decimal finalPrice = product.Subtotal - product.Discount + product.Tax;
+                grandTotal += finalPrice;
             }
         }
 

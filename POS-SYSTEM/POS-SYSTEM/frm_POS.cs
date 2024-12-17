@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -24,6 +23,8 @@ namespace POS_SYSTEM
             LoadProducts();
             LoadCategory();
             txt_cash.TextChanged += TxtCash_TextChanged;
+            txt_discount.TextChanged += (s, e) => UpdateTotal();
+            txt_tax.TextChanged += (s, e) => UpdateTotal();
             LoadComboBoxes();
         }
         private void InitializeTimer()
@@ -525,7 +526,6 @@ namespace POS_SYSTEM
         {
             UpdateChange();
         }
-
         private void UpdateTotal()
         {
             decimal totalAmount = 0;
@@ -543,13 +543,47 @@ namespace POS_SYSTEM
                         int.TryParse(lblQuantity.Text, out int quantity) &&
                         decimal.TryParse(lblPrice.Text.Replace("₱", ""), out decimal price))
                     {
-                        totalAmount += quantity * price;
+                        totalAmount += quantity * price; 
                     }
                 }
             }
 
-            lbl_total.Text = $"₱{totalAmount:F2}";
+            lbl_subtotal.Text = $"₱{totalAmount:F2}"; 
+
+            decimal discountPercentage = 0;
+            if (!string.IsNullOrEmpty(txt_discount.Text) && decimal.TryParse(txt_discount.Text, out decimal discountInput))
+            {
+                discountPercentage = discountInput;
+            }
+
+            if (discountPercentage < 0 || discountPercentage > 100)
+            {
+                MessageBox.Show("Discount percentage must be between 0 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                discountPercentage = 0;
+            }
+
+            decimal discountAmount = totalAmount * (discountPercentage / 100);
+            decimal discountedTotal = totalAmount - discountAmount;
+
+            decimal taxPercentage = 0;
+            if (!string.IsNullOrEmpty(txt_tax.Text) && decimal.TryParse(txt_tax.Text, out decimal taxInput))
+            {
+                taxPercentage = taxInput;
+            }
+
+            if (taxPercentage < 0)
+            {
+                MessageBox.Show("Tax percentage cannot be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                taxPercentage = 0; 
+            }
+
+            decimal taxAmount = discountedTotal * (taxPercentage / 100);
+            lbl_tax.Text = $"₱{taxAmount:F2}";
+
+            decimal finalTotal = discountedTotal + taxAmount;
+            lbl_total.Text = $"₱{finalTotal:F2}";
         }
+
         private void LoadCategory(string categoryName = null)
         {
             flp_category.Controls.Clear();
@@ -664,7 +698,7 @@ namespace POS_SYSTEM
             string serveMode = cmb_serveMode.SelectedItem.ToString();
 
             string selectedTable = cb_availtb.SelectedItem?.ToString();
-            int? tableId = null; 
+            int? tableId = null;
 
             if (serveMode == "Takeout")
             {
@@ -708,6 +742,21 @@ namespace POS_SYSTEM
                 return;
             }
 
+            decimal discountAmount = 0;
+            decimal taxAmount = 0;
+
+            if (!string.IsNullOrEmpty(txt_discount.Text) && decimal.TryParse(txt_discount.Text.Replace("₱", ""), out decimal discount))
+            {
+                discountAmount = discount;
+            }
+
+            if (!string.IsNullOrEmpty(lbl_tax.Text) && decimal.TryParse(lbl_tax.Text.Replace("₱", ""), out decimal tax))
+            {
+                taxAmount = tax;
+            }
+
+            decimal finalAmount = totalAmount - discountAmount + taxAmount;
+
             using (var conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
@@ -726,8 +775,8 @@ namespace POS_SYSTEM
                             }
                         }
 
-                        int orderId = InsertOrder(conn, transaction, tableId, totalAmount, orderNo, serveMode);
-                        LogAction("Create", "Order", $"Order created with Order ID: {orderId}", null, null, totalAmount);
+                        int orderId = InsertOrder(conn, transaction, tableId, finalAmount, orderNo, serveMode);
+                        LogAction("Create", "Order", $"Order created with Order ID: {orderId}", null, null, finalAmount);
 
                         Dictionary<int, int> ingredientUsage = new Dictionary<int, int>();
                         foreach (RoundedPanel panel in flp_billDetails.Controls.OfType<RoundedPanel>())
@@ -762,8 +811,8 @@ namespace POS_SYSTEM
 
                         UpdateInventoryAndLogUsage(conn, transaction, ingredientUsage);
 
-                        InsertPayment(conn, transaction, orderId, totalAmount, paymentMethod);
-                        LogAction("Create", "Payment", $"Payment processed for Order ID: {orderId}.", null, null, totalAmount);
+                        InsertPayment(conn, transaction, orderId, finalAmount, paymentMethod);
+                        LogAction("Create", "Payment", $"Payment processed for Order ID: {orderId}.", null, null, finalAmount);
 
                         transaction.Commit();
 
@@ -792,7 +841,6 @@ namespace POS_SYSTEM
             cb_availtb.Enabled = true;
             txt_change.Visible = true;
         }
-
         private void UpdateIngredientUsage(MySqlConnection conn, MySqlTransaction transaction, string itemId, int quantity, Dictionary<int, int> ingredientUsage)
         {
             string query = @"SELECT ingredient_id, quantity_required 
@@ -940,22 +988,40 @@ namespace POS_SYSTEM
             }
         }
 
-        private void InsertOrderDetails(MySqlConnection conn, MySqlTransaction transaction, int orderId, string itemId, int quantity, decimal price, string serveMode)
+        private void InsertOrderDetails(MySqlConnection conn, MySqlTransaction transaction, int orderId, string itemId, int quantity, decimal price, string dineMode)
         {
-            string query = @"
-        INSERT INTO order_details_tb (order_id, item_id, quantity, price_at_time, subtotal, dine_mode) 
-        VALUES (@order_id, @item_id, @quantity, @price_at_time, @subtotal, @dine_mode)";
+            decimal subtotal = quantity * price; 
+            decimal discountAmount = 0;
+            if (decimal.TryParse(txt_discount.Text, out decimal discountPercentage))
+            {
+                discountAmount = subtotal * (discountPercentage / 100);
+            }
+
+            decimal taxAmount = 0;
+            if (decimal.TryParse(lbl_tax.Text.Replace("₱", ""), out decimal taxInput))
+            {
+                taxAmount = taxInput;
+            }
+
+            string query = @"INSERT INTO order_details_tb 
+                    (order_id, item_id, quantity, price_at_time, subtotal, discount, tax, dine_mode) 
+                    VALUES (@orderId, @itemId, @quantity, @price, @subtotal, @discount, @tax, @dineMode)";
+
             using (var cmd = new MySqlCommand(query, conn, transaction))
             {
-                cmd.Parameters.AddWithValue("@order_id", orderId);
-                cmd.Parameters.AddWithValue("@item_id", itemId);
+                cmd.Parameters.AddWithValue("@orderId", orderId);
+                cmd.Parameters.AddWithValue("@itemId", itemId);
                 cmd.Parameters.AddWithValue("@quantity", quantity);
-                cmd.Parameters.AddWithValue("@price_at_time", price);
-                cmd.Parameters.AddWithValue("@subtotal", price * quantity);
-                cmd.Parameters.AddWithValue("@dine_mode", serveMode);
+                cmd.Parameters.AddWithValue("@price", price);
+                cmd.Parameters.AddWithValue("@subtotal", subtotal);
+                cmd.Parameters.AddWithValue("@discount", discountAmount);
+                cmd.Parameters.AddWithValue("@tax", taxAmount);
+                cmd.Parameters.AddWithValue("@dineMode", dineMode);
+
                 cmd.ExecuteNonQuery();
             }
         }
+
         private void InsertPayment(MySqlConnection conn, MySqlTransaction transaction, int orderId, decimal totalAmount, string paymentMethod)
         {
             string query = @"
@@ -986,7 +1052,10 @@ namespace POS_SYSTEM
             cmb_serveMode.SelectedIndex = -1;
             lbl_order.Text = "0";
             txt_cash.Text = "";
+            txt_discount.Text = "";
             txt_change.Text = "0.00";
+            lbl_subtotal.Text = "0";
+            lbl_tax.Text = "0";
 
              MessageBox.Show("Order details cleared. Ready for a new order.", "New Order", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

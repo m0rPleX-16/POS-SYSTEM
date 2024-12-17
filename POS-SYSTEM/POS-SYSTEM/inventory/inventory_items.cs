@@ -291,8 +291,19 @@ ORDER BY m.date_added DESC";
                     return;
                 }
 
+                string checkQuery = "SELECT COUNT(*) FROM menu_items_tb WHERE item_name = @item_name";
+                MySqlCommand cmdCheck = new MySqlCommand(checkQuery, conn);
+                cmdCheck.Parameters.AddWithValue("@item_name", txt_itemname.Text.Trim());
+                int itemCount = Convert.ToInt32(cmdCheck.ExecuteScalar());
+
+                if (itemCount > 0)
+                {
+                    MessageBox.Show("This item already exists. Please enter a different item name.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string query = @"INSERT INTO menu_items_tb (item_name, category_id, price, is_available, image_base64, is_archived)
-                         VALUES (@item_name, @category_id, @price, @is_available, @image_base64, @is_archived)";
+                  VALUES (@item_name, @category_id, @price, @is_available, @image_base64, @is_archived)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@item_name", txt_itemname.Text.Trim());
@@ -521,65 +532,6 @@ ORDER BY m.date_added DESC";
 
             return true;
         }
-       
-
-        public void loadsearch(string searchitem)
-        {
-            dgv_items.Rows.Clear();
-            try
-            {
-                conn.Open();
-                string query = @"
-            SELECT 
-            m.item_id, 
-            m.item_name, 
-            c.category_name, 
-            m.price, 
-            m.date_added, 
-            m.is_available, 
-            m.is_archived, 
-            m.image_base64
-        FROM menu_items_tb m
-        JOIN categories_tb c ON m.category_id = c.category_id
-        WHERE m.item_name LIKE @searchname";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@searchname", "%" + searchitem + "%");
-
-                using (MySqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        
-
-                        // Attempt to retrieve and convert the image BLOB data
-                        Image productImage = dr["image_base64"] != DBNull.Value
-                                    ? LoadImageFromBase64(dr["image_base64"].ToString())
-                                    : null;
-                        dgv_items.Rows.Add(
-                                                            productImage,                                  // Product Image
-                                                            dr["item_id"],                             // Item ID
-                                                            dr["item_name"],                           // Item Name
-                                                            dr["category_name"],                       // Category Name
-                                                            Convert.ToDecimal(dr["price"]).ToString("F2"), // Price formatted
-                                                            Convert.ToDateTime(dr["date_added"]).ToString("yyyy-MM-dd"), // Date
-                                                            Convert.ToBoolean(dr["is_available"]) ? "Active" : "Inactive", // Availability
-                                                            Convert.ToBoolean(dr["is_archived"]) ? "Archived" : "Unarchived" // Archived Status
-                                                        );
-                    }
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
-
-            }
-        }
-       
-
 
     }
 }

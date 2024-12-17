@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btn_close = new System.Windows.Forms.Button();
-            this.btn_restore = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +45,7 @@
             this.btn_backup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_backup.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
             this.btn_backup.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_backup.Location = new System.Drawing.Point(78, 274);
+            this.btn_backup.Location = new System.Drawing.Point(226, 279);
             this.btn_backup.Name = "btn_backup";
             this.btn_backup.Size = new System.Drawing.Size(166, 85);
             this.btn_backup.TabIndex = 39;
@@ -61,9 +60,9 @@
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(325, 46);
+            this.label1.Size = new System.Drawing.Size(133, 46);
             this.label1.TabIndex = 40;
-            this.label1.Text = "Backup and Restore";
+            this.label1.Text = "Backup";
             // 
             // panel3
             // 
@@ -94,22 +93,6 @@
             this.btn_close.UseVisualStyleBackColor = false;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
-            // btn_restore
-            // 
-            this.btn_restore.BackColor = System.Drawing.Color.Wheat;
-            this.btn_restore.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_restore.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_restore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_restore.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.btn_restore.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_restore.Location = new System.Drawing.Point(364, 274);
-            this.btn_restore.Name = "btn_restore";
-            this.btn_restore.Size = new System.Drawing.Size(166, 85);
-            this.btn_restore.TabIndex = 42;
-            this.btn_restore.Text = "Restore Database";
-            this.btn_restore.UseVisualStyleBackColor = false;
-            this.btn_restore.Click += new System.EventHandler(this.btn_restore_Click_1);
-            // 
             // panel1
             // 
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
@@ -126,7 +109,6 @@
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(622, 400);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btn_restore);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.btn_backup);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -144,7 +126,6 @@
         private System.Windows.Forms.Button btn_backup;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btn_restore;
         internal System.Windows.Forms.Button btn_close;
         private System.Windows.Forms.Panel panel1;
     }

@@ -225,14 +225,25 @@ namespace POS_SYSTEM.inventory
                 MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-                
+
             try
             {
                 conn.Open();
 
+                string checkQuery = "SELECT COUNT(*) FROM ingredients_tb WHERE ingredient_name = @ingredient_name";
+                MySqlCommand cmdCheck = new MySqlCommand(checkQuery, conn);
+                cmdCheck.Parameters.AddWithValue("@ingredient_name", txt_ingname.Text.Trim());
+                int ingredientCount = Convert.ToInt32(cmdCheck.ExecuteScalar());
+
+                if (ingredientCount > 0)
+                {
+                    MessageBox.Show("This ingredient already exists. Please enter a different name.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 string query = @"
-            INSERT INTO ingredients_tb (ingredient_name, unit, stock_quantity, minimum_quantity, expiration_date, is_active)
-            VALUES (@ingredient_name, @unit, @stock_quantity, @minimum_quantity, @expiration_date, @is_active)";
+        INSERT INTO ingredients_tb (ingredient_name, unit, stock_quantity, minimum_quantity, expiration_date, is_active)
+        VALUES (@ingredient_name, @unit, @stock_quantity, @minimum_quantity, @expiration_date, @is_active)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@ingredient_name", txt_ingname.Text.Trim());

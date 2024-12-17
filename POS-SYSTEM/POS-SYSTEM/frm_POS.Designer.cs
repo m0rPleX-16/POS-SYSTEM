@@ -75,6 +75,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmb_paymentMethod = new System.Windows.Forms.ComboBox();
             this.pnl_bgCash = new System.Windows.Forms.Panel();
+            this.lbl_tax = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.txt_discount = new System.Windows.Forms.TextBox();
+            this.lbl_subtotal = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.txt_tax = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.lbl_order = new System.Windows.Forms.Label();
             this.pnl_totalBG = new System.Windows.Forms.Panel();
             this.lbl_total = new System.Windows.Forms.Label();
@@ -126,7 +135,7 @@
             // 
             this.flp_sales.AutoScroll = true;
             this.flp_sales.AutoSize = true;
-            this.flp_sales.BackColor = System.Drawing.Color.NavajoWhite;
+            this.flp_sales.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.flp_sales.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flp_sales.Location = new System.Drawing.Point(0, 0);
             this.flp_sales.Name = "flp_sales";
@@ -146,7 +155,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Tan;
+            this.panel2.BackColor = System.Drawing.Color.BurlyWood;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(1353, 129);
             this.panel2.Name = "panel2";
@@ -155,7 +164,7 @@
             // 
             // pnl_top
             // 
-            this.pnl_top.BackColor = System.Drawing.Color.Tan;
+            this.pnl_top.BackColor = System.Drawing.Color.BurlyWood;
             this.pnl_top.Controls.Add(this.label2);
             this.pnl_top.Controls.Add(this.linepanel_transact);
             this.pnl_top.Controls.Add(this.txt_transactNo);
@@ -193,7 +202,7 @@
             // txt_transactNo
             // 
             this.txt_transactNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_transactNo.BackColor = System.Drawing.Color.Tan;
+            this.txt_transactNo.BackColor = System.Drawing.Color.BurlyWood;
             this.txt_transactNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.txt_transactNo.ForeColor = System.Drawing.Color.DarkRed;
@@ -201,11 +210,11 @@
             this.txt_transactNo.Name = "txt_transactNo";
             this.txt_transactNo.ReadOnly = true;
             this.txt_transactNo.Size = new System.Drawing.Size(382, 45);
-            this.txt_transactNo.TabIndex = 27;
+            this.txt_transactNo.TabIndex = 0;
             // 
             // pnl_clock
             // 
-            this.pnl_clock.BackColor = System.Drawing.Color.Tan;
+            this.pnl_clock.BackColor = System.Drawing.Color.BurlyWood;
             this.pnl_clock.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_clock.BackgroundImage")));
             this.pnl_clock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pnl_clock.Location = new System.Drawing.Point(27, 71);
@@ -215,7 +224,7 @@
             // 
             // pnl_calendar
             // 
-            this.pnl_calendar.BackColor = System.Drawing.Color.Tan;
+            this.pnl_calendar.BackColor = System.Drawing.Color.BurlyWood;
             this.pnl_calendar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_calendar.BackgroundImage")));
             this.pnl_calendar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pnl_calendar.Location = new System.Drawing.Point(27, 14);
@@ -247,7 +256,7 @@
             // 
             // pnl_bottom
             // 
-            this.pnl_bottom.BackColor = System.Drawing.Color.Tan;
+            this.pnl_bottom.BackColor = System.Drawing.Color.BurlyWood;
             this.pnl_bottom.Controls.Add(this.btn_history);
             this.pnl_bottom.Controls.Add(this.btn_exit);
             this.pnl_bottom.Controls.Add(this.btn_newOrder);
@@ -268,7 +277,7 @@
             this.btn_history.Location = new System.Drawing.Point(364, 38);
             this.btn_history.Name = "btn_history";
             this.btn_history.Size = new System.Drawing.Size(230, 59);
-            this.btn_history.TabIndex = 23;
+            this.btn_history.TabIndex = 0;
             this.btn_history.Text = "Order History";
             this.btn_history.UseVisualStyleBackColor = false;
             this.btn_history.Click += new System.EventHandler(this.btn_history_Click);
@@ -283,7 +292,7 @@
             this.btn_exit.Location = new System.Drawing.Point(88, 38);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(189, 59);
-            this.btn_exit.TabIndex = 21;
+            this.btn_exit.TabIndex = 0;
             this.btn_exit.Text = "Exit";
             this.btn_exit.UseVisualStyleBackColor = false;
             this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
@@ -298,7 +307,7 @@
             this.btn_newOrder.Location = new System.Drawing.Point(696, 38);
             this.btn_newOrder.Name = "btn_newOrder";
             this.btn_newOrder.Size = new System.Drawing.Size(222, 59);
-            this.btn_newOrder.TabIndex = 22;
+            this.btn_newOrder.TabIndex = 0;
             this.btn_newOrder.Text = "New Order";
             this.btn_newOrder.UseVisualStyleBackColor = false;
             this.btn_newOrder.Click += new System.EventHandler(this.btn_newOrder_Click);
@@ -313,14 +322,14 @@
             this.btn_confirm.Location = new System.Drawing.Point(1015, 38);
             this.btn_confirm.Name = "btn_confirm";
             this.btn_confirm.Size = new System.Drawing.Size(261, 59);
-            this.btn_confirm.TabIndex = 1;
+            this.btn_confirm.TabIndex = 0;
             this.btn_confirm.Text = "Confirm Order";
             this.btn_confirm.UseVisualStyleBackColor = false;
             this.btn_confirm.Click += new System.EventHandler(this.btn_confirm_Click);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Tan;
+            this.panel1.BackColor = System.Drawing.Color.BurlyWood;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -329,7 +338,7 @@
             // 
             // pnl_details
             // 
-            this.pnl_details.BackColor = System.Drawing.Color.Tan;
+            this.pnl_details.BackColor = System.Drawing.Color.BurlyWood;
             this.pnl_details.Controls.Add(this.cmb_serveMode);
             this.pnl_details.Controls.Add(this.label6);
             this.pnl_details.Controls.Add(this.cb_availtb);
@@ -360,10 +369,10 @@
             this.cmb_serveMode.Items.AddRange(new object[] {
             "Dine In",
             "Takeout"});
-            this.cmb_serveMode.Location = new System.Drawing.Point(343, 879);
+            this.cmb_serveMode.Location = new System.Drawing.Point(336, 902);
             this.cmb_serveMode.Name = "cmb_serveMode";
             this.cmb_serveMode.Size = new System.Drawing.Size(161, 36);
-            this.cmb_serveMode.TabIndex = 26;
+            this.cmb_serveMode.TabIndex = 0;
             this.cmb_serveMode.Text = "Select Mode";
             this.cmb_serveMode.SelectedIndexChanged += new System.EventHandler(this.cmb_serveMode_SelectedIndexChanged);
             // 
@@ -374,7 +383,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label6.ForeColor = System.Drawing.Color.DarkRed;
-            this.label6.Location = new System.Drawing.Point(71, 887);
+            this.label6.Location = new System.Drawing.Point(64, 910);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 28);
             this.label6.TabIndex = 25;
@@ -387,10 +396,10 @@
             this.cb_availtb.BackColor = System.Drawing.Color.Ivory;
             this.cb_availtb.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.cb_availtb.FormattingEnabled = true;
-            this.cb_availtb.Location = new System.Drawing.Point(343, 936);
+            this.cb_availtb.Location = new System.Drawing.Point(336, 959);
             this.cb_availtb.Name = "cb_availtb";
             this.cb_availtb.Size = new System.Drawing.Size(161, 36);
-            this.cb_availtb.TabIndex = 24;
+            this.cb_availtb.TabIndex = 0;
             this.cb_availtb.Text = "Select Table";
             // 
             // label5
@@ -400,7 +409,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label5.ForeColor = System.Drawing.Color.DarkRed;
-            this.label5.Location = new System.Drawing.Point(71, 944);
+            this.label5.Location = new System.Drawing.Point(64, 967);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 28);
             this.label5.TabIndex = 23;
@@ -413,7 +422,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label4.ForeColor = System.Drawing.Color.DarkRed;
-            this.label4.Location = new System.Drawing.Point(70, 833);
+            this.label4.Location = new System.Drawing.Point(63, 856);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 28);
             this.label4.TabIndex = 8;
@@ -426,7 +435,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label3.ForeColor = System.Drawing.Color.DarkRed;
-            this.label3.Location = new System.Drawing.Point(70, 783);
+            this.label3.Location = new System.Drawing.Point(63, 806);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 28);
             this.label3.TabIndex = 7;
@@ -447,7 +456,7 @@
             // 
             this.line_cash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.line_cash.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.line_cash.Location = new System.Drawing.Point(342, 810);
+            this.line_cash.Location = new System.Drawing.Point(335, 833);
             this.line_cash.Name = "line_cash";
             this.line_cash.Size = new System.Drawing.Size(142, 1);
             this.line_cash.TabIndex = 22;
@@ -459,7 +468,7 @@
             this.txt_change.AutoSize = true;
             this.txt_change.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txt_change.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_change.Location = new System.Drawing.Point(360, 833);
+            this.txt_change.Location = new System.Drawing.Point(353, 856);
             this.txt_change.Name = "txt_change";
             this.txt_change.Size = new System.Drawing.Size(49, 28);
             this.txt_change.TabIndex = 10;
@@ -469,22 +478,22 @@
             // 
             this.txt_cash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_cash.BackColor = System.Drawing.Color.Tan;
+            this.txt_cash.BackColor = System.Drawing.Color.BurlyWood;
             this.txt_cash.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_cash.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_cash.Location = new System.Drawing.Point(342, 781);
+            this.txt_cash.Location = new System.Drawing.Point(335, 804);
             this.txt_cash.Name = "txt_cash";
             this.txt_cash.Size = new System.Drawing.Size(143, 27);
-            this.txt_cash.TabIndex = 9;
+            this.txt_cash.TabIndex = 0;
             this.txt_cash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // flp_billDetails
             // 
-            this.flp_billDetails.BackColor = System.Drawing.Color.NavajoWhite;
+            this.flp_billDetails.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.flp_billDetails.Controls.Add(this.tableLayoutPanel1);
             this.flp_billDetails.Location = new System.Drawing.Point(10, 56);
             this.flp_billDetails.Name = "flp_billDetails";
-            this.flp_billDetails.Size = new System.Drawing.Size(515, 516);
+            this.flp_billDetails.Size = new System.Drawing.Size(515, 452);
             this.flp_billDetails.TabIndex = 6;
             // 
             // tableLayoutPanel1
@@ -620,7 +629,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(71, 994);
+            this.label1.Location = new System.Drawing.Point(64, 1017);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 28);
             this.label1.TabIndex = 5;
@@ -637,10 +646,10 @@
             "Cash",
             "GCash",
             "Maya"});
-            this.cmb_paymentMethod.Location = new System.Drawing.Point(343, 986);
+            this.cmb_paymentMethod.Location = new System.Drawing.Point(336, 1009);
             this.cmb_paymentMethod.Name = "cmb_paymentMethod";
             this.cmb_paymentMethod.Size = new System.Drawing.Size(161, 36);
-            this.cmb_paymentMethod.TabIndex = 4;
+            this.cmb_paymentMethod.TabIndex = 0;
             this.cmb_paymentMethod.Text = "Select Payment";
             this.cmb_paymentMethod.SelectedIndexChanged += new System.EventHandler(this.cmb_paymentMethod_SelectedIndexChanged);
             // 
@@ -648,21 +657,131 @@
             // 
             this.pnl_bgCash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnl_bgCash.BackColor = System.Drawing.Color.PeachPuff;
+            this.pnl_bgCash.BackColor = System.Drawing.Color.Bisque;
+            this.pnl_bgCash.Controls.Add(this.lbl_tax);
+            this.pnl_bgCash.Controls.Add(this.panel9);
+            this.pnl_bgCash.Controls.Add(this.txt_discount);
+            this.pnl_bgCash.Controls.Add(this.lbl_subtotal);
+            this.pnl_bgCash.Controls.Add(this.panel3);
+            this.pnl_bgCash.Controls.Add(this.txt_tax);
+            this.pnl_bgCash.Controls.Add(this.label15);
+            this.pnl_bgCash.Controls.Add(this.label14);
+            this.pnl_bgCash.Controls.Add(this.label13);
             this.pnl_bgCash.Controls.Add(this.lbl_order);
             this.pnl_bgCash.Controls.Add(this.pnl_totalBG);
             this.pnl_bgCash.Controls.Add(this.Discount);
-            this.pnl_bgCash.Location = new System.Drawing.Point(10, 590);
+            this.pnl_bgCash.Location = new System.Drawing.Point(10, 530);
             this.pnl_bgCash.Name = "pnl_bgCash";
-            this.pnl_bgCash.Size = new System.Drawing.Size(515, 161);
+            this.pnl_bgCash.Size = new System.Drawing.Size(515, 265);
             this.pnl_bgCash.TabIndex = 0;
+            // 
+            // lbl_tax
+            // 
+            this.lbl_tax.AutoSize = true;
+            this.lbl_tax.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lbl_tax.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_tax.Location = new System.Drawing.Point(367, 148);
+            this.lbl_tax.Name = "lbl_tax";
+            this.lbl_tax.Size = new System.Drawing.Size(49, 28);
+            this.lbl_tax.TabIndex = 27;
+            this.lbl_tax.Text = "0.00";
+            // 
+            // panel9
+            // 
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel9.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel9.Location = new System.Drawing.Point(365, 87);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(50, 1);
+            this.panel9.TabIndex = 26;
+            // 
+            // txt_discount
+            // 
+            this.txt_discount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_discount.BackColor = System.Drawing.Color.Bisque;
+            this.txt_discount.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_discount.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_discount.ForeColor = System.Drawing.Color.Crimson;
+            this.txt_discount.Location = new System.Drawing.Point(368, 61);
+            this.txt_discount.Name = "txt_discount";
+            this.txt_discount.Size = new System.Drawing.Size(43, 27);
+            this.txt_discount.TabIndex = 0;
+            this.txt_discount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lbl_subtotal
+            // 
+            this.lbl_subtotal.AutoSize = true;
+            this.lbl_subtotal.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lbl_subtotal.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_subtotal.Location = new System.Drawing.Point(367, 107);
+            this.lbl_subtotal.Name = "lbl_subtotal";
+            this.lbl_subtotal.Size = new System.Drawing.Size(49, 28);
+            this.lbl_subtotal.TabIndex = 24;
+            this.lbl_subtotal.Text = "0.00";
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel3.Location = new System.Drawing.Point(93, 177);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(50, 1);
+            this.panel3.TabIndex = 23;
+            // 
+            // txt_tax
+            // 
+            this.txt_tax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_tax.BackColor = System.Drawing.Color.Bisque;
+            this.txt_tax.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_tax.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_tax.ForeColor = System.Drawing.Color.Crimson;
+            this.txt_tax.Location = new System.Drawing.Point(93, 149);
+            this.txt_tax.Name = "txt_tax";
+            this.txt_tax.Size = new System.Drawing.Size(50, 27);
+            this.txt_tax.TabIndex = 0;
+            this.txt_tax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label15.ForeColor = System.Drawing.Color.DarkRed;
+            this.label15.Location = new System.Drawing.Point(53, 148);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(39, 28);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "Tax";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label14.ForeColor = System.Drawing.Color.DarkRed;
+            this.label14.Location = new System.Drawing.Point(50, 107);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(93, 28);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "Sub Total";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.label13.ForeColor = System.Drawing.Color.DarkRed;
+            this.label13.Location = new System.Drawing.Point(50, 60);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(122, 28);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Discount (%)";
             // 
             // lbl_order
             // 
             this.lbl_order.AutoSize = true;
             this.lbl_order.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lbl_order.ForeColor = System.Drawing.Color.DarkRed;
-            this.lbl_order.Location = new System.Drawing.Point(367, 34);
+            this.lbl_order.Location = new System.Drawing.Point(369, 19);
             this.lbl_order.Name = "lbl_order";
             this.lbl_order.Size = new System.Drawing.Size(49, 28);
             this.lbl_order.TabIndex = 4;
@@ -673,7 +792,7 @@
             this.pnl_totalBG.BackColor = System.Drawing.Color.Linen;
             this.pnl_totalBG.Controls.Add(this.lbl_total);
             this.pnl_totalBG.Controls.Add(this.Total);
-            this.pnl_totalBG.Location = new System.Drawing.Point(28, 82);
+            this.pnl_totalBG.Location = new System.Drawing.Point(27, 198);
             this.pnl_totalBG.Name = "pnl_totalBG";
             this.pnl_totalBG.Size = new System.Drawing.Size(460, 57);
             this.pnl_totalBG.TabIndex = 3;
@@ -682,7 +801,7 @@
             // 
             this.lbl_total.AutoSize = true;
             this.lbl_total.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.lbl_total.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_total.ForeColor = System.Drawing.Color.Crimson;
             this.lbl_total.Location = new System.Drawing.Point(339, 13);
             this.lbl_total.Name = "lbl_total";
             this.lbl_total.Size = new System.Drawing.Size(50, 28);
@@ -705,7 +824,7 @@
             this.Discount.AutoSize = true;
             this.Discount.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.Discount.ForeColor = System.Drawing.Color.DarkRed;
-            this.Discount.Location = new System.Drawing.Point(51, 34);
+            this.Discount.Location = new System.Drawing.Point(50, 19);
             this.Discount.Name = "Discount";
             this.Discount.Size = new System.Drawing.Size(118, 28);
             this.Discount.TabIndex = 0;
@@ -715,7 +834,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.SeaShell;
+            this.BackColor = System.Drawing.Color.Tan;
             this.ClientSize = new System.Drawing.Size(1942, 1102);
             this.Controls.Add(this.pnl_bg);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -804,5 +923,14 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cmb_serveMode;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbl_tax;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.TextBox txt_discount;
+        private System.Windows.Forms.Label lbl_subtotal;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TextBox txt_tax;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
     }
 }

@@ -51,38 +51,7 @@ namespace POS_SYSTEM
                 MessageBox.Show("Backup failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-            
-        public void RestoreDatabase()
-        {
-            try
-            {
-                string server = "localhost";
-                string port = "3306";
-                string username = "root";
-                string password = "";
-                string database = "posresto_db";
-                string backupFilePath = @"C:\Users\glenn\source\repos\POS-SYSTEM\POS-SYSTEM\POS-SYSTEM\database\posresto_db.sql";
 
-                string restoreCommand = $@"C:\xampp\mysql\bin\mysql --host={server} --port={port} --user={username} --password={password} {database} < ""{backupFilePath}""";
-
-                Process process = new Process();
-                process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.Arguments = "/c " + restoreCommand;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-
-                MessageBox.Show("Restore completed successfully, including tables and attributes!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Restore failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
         private void btn_close_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -90,10 +59,6 @@ namespace POS_SYSTEM
         private void btn_backup_Click_1(object sender, EventArgs e)
         {
             BackupDatabase();
-        }
-        private void btn_restore_Click_1(object sender, EventArgs e)
-        {
-            RestoreDatabase();
         }
     }
 }

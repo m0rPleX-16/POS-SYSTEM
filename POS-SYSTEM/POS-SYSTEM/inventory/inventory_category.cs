@@ -64,8 +64,19 @@ namespace POS_SYSTEM
             try
             {
                 conn.Open();
+                string checkQuery = "SELECT COUNT(*) FROM categories_tb WHERE category_name = @category_name";
+                MySqlCommand cmdCheck = new MySqlCommand(checkQuery, conn);
+                cmdCheck.Parameters.AddWithValue("@category_name", txt_category_name.Text.Trim());
+                int categoryCount = Convert.ToInt32(cmdCheck.ExecuteScalar());
+
+                if (categoryCount > 0)
+                {
+                    MessageBox.Show("This category already exists. Please enter a different category name.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 MySqlCommand cmd = new MySqlCommand("INSERT INTO categories_tb (category_name) VALUES (@category_name)", conn);
-                cmd.Parameters.AddWithValue("@category_name", txt_category_name.Text);
+                cmd.Parameters.AddWithValue("@category_name", txt_category_name.Text.Trim());
 
                 int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -90,6 +101,7 @@ namespace POS_SYSTEM
                 ClearFields();
             }
         }
+
 
         private void btn_edit_Click(object sender, EventArgs e)
         {

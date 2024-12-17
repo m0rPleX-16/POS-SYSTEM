@@ -170,19 +170,6 @@ namespace POS_SYSTEM
         {
             LoadInventoryData(txt_search.Text);
 
-            switch (panel) {
-
-                case 1:
-                    using (inventory_items search = new inventory_items(_currentEmployee))
-                    {
-
-                        search.loadsearch(txt_search.Text);
-
-
-                    }
-
-                    break;
-            }
         }
 
         private void LoadInventoryData(string searchFilter = "")

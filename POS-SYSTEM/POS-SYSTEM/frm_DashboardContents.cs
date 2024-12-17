@@ -60,7 +60,7 @@ namespace POS_SYSTEM
                 conn.Open();
                 string query = @"
             SELECT 
-                SUM(od.quantity * od.price_at_time) AS 'Daily Total'
+                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Daily Total'
             FROM 
                 `orders_tb` o
             JOIN 
@@ -82,6 +82,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
         private void LoadMonthlySales()
         {
             try
@@ -89,7 +90,7 @@ namespace POS_SYSTEM
                 conn.Open();
                 string query = @"
             SELECT 
-                SUM(od.quantity * od.price_at_time) AS 'Monthly Total'
+                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Monthly Total'
             FROM 
                 `orders_tb` o
             JOIN 
@@ -119,7 +120,7 @@ namespace POS_SYSTEM
                 conn.Open();
                 string query = @"
             SELECT 
-                SUM(od.quantity * od.price_at_time) AS 'Annual Total'
+                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Annual Total'
             FROM 
                 `orders_tb` o
             JOIN 
@@ -141,6 +142,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
         private void DGV_loadBestCategory()
         {
             dgv_bestCat.Rows.Clear();
@@ -195,30 +197,37 @@ namespace POS_SYSTEM
                 conn.Open();
 
                 string query = @"
-        SELECT 
-            mi.image_base64, 
-            mi.item_name, 
-            c.category_name, 
-            SUM(od.quantity) AS quantity_sold, 
-            od.price_at_time
-        FROM order_details_tb od
-        JOIN orders_tb o ON od.order_id = o.order_id
-        JOIN menu_items_tb mi ON od.item_id = mi.item_id
-        JOIN categories_tb c ON mi.category_id = c.category_id
-        WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE) 
-        AND YEAR(o.order_date) = YEAR(CURRENT_DATE)
-        AND o.status != 'Canceled' -- Exclude canceled orders
-        GROUP BY mi.item_id, mi.item_name, c.category_name, od.price_at_time
-        ORDER BY quantity_sold DESC
-        LIMIT 5";
+            SELECT 
+                mi.image_base64, 
+                mi.item_name, 
+                c.category_name, 
+                SUM(od.quantity) AS quantity_sold, 
+                od.price_at_time, 
+                SUM(od.discount) AS total_discount, 
+                SUM(od.tax) AS total_tax
+            FROM order_details_tb od
+            JOIN orders_tb o ON od.order_id = o.order_id
+            JOIN menu_items_tb mi ON od.item_id = mi.item_id
+            JOIN categories_tb c ON mi.category_id = c.category_id
+            WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE) 
+            AND YEAR(o.order_date) = YEAR(CURRENT_DATE)
+            AND o.status != 'Canceled' -- Exclude canceled orders
+            GROUP BY mi.item_id, mi.item_name, c.category_name, od.price_at_time
+            ORDER BY quantity_sold DESC
+            LIMIT 5";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
                 {
-                    Image itemImage = null;
+                    decimal totalPrice = Convert.ToDecimal(dr["price_at_time"]) * Convert.ToInt32(dr["quantity_sold"]);
+                    decimal discount = Convert.ToDecimal(dr["total_discount"]);
+                    decimal tax = Convert.ToDecimal(dr["total_tax"]);
 
+                    decimal finalPrice = totalPrice - discount + tax;
+
+                    Image itemImage = null;
                     if (dr["image_base64"] != DBNull.Value)
                     {
                         byte[] imageBytes = (byte[])dr["image_base64"];
@@ -241,10 +250,10 @@ namespace POS_SYSTEM
 
                     dgv_bestSellers.Rows.Add(
                         itemImage,
-                        dr["item_name"],   
-                        dr["category_name"], 
+                        dr["item_name"],
+                        dr["category_name"],
                         dr["quantity_sold"],
-                        dr["price_at_time"]
+                        finalPrice
                     );
                 }
 
@@ -259,6 +268,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
         private void LoadStockLevels()
         {
             try
@@ -286,25 +296,24 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-    
+
         private void CalculateSalesAndProfitForEachDay()
         {
             try
             {
                 conn.Open();
 
-
                 string query = @"
-    SELECT 
-        DATE(o.order_date) AS order_date,
-        SUM(od.quantity * mi.price) AS daily_sales,
-        SUM(od.quantity * mi.price) AS daily_profit
-    FROM orders_tb o
-    JOIN order_details_tb od ON o.order_id = od.order_id
-        JOIN menu_items_tb mi ON od.item_id = mi.item_id
-    WHERE o.status IN ('Dine In', 'Takeout')
-    GROUP BY DATE(o.order_date)
-    ORDER BY order_date";
+            SELECT 
+                DATE(o.order_date) AS order_date,
+                SUM((od.quantity * mi.price) - od.discount + od.tax) AS daily_sales,
+                SUM((od.quantity * mi.price) - od.discount + od.tax) AS daily_profit
+            FROM orders_tb o
+            JOIN order_details_tb od ON o.order_id = od.order_id
+            JOIN menu_items_tb mi ON od.item_id = mi.item_id
+            WHERE o.status IN ('Dine In', 'Takeout')
+            GROUP BY DATE(o.order_date)
+            ORDER BY order_date";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader dr = cmd.ExecuteReader();
@@ -357,6 +366,7 @@ namespace POS_SYSTEM
                     salesSeries.Points.AddXY(entry.Key, entry.Value);
                     Console.WriteLine($"Adding Sales Data: {entry.Key} - {entry.Value}");
                 }
+
                 foreach (var entry in dailyProfit)
                 {
                     profitSeries.Points.AddXY(entry.Key, entry.Value);
@@ -384,6 +394,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
         private void LoadOrderHistory()
         {
             try
