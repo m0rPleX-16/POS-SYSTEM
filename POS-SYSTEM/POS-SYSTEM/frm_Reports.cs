@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
@@ -23,9 +24,181 @@ namespace POS_SYSTEM
             timerClock.Interval = 100;
             timerClock.Tick += TimerClock_Tick;
             timerClock.Start();
+            LoadInventoryReport(null, null);
+            LoadSalesReport(null, null);
             LoadDailySales();
             LoadMonthlySales();
         }
+        private void LoadInventoryReport(DateTime? startDate, DateTime? endDate, string searchQuery = "")
+        {
+            string query = @"
+    SELECT 
+        it.transaction_id, 
+        i.ingredient_id, 
+        i.ingredient_name, 
+        it.transaction_type, 
+        it.quantity, 
+        it.transaction_date, 
+        it.note
+    FROM `inventory_transactions_tb` it
+    JOIN `ingredients_tb` i ON it.ingredient_id = i.ingredient_id";
+
+            List<string> conditions = new List<string>();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                conditions.Add("(i.ingredient_name LIKE @searchQuery OR it.transaction_id LIKE @searchQuery)");
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                if (conditions.Count > 0)
+                    conditions.Add("DATE(it.transaction_date) BETWEEN @startDate AND @endDate");
+                else
+                    conditions.Add("DATE(it.transaction_date) BETWEEN @startDate AND @endDate");
+            }
+
+            if (conditions.Count > 0)
+            {
+                query += " WHERE " + string.Join(" AND ", conditions);
+            }
+
+            query += " ORDER BY it.transaction_date DESC";
+
+            LoadFilteredData(query, startDate, endDate, dgv_inventory, new string[]
+            {
+        "transaction_id",
+        "ingredient_id",
+        "ingredient_name",
+        "transaction_type",
+        "quantity",
+        "transaction_date",
+        "note"
+            }, searchQuery);
+        }
+        private void LoadSalesReport(DateTime? startDate, DateTime? endDate, string searchQuery = "")
+        {
+            string query = @"
+    SELECT 
+        o.order_id, 
+        o.order_date,
+        SUM(od.quantity * od.price_at_time) AS total_sale, 
+        p.payment_method, 
+        p.payment_date
+    FROM 
+        `orders_tb` o
+    JOIN 
+        `order_details_tb` od ON o.order_id = od.order_id
+    JOIN 
+        `payments_tb` p ON o.order_id = p.order_id
+    WHERE 
+        o.status != 'Canceled'";
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query += " AND (o.order_id LIKE @searchQuery OR p.payment_method LIKE @searchQuery)";
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query += " AND DATE(o.order_date) BETWEEN @startDate AND @endDate";
+            }
+
+            query += " GROUP BY o.order_id, p.payment_method, p.payment_date ORDER BY o.order_date DESC";
+
+            LoadFilteredData(query, startDate, endDate, dgv_sales, new string[]
+            {
+        "order_id",
+        "order_date",
+        "total_sale",
+        "payment_method",
+        "payment_date"
+            }, searchQuery);
+        }
+
+        private void LoadFilteredData(string query, DateTime? startDate, DateTime? endDate, DataGridView dgv, string[] columnNames, string searchQuery)
+        {
+            try
+            {
+                dgv.Rows.Clear();
+
+                if (!EnsureConnectionOpen()) return;
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@startDate", startDate.Value.Date.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@endDate", endDate.Value.Date.ToString("yyyy-MM-dd"));
+                }
+
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    cmd.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
+                }
+
+                using (MySqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        object[] rowData = new object[columnNames.Length];
+                        for (int i = 0; i < columnNames.Length; i++)
+                        {
+                            rowData[i] = dr[columnNames[i]] is DBNull ? "No Data" : dr[columnNames[i]];
+                        }
+                        dgv.Rows.Add(rowData);
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                HandleError(ex, "Error loading filtered data");
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex, "An unexpected error occurred while loading filtered data");
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void btn_Filter_Click_1(object sender, EventArgs e)
+        {
+            string searchQuery = txt_search.Text.Trim();
+            LoadReportsBasedOnTab(searchQuery);
+        }
+
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            string searchQuery = txt_search.Text.Trim();
+
+            LoadReportsBasedOnTab(string.IsNullOrEmpty(searchQuery) ? "" : searchQuery);
+        }
+
+
+        private void LoadReportsBasedOnTab(string searchQuery)
+        {
+            DateTime? startDate = start_dtp.Value.Date;
+            DateTime? endDate = end_dtp.Value.Date;
+
+            if (reports_control.SelectedTab.Name == "sales_tab")
+            {
+                LoadSalesReport(startDate, endDate, searchQuery);
+            }
+            else if (reports_control.SelectedTab.Name == "inv_tab")
+            {
+                LoadInventoryReport(startDate, endDate, searchQuery);
+            }
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void TimerClock_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
@@ -78,7 +251,7 @@ namespace POS_SYSTEM
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 object result = cmd.ExecuteScalar();
-               lbl_daily_sales.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
+                lbl_daily_sales.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
             }
             catch (MySqlException ex)
             {
@@ -118,216 +291,6 @@ namespace POS_SYSTEM
             {
                 conn.Close();
             }
-        }
-        private void LoadInventoryReport(DateTime? startDate, DateTime? endDate, string searchQuery)
-        {
-            string query = @"
-    SELECT 
-        it.transaction_id, 
-        i.ingredient_id, 
-        i.ingredient_name, 
-        it.transaction_type, 
-        it.quantity, 
-        it.transaction_date, 
-        it.note
-    FROM `inventory_transactions_tb` it
-    JOIN `ingredients_tb` i ON it.ingredient_id = i.ingredient_id";
-
-            if (!string.IsNullOrEmpty(searchQuery))
-            {
-                query += " WHERE (i.ingredient_name LIKE @searchQuery OR it.transaction_id LIKE @searchQuery)";
-            }
-
-            if (startDate.HasValue && endDate.HasValue)
-            {
-                if (query.Contains("WHERE"))
-                {
-                    query += " AND DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
-                }
-                else
-                {
-                    query += " WHERE DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
-                }
-            }
-
-            query += " ORDER BY it.transaction_date DESC";
-
-            LoadFilteredData(query, startDate, endDate, dgv_inventory, new string[]
-            {
-        "transaction_id",
-        "ingredient_id",
-        "ingredient_name",
-        "transaction_type",
-        "quantity",
-        "transaction_date",
-        "note"
-            }, searchQuery);
-        }
-        private void LoadSalesReport(DateTime? startDate, DateTime? endDate, string searchQuery)
-        {
-            string query = @"
-    SELECT 
-        o.order_id, 
-        o.order_date,
-        SUM(od.quantity * od.price_at_time) AS total_sale, 
-        p.payment_method, 
-        p.payment_date
-    FROM 
-        `orders_tb` o
-    JOIN 
-        `order_details_tb` od ON o.order_id = od.order_id
-    JOIN 
-        `payments_tb` p ON o.order_id = p.order_id
-    WHERE 
-        o.status != 'Canceled'"; 
-
-            if (!string.IsNullOrEmpty(searchQuery))
-            {
-                query += " AND (o.order_id LIKE @searchQuery OR p.payment_method LIKE @searchQuery)";
-            }
-    
-            if (startDate.HasValue && endDate.HasValue)
-            {
-                query += " AND DATE(o.order_date) BETWEEN @startDate AND @endDate";
-            }
-
-            query += " GROUP BY o.order_id, p.payment_method, p.payment_date ORDER BY o.order_date DESC";
-
-            LoadFilteredData(query, startDate, endDate, dgv_sales, new string[]
-            {
-        "order_id",
-        "order_date",
-        "total_sale",
-        "payment_method",
-        "payment_date"
-            }, searchQuery);
-        }
-
-        private void LoadFilteredData(string query, DateTime? startDate, DateTime? endDate, DataGridView dgv, string[] columnNames, string searchQuery)
-        {
-            try
-            {
-                dgv.Rows.Clear();
-                if (!EnsureConnectionOpen()) return;
-
-                if (startDate.HasValue && endDate.HasValue)
-                {
-                    if (query.Contains("o.order_date"))
-                    {
-                        if (query.Contains("WHERE"))
-                        {
-                            query += " AND DATE(o.order_date) BETWEEN @startDate AND @endDate";
-                        }
-                        else
-                        {
-                            query += " WHERE DATE(o.order_date) BETWEEN @startDate AND @endDate";
-                        }
-                    }
-                    else if (query.Contains("it.transaction_date"))
-                    {
-                        if (query.Contains("WHERE"))
-                        {
-                            query += " AND DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
-                        }
-                        else
-                        {
-                            query += " WHERE DATE(it.transaction_date) BETWEEN @startDate AND @endDate";
-                        }
-                    }
-                }
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                if (startDate.HasValue && endDate.HasValue)
-                {
-                    cmd.Parameters.AddWithValue("@startDate", startDate.Value.Date);
-                    cmd.Parameters.AddWithValue("@endDate", endDate.Value.Date);
-                }
-
-                if (!string.IsNullOrEmpty(searchQuery))
-                {
-                    cmd.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
-                }
-
-                using (MySqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        object[] rowData = new object[columnNames.Length];
-                        for (int i = 0; i < columnNames.Length; i++)
-                        {
-                            rowData[i] = dr[columnNames[i]] is DBNull ? "No Data" : dr[columnNames[i]];
-                        }
-                        dgv.Rows.Add(rowData);
-                    }
-                }
-            }
-            catch (MySqlException ex)
-            {
-                HandleError(ex, "Error loading filtered data");
-            }
-            catch (Exception ex)
-            {
-                HandleError(ex, "An unexpected error occurred while loading filtered data");
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-        private void btn_Filter_Click_1(object sender, EventArgs e)
-        {
-            DateTime? startDate = start_dtp.Checked ? start_dtp.Value.Date : (DateTime?)null;
-            DateTime? endDate = end_dtp.Checked ? end_dtp.Value.Date : (DateTime?)null;
-
-            if (startDate.HasValue && endDate.HasValue && startDate > endDate)
-            {
-                MessageBox.Show("Start date cannot be later than the end date.", "Invalid Date Range", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (reports_control.SelectedTab.Name == "sales_tab")
-            {
-                LoadSalesReport(startDate, endDate, null);
-            }
-            else if (reports_control.SelectedTab.Name == "inv_tab")
-            {
-                LoadInventoryReport(startDate, endDate, null);
-            }
-        }
-
-        private void txt_search_TextChanged(object sender, EventArgs e)
-        {
-            string searchQuery = txt_search.Text.Trim().ToLower();
-
-            if (string.IsNullOrEmpty(searchQuery))
-            {
-                LoadReportsBasedOnTab(null);
-            }
-            else
-            {
-                LoadReportsBasedOnTab(searchQuery);
-            }
-        }
-
-        private void LoadReportsBasedOnTab(string searchQuery)
-        {
-            DateTime startDate = start_dtp.Value.Date;
-            DateTime endDate = end_dtp.Value.Date;
-
-            if (reports_control.SelectedTab.Name == "sales_tab")
-            {
-                LoadSalesReport(startDate, endDate, searchQuery);
-            }
-            else if (reports_control.SelectedTab.Name == "inv_tab")
-            {
-                LoadInventoryReport(startDate, endDate, searchQuery);
-            }
-        }
-
-        private void btn_close_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         private void btn_Export_Click(object sender, EventArgs e)

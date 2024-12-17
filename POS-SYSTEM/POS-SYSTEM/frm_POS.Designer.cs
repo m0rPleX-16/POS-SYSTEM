@@ -146,6 +146,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.Tan;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(1353, 129);
             this.panel2.Name = "panel2";
@@ -154,6 +155,7 @@
             // 
             // pnl_top
             // 
+            this.pnl_top.BackColor = System.Drawing.Color.Tan;
             this.pnl_top.Controls.Add(this.label2);
             this.pnl_top.Controls.Add(this.linepanel_transact);
             this.pnl_top.Controls.Add(this.txt_transactNo);
@@ -191,7 +193,7 @@
             // txt_transactNo
             // 
             this.txt_transactNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_transactNo.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_transactNo.BackColor = System.Drawing.Color.Tan;
             this.txt_transactNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
             this.txt_transactNo.ForeColor = System.Drawing.Color.DarkRed;
@@ -203,7 +205,7 @@
             // 
             // pnl_clock
             // 
-            this.pnl_clock.BackColor = System.Drawing.Color.MistyRose;
+            this.pnl_clock.BackColor = System.Drawing.Color.Tan;
             this.pnl_clock.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_clock.BackgroundImage")));
             this.pnl_clock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pnl_clock.Location = new System.Drawing.Point(27, 71);
@@ -213,7 +215,7 @@
             // 
             // pnl_calendar
             // 
-            this.pnl_calendar.BackColor = System.Drawing.Color.MistyRose;
+            this.pnl_calendar.BackColor = System.Drawing.Color.Tan;
             this.pnl_calendar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnl_calendar.BackgroundImage")));
             this.pnl_calendar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pnl_calendar.Location = new System.Drawing.Point(27, 14);
@@ -245,6 +247,7 @@
             // 
             // pnl_bottom
             // 
+            this.pnl_bottom.BackColor = System.Drawing.Color.Tan;
             this.pnl_bottom.Controls.Add(this.btn_history);
             this.pnl_bottom.Controls.Add(this.btn_exit);
             this.pnl_bottom.Controls.Add(this.btn_newOrder);
@@ -317,6 +320,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Tan;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -325,7 +329,7 @@
             // 
             // pnl_details
             // 
-            this.pnl_details.BackColor = System.Drawing.Color.MistyRose;
+            this.pnl_details.BackColor = System.Drawing.Color.Tan;
             this.pnl_details.Controls.Add(this.cmb_serveMode);
             this.pnl_details.Controls.Add(this.label6);
             this.pnl_details.Controls.Add(this.cb_availtb);
@@ -356,11 +360,12 @@
             this.cmb_serveMode.Items.AddRange(new object[] {
             "Dine In",
             "Takeout"});
-            this.cmb_serveMode.Location = new System.Drawing.Point(343, 936);
+            this.cmb_serveMode.Location = new System.Drawing.Point(343, 879);
             this.cmb_serveMode.Name = "cmb_serveMode";
             this.cmb_serveMode.Size = new System.Drawing.Size(161, 36);
             this.cmb_serveMode.TabIndex = 26;
             this.cmb_serveMode.Text = "Select Mode";
+            this.cmb_serveMode.SelectedIndexChanged += new System.EventHandler(this.cmb_serveMode_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -369,7 +374,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label6.ForeColor = System.Drawing.Color.DarkRed;
-            this.label6.Location = new System.Drawing.Point(70, 944);
+            this.label6.Location = new System.Drawing.Point(71, 887);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 28);
             this.label6.TabIndex = 25;
@@ -382,7 +387,7 @@
             this.cb_availtb.BackColor = System.Drawing.Color.Ivory;
             this.cb_availtb.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.cb_availtb.FormattingEnabled = true;
-            this.cb_availtb.Location = new System.Drawing.Point(342, 884);
+            this.cb_availtb.Location = new System.Drawing.Point(343, 936);
             this.cb_availtb.Name = "cb_availtb";
             this.cb_availtb.Size = new System.Drawing.Size(161, 36);
             this.cb_availtb.TabIndex = 24;
@@ -395,7 +400,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.label5.ForeColor = System.Drawing.Color.DarkRed;
-            this.label5.Location = new System.Drawing.Point(71, 887);
+            this.label5.Location = new System.Drawing.Point(71, 944);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 28);
             this.label5.TabIndex = 23;
@@ -464,7 +469,7 @@
             // 
             this.txt_cash.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_cash.BackColor = System.Drawing.Color.MistyRose;
+            this.txt_cash.BackColor = System.Drawing.Color.Tan;
             this.txt_cash.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_cash.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.txt_cash.Location = new System.Drawing.Point(342, 781);
@@ -637,6 +642,7 @@
             this.cmb_paymentMethod.Size = new System.Drawing.Size(161, 36);
             this.cmb_paymentMethod.TabIndex = 4;
             this.cmb_paymentMethod.Text = "Select Payment";
+            this.cmb_paymentMethod.SelectedIndexChanged += new System.EventHandler(this.cmb_paymentMethod_SelectedIndexChanged);
             // 
             // pnl_bgCash
             // 

@@ -702,7 +702,6 @@
             this.end_dtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.end_dtp.Location = new System.Drawing.Point(654, 60);
             this.end_dtp.Name = "end_dtp";
-            this.end_dtp.ShowCheckBox = true;
             this.end_dtp.Size = new System.Drawing.Size(275, 26);
             this.end_dtp.TabIndex = 28;
             // 
@@ -713,7 +712,6 @@
             this.start_dtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.start_dtp.Location = new System.Drawing.Point(361, 60);
             this.start_dtp.Name = "start_dtp";
-            this.start_dtp.ShowCheckBox = true;
             this.start_dtp.Size = new System.Drawing.Size(271, 26);
             this.start_dtp.TabIndex = 27;
             // 

@@ -53,7 +53,13 @@
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.disable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_unarchive = new System.Windows.Forms.Button();
             this.btn_respassword = new System.Windows.Forms.Button();
+            this.btn_archive = new System.Windows.Forms.Button();
+            this.btn_edit = new System.Windows.Forms.Button();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.btn_save = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -77,18 +83,12 @@
             this.lbl_time = new System.Windows.Forms.Label();
             this.lbl_date = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_unarchive = new System.Windows.Forms.Button();
-            this.btn_archive = new System.Windows.Forms.Button();
-            this.btn_edit = new System.Windows.Forms.Button();
-            this.btn_clear = new System.Windows.Forms.Button();
-            this.btn_save = new System.Windows.Forms.Button();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_users)).BeginInit();
             this.panel12.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.pnl_bgStats.SuspendLayout();
             this.pnl_top.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel13
@@ -275,6 +275,35 @@
             this.panel12.Size = new System.Drawing.Size(470, 830);
             this.panel12.TabIndex = 30;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btn_unarchive);
+            this.panel1.Controls.Add(this.btn_respassword);
+            this.panel1.Controls.Add(this.btn_archive);
+            this.panel1.Controls.Add(this.btn_edit);
+            this.panel1.Controls.Add(this.btn_clear);
+            this.panel1.Controls.Add(this.btn_save);
+            this.panel1.Location = new System.Drawing.Point(1, 503);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 311);
+            this.panel1.TabIndex = 55;
+            // 
+            // btn_unarchive
+            // 
+            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_unarchive.FlatAppearance.BorderSize = 0;
+            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_unarchive.Location = new System.Drawing.Point(254, 225);
+            this.btn_unarchive.Name = "btn_unarchive";
+            this.btn_unarchive.Size = new System.Drawing.Size(139, 58);
+            this.btn_unarchive.TabIndex = 36;
+            this.btn_unarchive.Text = "Unarchive";
+            this.btn_unarchive.UseVisualStyleBackColor = false;
+            this.btn_unarchive.Click += new System.EventHandler(this.btn_unarchive_Click);
+            // 
             // btn_respassword
             // 
             this.btn_respassword.BackColor = System.Drawing.Color.Sienna;
@@ -290,6 +319,70 @@
             this.btn_respassword.Text = "Reset Password";
             this.btn_respassword.UseVisualStyleBackColor = false;
             this.btn_respassword.Click += new System.EventHandler(this.btn_respassword_Click);
+            // 
+            // btn_archive
+            // 
+            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_archive.FlatAppearance.BorderSize = 0;
+            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_archive.Location = new System.Drawing.Point(82, 225);
+            this.btn_archive.Name = "btn_archive";
+            this.btn_archive.Size = new System.Drawing.Size(124, 58);
+            this.btn_archive.TabIndex = 35;
+            this.btn_archive.Text = "Archive";
+            this.btn_archive.UseVisualStyleBackColor = false;
+            this.btn_archive.Click += new System.EventHandler(this.btn_archive_Click);
+            // 
+            // btn_edit
+            // 
+            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_edit.FlatAppearance.BorderSize = 0;
+            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_edit.Location = new System.Drawing.Point(334, 141);
+            this.btn_edit.Name = "btn_edit";
+            this.btn_edit.Size = new System.Drawing.Size(93, 58);
+            this.btn_edit.TabIndex = 34;
+            this.btn_edit.Text = "Edit";
+            this.btn_edit.UseVisualStyleBackColor = false;
+            this.btn_edit.Click += new System.EventHandler(this.btn_edit_Click_1);
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_clear.FlatAppearance.BorderSize = 0;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_clear.Location = new System.Drawing.Point(193, 141);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(93, 58);
+            this.btn_clear.TabIndex = 33;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.UseVisualStyleBackColor = false;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            // 
+            // btn_save
+            // 
+            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_save.FlatAppearance.BorderSize = 0;
+            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_save.Location = new System.Drawing.Point(53, 141);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(93, 58);
+            this.btn_save.TabIndex = 32;
+            this.btn_save.Text = "Add";
+            this.btn_save.UseVisualStyleBackColor = false;
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click_1);
             // 
             // label7
             // 
@@ -560,94 +653,6 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "User Management";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btn_unarchive);
-            this.panel1.Controls.Add(this.btn_respassword);
-            this.panel1.Controls.Add(this.btn_archive);
-            this.panel1.Controls.Add(this.btn_edit);
-            this.panel1.Controls.Add(this.btn_clear);
-            this.panel1.Controls.Add(this.btn_save);
-            this.panel1.Location = new System.Drawing.Point(1, 503);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(468, 311);
-            this.panel1.TabIndex = 55;
-            // 
-            // btn_unarchive
-            // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
-            this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_unarchive.FlatAppearance.BorderSize = 0;
-            this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_unarchive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_unarchive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_unarchive.Location = new System.Drawing.Point(254, 225);
-            this.btn_unarchive.Name = "btn_unarchive";
-            this.btn_unarchive.Size = new System.Drawing.Size(139, 58);
-            this.btn_unarchive.TabIndex = 36;
-            this.btn_unarchive.Text = "Unarchive";
-            this.btn_unarchive.UseVisualStyleBackColor = false;
-            // 
-            // btn_archive
-            // 
-            this.btn_archive.BackColor = System.Drawing.Color.Orange;
-            this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_archive.FlatAppearance.BorderSize = 0;
-            this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_archive.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_archive.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_archive.Location = new System.Drawing.Point(82, 225);
-            this.btn_archive.Name = "btn_archive";
-            this.btn_archive.Size = new System.Drawing.Size(124, 58);
-            this.btn_archive.TabIndex = 35;
-            this.btn_archive.Text = "Archive";
-            this.btn_archive.UseVisualStyleBackColor = false;
-            // 
-            // btn_edit
-            // 
-            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_edit.FlatAppearance.BorderSize = 0;
-            this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_edit.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_edit.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_edit.Location = new System.Drawing.Point(334, 141);
-            this.btn_edit.Name = "btn_edit";
-            this.btn_edit.Size = new System.Drawing.Size(93, 58);
-            this.btn_edit.TabIndex = 34;
-            this.btn_edit.Text = "Edit";
-            this.btn_edit.UseVisualStyleBackColor = false;
-            // 
-            // btn_clear
-            // 
-            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
-            this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_clear.FlatAppearance.BorderSize = 0;
-            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_clear.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_clear.Location = new System.Drawing.Point(193, 141);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(93, 58);
-            this.btn_clear.TabIndex = 33;
-            this.btn_clear.Text = "Clear";
-            this.btn_clear.UseVisualStyleBackColor = false;
-            // 
-            // btn_save
-            // 
-            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
-            this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_save.FlatAppearance.BorderSize = 0;
-            this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_save.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_save.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_save.Location = new System.Drawing.Point(53, 141);
-            this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(93, 58);
-            this.btn_save.TabIndex = 32;
-            this.btn_save.Text = "Add";
-            this.btn_save.UseVisualStyleBackColor = false;
-            // 
             // frm_Users
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -666,11 +671,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_users)).EndInit();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.pnl_bgStats.ResumeLayout(false);
             this.pnl_bgStats.PerformLayout();
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -131,7 +131,7 @@ namespace POS_SYSTEM
                 try
                 {
                     conn.Open();
-                    MySqlCommand cmdIngredients = new MySqlCommand("SELECT table_id, table_number FROM tables_tb WHERE is_archived = 0", conn);
+                    MySqlCommand cmdIngredients = new MySqlCommand("SELECT table_id, table_number FROM tables_tb", conn);
                     MySqlDataReader drIngredients = cmdIngredients.ExecuteReader();
                     cb_availtb.Items.Clear();
                     while (drIngredients.Read())
@@ -787,6 +787,10 @@ namespace POS_SYSTEM
                     }
                 }
             }
+            AutoGenerateTransactionNumber();
+            LoadComboBoxes();
+            cb_availtb.Enabled = true;
+            txt_change.Visible = true;
         }
 
         private void UpdateIngredientUsage(MySqlConnection conn, MySqlTransaction transaction, string itemId, int quantity, Dictionary<int, int> ingredientUsage)
@@ -1020,6 +1024,34 @@ namespace POS_SYSTEM
             else
             {
                 ClearOrderDetails();
+            }
+            LoadComboBoxes();
+            cb_availtb.Enabled = true;
+        }
+
+        private void cmb_serveMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmb_serveMode.SelectedItem == "Takeout")
+            {
+                cb_availtb.Text = "";
+                cb_availtb.Enabled = false;
+
+            }
+            else
+            {
+                cb_availtb.Enabled=true;
+            }
+        }
+
+        private void cmb_paymentMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if( cmb_paymentMethod.SelectedItem != "Cash")
+            {
+                txt_change.Visible = false;
+            }
+            else
+            {
+                txt_change.Visible = true;
             }
         }
     }

@@ -101,7 +101,7 @@
             this.txt_password.Name = "txt_password";
             this.txt_password.PasswordChar = '*';
             this.txt_password.Size = new System.Drawing.Size(328, 27);
-            this.txt_password.TabIndex = 13;
+            this.txt_password.TabIndex = 2;
             this.txt_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_username
@@ -112,7 +112,7 @@
             this.txt_username.Location = new System.Drawing.Point(155, 325);
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(328, 27);
-            this.txt_username.TabIndex = 12;
+            this.txt_username.TabIndex = 1;
             this.txt_username.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // login_logo
@@ -195,6 +195,7 @@
             // 
             // frm_Login
             // 
+            this.AcceptButton = this.Btn_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;

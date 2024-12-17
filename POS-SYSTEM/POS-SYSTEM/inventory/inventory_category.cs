@@ -178,40 +178,7 @@ namespace POS_SYSTEM
 
         private void btn_unarchive_Click(object sender, EventArgs e)
         {
-            if (dgv_category.CurrentRow != null)
-            {
-                DialogResult result = MessageBox.Show("Are you sure you want to unarchive this category?", "Unarchive Category", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
-                {
-                    try
-                    {
-                        conn.Open();
-                        MySqlCommand cmd = new MySqlCommand("UPDATE categories_tb SET is_archived = 0 WHERE category_id = @category_id", conn);
-                        cmd.Parameters.AddWithValue("@category_id", dgv_category.CurrentRow.Cells[0].Value);
 
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Category unarchived successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LogAction("Inventory Category", "Unarchived category", Convert.ToInt32(dgv_category.CurrentRow.Cells[0].Value), null, null, "Unarchived Category ID: " + dgv_category.CurrentRow.Cells[0].Value);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error unarchiving category.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    catch (MySqlException ex)
-                    {
-                        MessageBox.Show("Error unarchiving category: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                        LoadDataGridView();
-                    }
-                }
-            }
         }
 
         private void LoadDataGridView()
@@ -274,6 +241,5 @@ namespace POS_SYSTEM
 
             return true;
         }
-
     }
 }

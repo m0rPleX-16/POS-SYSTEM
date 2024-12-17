@@ -302,7 +302,7 @@ namespace POS_SYSTEM
     FROM orders_tb o
     JOIN order_details_tb od ON o.order_id = od.order_id
         JOIN menu_items_tb mi ON od.item_id = mi.item_id
-    WHERE o.status IN ('To be Served', 'Takeout')
+    WHERE o.status IN ('Dine In', 'Takeout')
     GROUP BY DATE(o.order_date)
     ORDER BY order_date";
 

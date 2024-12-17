@@ -16,7 +16,7 @@ namespace POS_SYSTEM
     {
         private Employee _currentEmployee;
         private MySqlConnection conn;
-
+        private int panel;
         public frm_Inventory(Employee _currentEmployee)
         {
             InitializeComponent();
@@ -132,38 +132,57 @@ namespace POS_SYSTEM
 
         private void btn_product_Click(object sender, EventArgs e)
         {
+            panel = 1;
             LoadUserControl(new inventory_items(_currentEmployee));
         }
 
         private void btn_category_Click(object sender, EventArgs e)
         {
-  
+            panel = 2;
             LoadUserControl(new inventory_category(_currentEmployee));
         }
 
         private void btn_stockin_Click(object sender, EventArgs e)
         {
+            panel = 3;
             LoadUserControl(new inventory_ingridients(_currentEmployee));
         }
 
         private void btn_tables_Click(object sender, EventArgs e)
         {
+            panel = 4;
             LoadUserControl(new inventory_tables(_currentEmployee));
         }
 
         private void recipe_Click(object sender, EventArgs e)
         {
+            panel = 5;
             LoadUserControl(new inventory_recipe(_currentEmployee));
         }
 
         private void btn_transactions_Click(object sender, EventArgs e)
         {
+            panel = 6;
             LoadUserControl(new inventory_transactions(_currentEmployee));
         }
 
         private void txt_search_TextChanged(object sender, EventArgs e)
         {
             LoadInventoryData(txt_search.Text);
+
+            switch (panel) {
+
+                case 1:
+                    using (inventory_items search = new inventory_items(_currentEmployee))
+                    {
+
+                        search.loadsearch(txt_search.Text);
+
+
+                    }
+
+                    break;
+            }
         }
 
         private void LoadInventoryData(string searchFilter = "")

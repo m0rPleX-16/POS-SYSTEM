@@ -266,17 +266,17 @@ namespace POS_SYSTEM.inventory
             txt_stockquan.Clear();
             txt_minquan.Clear();
         }
-
         private void btn_edit_Click(object sender, EventArgs e)
         {
             if (!ValidateInput())
                 return;
 
-            int quantityUpdated = 0;
+            decimal stockQuantityUpdated, minimumQuantityUpdated;
 
-            if (!int.TryParse(txt_stockquan.Text, out quantityUpdated))
+            if (!Decimal.TryParse(txt_stockquan.Text.Trim(), out stockQuantityUpdated) ||
+                !Decimal.TryParse(txt_minquan.Text.Trim(), out minimumQuantityUpdated))
             {
-                MessageBox.Show("Please enter a valid quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter valid numeric values for stock quantity and minimum quantity.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -294,14 +294,14 @@ namespace POS_SYSTEM.inventory
                 cmd.Parameters.AddWithValue("@ingredient_id", txt_ingid.Text.Trim());
                 cmd.Parameters.AddWithValue("@ingredient_name", txt_ingname.Text.Trim());
                 cmd.Parameters.AddWithValue("@unit", txt_unit.Text.Trim());
-                cmd.Parameters.AddWithValue("@stock_quantity", txt_stockquan.Text.Trim());
-                cmd.Parameters.AddWithValue("@minimum_quantity", txt_minquan.Text.Trim());
+                cmd.Parameters.AddWithValue("@stock_quantity", stockQuantityUpdated);
+                cmd.Parameters.AddWithValue("@minimum_quantity", minimumQuantityUpdated);
                 cmd.Parameters.AddWithValue("@expiration_date", expire_dtp.Value.Date == DateTime.MinValue ? (object)DBNull.Value : expire_dtp.Value.Date);
-                cmd.Parameters.AddWithValue("@is_active", false);
+                cmd.Parameters.AddWithValue("@is_active", false); 
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Ingredient updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LogAction("Inventory", "Edit Ingredient", null, quantityUpdated, null, $"Edited ingredient: {txt_ingname.Text}");
+                LogAction("Inventory", "Edit Ingredient", null, (int)stockQuantityUpdated, null, $"Edited ingredient: {txt_ingname.Text}");
 
                 LoadDataGridView();
             }
@@ -314,6 +314,7 @@ namespace POS_SYSTEM.inventory
                 conn.Close();
             }
         }
+
 
         private void btn_archive_Click(object sender, EventArgs e)
         {

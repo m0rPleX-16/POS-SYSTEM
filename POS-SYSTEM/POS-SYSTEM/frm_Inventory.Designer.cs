@@ -30,26 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Inventory));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.pnl_bgStats = new System.Windows.Forms.Panel();
-            this.btn_transactions = new System.Windows.Forms.Button();
-            this.recipe = new System.Windows.Forms.Button();
-            this.btn_tables = new System.Windows.Forms.Button();
-            this.btn_stockin = new System.Windows.Forms.Button();
-            this.btn_category = new System.Windows.Forms.Button();
-            this.btn_product = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txt_search = new System.Windows.Forms.TextBox();
             this.pnl_top = new System.Windows.Forms.Panel();
             this.pnl_clock = new System.Windows.Forms.Panel();
             this.pnl_calendar = new System.Windows.Forms.Panel();
@@ -69,164 +59,22 @@
             this.last_transaction_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.last_transaction_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.last_transaction_note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnl_bgStats.SuspendLayout();
+            this.txt_search = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btn_product = new System.Windows.Forms.Button();
+            this.btn_category = new System.Windows.Forms.Button();
+            this.btn_stockin = new System.Windows.Forms.Button();
+            this.btn_tables = new System.Windows.Forms.Button();
+            this.recipe = new System.Windows.Forms.Button();
+            this.btn_transactions = new System.Windows.Forms.Button();
+            this.pnl_bgStats = new System.Windows.Forms.Panel();
             this.pnl_top.SuspendLayout();
             this.pnl_inventBG.SuspendLayout();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_inventory)).BeginInit();
+            this.pnl_bgStats.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnl_bgStats
-            // 
-            this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
-            this.pnl_bgStats.Controls.Add(this.btn_transactions);
-            this.pnl_bgStats.Controls.Add(this.recipe);
-            this.pnl_bgStats.Controls.Add(this.btn_tables);
-            this.pnl_bgStats.Controls.Add(this.btn_stockin);
-            this.pnl_bgStats.Controls.Add(this.btn_category);
-            this.pnl_bgStats.Controls.Add(this.btn_product);
-            this.pnl_bgStats.Controls.Add(this.button1);
-            this.pnl_bgStats.Controls.Add(this.panel1);
-            this.pnl_bgStats.Controls.Add(this.txt_search);
-            this.pnl_bgStats.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_bgStats.Location = new System.Drawing.Point(0, 153);
-            this.pnl_bgStats.Name = "pnl_bgStats";
-            this.pnl_bgStats.Size = new System.Drawing.Size(1461, 119);
-            this.pnl_bgStats.TabIndex = 29;
-            // 
-            // btn_transactions
-            // 
-            this.btn_transactions.BackColor = System.Drawing.Color.Wheat;
-            this.btn_transactions.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_transactions.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_transactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_transactions.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            this.btn_transactions.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_transactions.Location = new System.Drawing.Point(909, 18);
-            this.btn_transactions.Name = "btn_transactions";
-            this.btn_transactions.Size = new System.Drawing.Size(166, 85);
-            this.btn_transactions.TabIndex = 42;
-            this.btn_transactions.Text = "Transactions";
-            this.btn_transactions.UseVisualStyleBackColor = false;
-            this.btn_transactions.Click += new System.EventHandler(this.btn_transactions_Click);
-            // 
-            // recipe
-            // 
-            this.recipe.BackColor = System.Drawing.Color.Wheat;
-            this.recipe.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.recipe.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.recipe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.recipe.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
-            this.recipe.ForeColor = System.Drawing.Color.DarkRed;
-            this.recipe.Location = new System.Drawing.Point(732, 18);
-            this.recipe.Name = "recipe";
-            this.recipe.Size = new System.Drawing.Size(166, 85);
-            this.recipe.TabIndex = 41;
-            this.recipe.Text = "Recipe";
-            this.recipe.UseVisualStyleBackColor = false;
-            this.recipe.Click += new System.EventHandler(this.recipe_Click);
-            // 
-            // btn_tables
-            // 
-            this.btn_tables.BackColor = System.Drawing.Color.Wheat;
-            this.btn_tables.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_tables.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_tables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_tables.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
-            this.btn_tables.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_tables.Location = new System.Drawing.Point(553, 18);
-            this.btn_tables.Name = "btn_tables";
-            this.btn_tables.Size = new System.Drawing.Size(166, 85);
-            this.btn_tables.TabIndex = 40;
-            this.btn_tables.Text = "Tables";
-            this.btn_tables.UseVisualStyleBackColor = false;
-            this.btn_tables.Click += new System.EventHandler(this.btn_tables_Click);
-            // 
-            // btn_stockin
-            // 
-            this.btn_stockin.BackColor = System.Drawing.Color.Wheat;
-            this.btn_stockin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_stockin.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
-            this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_stockin.Location = new System.Drawing.Point(374, 18);
-            this.btn_stockin.Name = "btn_stockin";
-            this.btn_stockin.Size = new System.Drawing.Size(166, 85);
-            this.btn_stockin.TabIndex = 39;
-            this.btn_stockin.Text = "Ingredients";
-            this.btn_stockin.UseVisualStyleBackColor = false;
-            this.btn_stockin.Click += new System.EventHandler(this.btn_stockin_Click);
-            // 
-            // btn_category
-            // 
-            this.btn_category.BackColor = System.Drawing.Color.Wheat;
-            this.btn_category.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_category.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_category.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
-            this.btn_category.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_category.Location = new System.Drawing.Point(193, 18);
-            this.btn_category.Name = "btn_category";
-            this.btn_category.Size = new System.Drawing.Size(166, 85);
-            this.btn_category.TabIndex = 38;
-            this.btn_category.Text = "Categories";
-            this.btn_category.UseVisualStyleBackColor = false;
-            this.btn_category.Click += new System.EventHandler(this.btn_category_Click);
-            // 
-            // btn_product
-            // 
-            this.btn_product.BackColor = System.Drawing.Color.Wheat;
-            this.btn_product.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_product.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
-            this.btn_product.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_product.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
-            this.btn_product.ForeColor = System.Drawing.Color.DarkRed;
-            this.btn_product.Location = new System.Drawing.Point(12, 17);
-            this.btn_product.Name = "btn_product";
-            this.btn_product.Size = new System.Drawing.Size(166, 85);
-            this.btn_product.TabIndex = 37;
-            this.btn_product.Text = "Items";
-            this.btn_product.UseVisualStyleBackColor = false;
-            this.btn_product.Click += new System.EventHandler(this.btn_product_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FloralWhite;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(1348, 40);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(51, 46);
-            this.button1.TabIndex = 25;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.panel1.Location = new System.Drawing.Point(969, 88);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(430, 1);
-            this.panel1.TabIndex = 24;
-            // 
-            // txt_search
-            // 
-            this.txt_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_search.BackColor = System.Drawing.Color.FloralWhite;
-            this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
-            this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
-            this.txt_search.Location = new System.Drawing.Point(969, 52);
-            this.txt_search.Name = "txt_search";
-            this.txt_search.Size = new System.Drawing.Size(382, 36);
-            this.txt_search.TabIndex = 23;
-            this.txt_search.Text = "Search";
-            this.txt_search.TextChanged += new System.EventHandler(this.txt_search_TextChanged);
             // 
             // pnl_top
             // 
@@ -322,22 +170,22 @@
             // 
             this.dgv_inventory.AllowUserToAddRows = false;
             this.dgv_inventory.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            this.dgv_inventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            this.dgv_inventory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgv_inventory.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_inventory.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_inventory.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inventory.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dgv_inventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_inventory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ingredient_id,
@@ -350,34 +198,34 @@
             this.last_transaction_quantity,
             this.last_transaction_date,
             this.last_transaction_note});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_inventory.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_inventory.DefaultCellStyle = dataGridViewCellStyle16;
             this.dgv_inventory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_inventory.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_inventory.Location = new System.Drawing.Point(0, 0);
             this.dgv_inventory.Name = "dgv_inventory";
             this.dgv_inventory.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_inventory.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_inventory.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.dgv_inventory.RowHeadersVisible = false;
             this.dgv_inventory.RowHeadersWidth = 51;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            this.dgv_inventory.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            this.dgv_inventory.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dgv_inventory.RowTemplate.Height = 24;
             this.dgv_inventory.Size = new System.Drawing.Size(1461, 710);
             this.dgv_inventory.TabIndex = 1;
@@ -385,11 +233,11 @@
             // ingredient_id
             // 
             this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle12;
             this.ingredient_id.HeaderText = "INVENTORY NO.";
             this.ingredient_id.MinimumWidth = 6;
             this.ingredient_id.Name = "ingredient_id";
@@ -400,10 +248,10 @@
             // ingredient_name
             // 
             this.ingredient_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.ingredient_name.DefaultCellStyle = dataGridViewCellStyle13;
             this.ingredient_name.HeaderText = "INGREDIENT NAME";
             this.ingredient_name.MinimumWidth = 6;
             this.ingredient_name.Name = "ingredient_name";
@@ -413,10 +261,10 @@
             // unit
             // 
             this.unit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.unit.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.unit.DefaultCellStyle = dataGridViewCellStyle14;
             this.unit.HeaderText = "UNIT";
             this.unit.MinimumWidth = 6;
             this.unit.Name = "unit";
@@ -426,10 +274,10 @@
             // stock_quantity
             // 
             this.stock_quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.stock_quantity.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.stock_quantity.DefaultCellStyle = dataGridViewCellStyle15;
             this.stock_quantity.HeaderText = "STOCK QUANTITY";
             this.stock_quantity.MinimumWidth = 6;
             this.stock_quantity.Name = "stock_quantity";
@@ -487,6 +335,157 @@
             this.last_transaction_note.Name = "last_transaction_note";
             this.last_transaction_note.ReadOnly = true;
             // 
+            // txt_search
+            // 
+            this.txt_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_search.BackColor = System.Drawing.Color.FloralWhite;
+            this.txt_search.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_search.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
+            this.txt_search.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_search.Location = new System.Drawing.Point(969, 52);
+            this.txt_search.Name = "txt_search";
+            this.txt_search.Size = new System.Drawing.Size(382, 36);
+            this.txt_search.TabIndex = 23;
+            this.txt_search.TextChanged += new System.EventHandler(this.txt_search_TextChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.panel1.Location = new System.Drawing.Point(969, 88);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(430, 1);
+            this.panel1.TabIndex = 24;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FloralWhite;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(1348, 40);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(51, 46);
+            this.button1.TabIndex = 25;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btn_product
+            // 
+            this.btn_product.BackColor = System.Drawing.Color.Wheat;
+            this.btn_product.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_product.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_product.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_product.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
+            this.btn_product.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_product.Location = new System.Drawing.Point(12, 17);
+            this.btn_product.Name = "btn_product";
+            this.btn_product.Size = new System.Drawing.Size(166, 85);
+            this.btn_product.TabIndex = 37;
+            this.btn_product.Text = "Items";
+            this.btn_product.UseVisualStyleBackColor = false;
+            this.btn_product.Click += new System.EventHandler(this.btn_product_Click);
+            // 
+            // btn_category
+            // 
+            this.btn_category.BackColor = System.Drawing.Color.Wheat;
+            this.btn_category.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_category.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_category.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_category.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
+            this.btn_category.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_category.Location = new System.Drawing.Point(193, 18);
+            this.btn_category.Name = "btn_category";
+            this.btn_category.Size = new System.Drawing.Size(166, 85);
+            this.btn_category.TabIndex = 38;
+            this.btn_category.Text = "Categories";
+            this.btn_category.UseVisualStyleBackColor = false;
+            this.btn_category.Click += new System.EventHandler(this.btn_category_Click);
+            // 
+            // btn_stockin
+            // 
+            this.btn_stockin.BackColor = System.Drawing.Color.Wheat;
+            this.btn_stockin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_stockin.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_stockin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_stockin.Font = new System.Drawing.Font("Segoe UI Semibold", 13F);
+            this.btn_stockin.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_stockin.Location = new System.Drawing.Point(374, 18);
+            this.btn_stockin.Name = "btn_stockin";
+            this.btn_stockin.Size = new System.Drawing.Size(166, 85);
+            this.btn_stockin.TabIndex = 39;
+            this.btn_stockin.Text = "Ingredients";
+            this.btn_stockin.UseVisualStyleBackColor = false;
+            this.btn_stockin.Click += new System.EventHandler(this.btn_stockin_Click);
+            // 
+            // btn_tables
+            // 
+            this.btn_tables.BackColor = System.Drawing.Color.Wheat;
+            this.btn_tables.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_tables.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_tables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_tables.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
+            this.btn_tables.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_tables.Location = new System.Drawing.Point(553, 18);
+            this.btn_tables.Name = "btn_tables";
+            this.btn_tables.Size = new System.Drawing.Size(166, 85);
+            this.btn_tables.TabIndex = 40;
+            this.btn_tables.Text = "Tables";
+            this.btn_tables.UseVisualStyleBackColor = false;
+            this.btn_tables.Click += new System.EventHandler(this.btn_tables_Click);
+            // 
+            // recipe
+            // 
+            this.recipe.BackColor = System.Drawing.Color.Wheat;
+            this.recipe.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.recipe.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.recipe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.recipe.Font = new System.Drawing.Font("Segoe UI Semibold", 16F);
+            this.recipe.ForeColor = System.Drawing.Color.DarkRed;
+            this.recipe.Location = new System.Drawing.Point(732, 18);
+            this.recipe.Name = "recipe";
+            this.recipe.Size = new System.Drawing.Size(166, 85);
+            this.recipe.TabIndex = 41;
+            this.recipe.Text = "Recipe";
+            this.recipe.UseVisualStyleBackColor = false;
+            this.recipe.Click += new System.EventHandler(this.recipe_Click);
+            // 
+            // btn_transactions
+            // 
+            this.btn_transactions.BackColor = System.Drawing.Color.Wheat;
+            this.btn_transactions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_transactions.FlatAppearance.BorderColor = System.Drawing.Color.Wheat;
+            this.btn_transactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_transactions.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            this.btn_transactions.ForeColor = System.Drawing.Color.DarkRed;
+            this.btn_transactions.Location = new System.Drawing.Point(909, 18);
+            this.btn_transactions.Name = "btn_transactions";
+            this.btn_transactions.Size = new System.Drawing.Size(166, 85);
+            this.btn_transactions.TabIndex = 42;
+            this.btn_transactions.Text = "Transactions";
+            this.btn_transactions.UseVisualStyleBackColor = false;
+            this.btn_transactions.Click += new System.EventHandler(this.btn_transactions_Click);
+            // 
+            // pnl_bgStats
+            // 
+            this.pnl_bgStats.BackColor = System.Drawing.Color.FloralWhite;
+            this.pnl_bgStats.Controls.Add(this.btn_transactions);
+            this.pnl_bgStats.Controls.Add(this.recipe);
+            this.pnl_bgStats.Controls.Add(this.btn_tables);
+            this.pnl_bgStats.Controls.Add(this.btn_stockin);
+            this.pnl_bgStats.Controls.Add(this.btn_category);
+            this.pnl_bgStats.Controls.Add(this.btn_product);
+            this.pnl_bgStats.Controls.Add(this.button1);
+            this.pnl_bgStats.Controls.Add(this.panel1);
+            this.pnl_bgStats.Controls.Add(this.txt_search);
+            this.pnl_bgStats.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_bgStats.Location = new System.Drawing.Point(0, 153);
+            this.pnl_bgStats.Name = "pnl_bgStats";
+            this.pnl_bgStats.Size = new System.Drawing.Size(1461, 119);
+            this.pnl_bgStats.TabIndex = 29;
+            // 
             // frm_Inventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -503,38 +502,28 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inventory Module";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.pnl_bgStats.ResumeLayout(false);
-            this.pnl_bgStats.PerformLayout();
             this.pnl_top.ResumeLayout(false);
             this.pnl_top.PerformLayout();
             this.pnl_inventBG.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_inventory)).EndInit();
+            this.pnl_bgStats.ResumeLayout(false);
+            this.pnl_bgStats.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer timerClock;
-        private System.Windows.Forms.Panel pnl_bgStats;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txt_search;
-        private System.Windows.Forms.Button btn_product;
-        private System.Windows.Forms.Button btn_category;
         private System.Windows.Forms.Panel pnl_top;
         private System.Windows.Forms.Panel pnl_clock;
         private System.Windows.Forms.Panel pnl_calendar;
         private System.Windows.Forms.Label lbl_time;
         private System.Windows.Forms.Label lbl_date;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btn_stockin;
         private System.Windows.Forms.Panel pnl_inventBG;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.DataGridView dgv_inventory;
-        private System.Windows.Forms.Button btn_tables;
-        private System.Windows.Forms.Button recipe;
-        private System.Windows.Forms.Button btn_transactions;
         private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ingredient_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn unit;
@@ -545,5 +534,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn last_transaction_quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn last_transaction_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn last_transaction_note;
+        private System.Windows.Forms.TextBox txt_search;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_product;
+        private System.Windows.Forms.Button btn_category;
+        private System.Windows.Forms.Button btn_stockin;
+        private System.Windows.Forms.Button btn_tables;
+        private System.Windows.Forms.Button recipe;
+        private System.Windows.Forms.Button btn_transactions;
+        private System.Windows.Forms.Panel pnl_bgStats;
     }
 }
