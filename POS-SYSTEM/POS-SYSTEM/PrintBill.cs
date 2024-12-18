@@ -138,7 +138,7 @@ namespace POS_SYSTEM
 
         private void AdjustPaperLength()
         {
-            longPaper = (products.Count * 20) + 200; // Dynamically adjust based on content length
+            longPaper = (products.Count * 20) + 200;
         }
 
         private void PD_PrintPage(object sender, PrintPageEventArgs e)
@@ -187,46 +187,78 @@ namespace POS_SYSTEM
 
             currentHeight = (int)(height + 20);
         }
-
         private void DrawProductDetails(Graphics g)
         {
             Font productFont = new Font("Segoe UI", 8, FontStyle.Regular);
             Font headerFont = new Font("Segoe UI", 8, FontStyle.Bold);
             float height = currentHeight;
 
-            g.DrawString("Product", headerFont, Brushes.Black, 10, height);
-            g.DrawString("Qty", headerFont, Brushes.Black, 100, height);
-            g.DrawString("Subtotal", headerFont, Brushes.Black, 150, height);
-            g.DrawString("Discount", headerFont, Brushes.Black, 220, height);
-            g.DrawString("Tax", headerFont, Brushes.Black, 290, height);
+            g.DrawString("Item Name", headerFont, Brushes.Black, 10, height);
+            g.DrawString("Qty", headerFont, Brushes.Black, 120, height);
+            g.DrawString("Price", headerFont, Brushes.Black, 200, height);
 
             height += 15;
 
+            int itemNameColumnWidth = 100;
             foreach (var product in products)
             {
-                g.DrawString(product.ProdName, productFont, Brushes.Black, 10, height);
-                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 100, height);
-                g.DrawString(product.Subtotal.ToString("C"), productFont, Brushes.Black, 150, height);
-                g.DrawString(product.Discount.ToString("C"), productFont, Brushes.Black, 220, height);
-                g.DrawString(product.Tax.ToString("C"), productFont, Brushes.Black, 290, height);
+                string truncatedName = WrapOrTruncateText(g, product.ProdName, productFont, itemNameColumnWidth);
+
+                g.DrawString(truncatedName, productFont, Brushes.Black, 10, height);
+                g.DrawString(product.Quantity.ToString(), productFont, Brushes.Black, 120, height);
+                g.DrawString((product.Subtotal / product.Quantity).ToString("C"), productFont, Brushes.Black, 200, height);
 
                 height += 20;
             }
 
-            currentHeight = (int)(height + 20);
+            currentHeight = (int)(height + 10);
         }
+
+        private string WrapOrTruncateText(Graphics g, string text, Font font, int maxWidth)
+        {
+            SizeF textSize = g.MeasureString(text, font);
+
+            if (textSize.Width > maxWidth)
+            {
+                for (int i = text.Length - 1; i >= 0; i--)
+                {
+                    string truncatedText = text.Substring(0, i) + "...";
+                    if (g.MeasureString(truncatedText, font).Width <= maxWidth)
+                        return truncatedText;
+                }
+            }
+
+            return text;
+        }
+
 
         private void DrawFooter(Graphics g)
         {
-            Font footerFont = new Font("Segoe UI", 8, FontStyle.Bold);
+            Font footerFont = new Font("Segoe UI", 8, FontStyle.Regular);
+            Font boldFooterFont = new Font("Segoe UI", 8, FontStyle.Bold);
             float height = currentHeight;
 
-            g.DrawString($"Grand Total: {grandTotal:C}", footerFont, Brushes.Black, 10, height);
+            decimal totalDiscount = 0;
+            decimal totalTax = 0;
+
+            foreach (var product in products)
+            {
+                totalDiscount += product.Discount;
+                totalTax += product.Tax;
+            }
+
+            g.DrawString($"Discount: {totalDiscount:C}", footerFont, Brushes.Black, 10, height);
+            height += 15;
+            g.DrawString($"Tax: {totalTax:C}", footerFont, Brushes.Black, 10, height);
+            height += 15;
+            g.DrawString($"Grand Total: {grandTotal:C}", boldFooterFont, Brushes.Black, 10, height);
             height += 20;
+
             g.DrawString("Thank you for dining with us!", footerFont, Brushes.Black,
                 PD.DefaultPageSettings.PaperSize.Width / 2, height,
                 new StringFormat { Alignment = StringAlignment.Center });
         }
+
 
         private void SumPrice()
         {

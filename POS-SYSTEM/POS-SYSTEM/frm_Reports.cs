@@ -124,7 +124,6 @@ namespace POS_SYSTEM
                 {
                     conn.Open();
 
-                    // Start building the query
                     string query = @"
                 SELECT o.order_id, o.order_date, SUM(od.quantity * od.price_at_time) AS total_sale, 
                        p.payment_method, p.payment_date
