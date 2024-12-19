@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace POS_SYSTEM
                 string username = "root";
                 string password = "";
                 string database = "posresto_db";
-                string backupFilePath = @"C:\Users\glenn\source\repos\POS-SYSTEM\POS-SYSTEM\POS-SYSTEM\database\posresto_db.sql";
+                string backupFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "posresto_db.sql");
 
                 string backupCommand = $@"C:\xampp\mysql\bin\mysqldump --host={server} --port={port} --user={username} --password={password} --databases {database} --routines --events --triggers > ""{backupFilePath}""";
 
