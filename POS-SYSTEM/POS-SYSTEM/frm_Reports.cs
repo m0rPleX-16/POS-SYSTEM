@@ -17,6 +17,10 @@ namespace POS_SYSTEM
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private MySqlConnection conn = new MySqlConnection("server=localhost;userid=root;password=;database=posresto_db");
         private Employee _currentEmployee;
+        private const int PageSize = 25;
+        private int currentPageIndex = 1;
+        private int totalPages = 0;
+        private int totalRows = 0;
 
         public frm_Reports(Employee currentEmployee)
         {
@@ -114,7 +118,6 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
-
         private void LoadSalesReport(string searchQuery = "", DateTime? filterDate = null)
         {
             dgv_sales.Rows.Clear();
@@ -124,13 +127,46 @@ namespace POS_SYSTEM
                 {
                     conn.Open();
 
+                    string countQuery = @"
+                SELECT COUNT(*) 
+                FROM `orders_tb` o
+                JOIN `order_details_tb` od ON o.order_id = od.order_id
+                JOIN `payments_tb` p ON o.order_id = p.order_id
+                WHERE o.status != 'Canceled'";
+
+                    if (!string.IsNullOrEmpty(searchQuery))
+                    {
+                        countQuery += " AND (o.order_id LIKE @searchQuery OR p.payment_method LIKE @searchQuery)";
+                    }
+
+                    if (filterDate.HasValue)
+                    {
+                        countQuery += " AND DATE(o.order_date) = @filterDate";
+                    }
+
+                    using (MySqlCommand countCmd = new MySqlCommand(countQuery, conn))
+                    {
+                        countCmd.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
+                        if (filterDate.HasValue)
+                        {
+                            countCmd.Parameters.AddWithValue("@filterDate", filterDate.Value.Date);
+                        }
+
+                        totalRows = Convert.ToInt32(countCmd.ExecuteScalar());
+                    }
+
+                    totalPages = (int)Math.Ceiling((double)totalRows / PageSize);
+
+                    lblCurrentPage.Text = currentPageIndex.ToString();
+                    lblTotalPage.Text = totalPages.ToString();
+
                     string query = @"
                 SELECT o.order_id, o.order_date, SUM(od.quantity * od.price_at_time) AS total_sale, 
                        p.payment_method, p.payment_date
                 FROM `orders_tb` o
                 JOIN `order_details_tb` od ON o.order_id = od.order_id
                 JOIN `payments_tb` p ON o.order_id = p.order_id
-                WHERE o.status != 'Canceled' ";
+                WHERE o.status != 'Canceled'";
 
                     if (!string.IsNullOrEmpty(searchQuery))
                     {
@@ -143,72 +179,24 @@ namespace POS_SYSTEM
                     }
 
                     query += " GROUP BY o.order_id, o.order_date, p.payment_method, p.payment_date";
+                    query += " ORDER BY o.order_date DESC LIMIT @offset, @pageSize";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-
                     cmd.Parameters.AddWithValue("@searchQuery", "%" + searchQuery + "%");
                     if (filterDate.HasValue)
                     {
                         cmd.Parameters.AddWithValue("@filterDate", filterDate.Value.Date);
                     }
-
-                    MySqlDataReader dr = cmd.ExecuteReader();
-
-                    while (dr.Read())
-                    {
-                        dgv_sales.Rows.Add(
-                            dr["order_id"],
-                            dr["order_date"],
-                            dr["total_sale"],
-                            dr["payment_method"],
-                            dr["payment_date"]
-                        );
-                    }
-
-                    dr.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Error", ex);
-            }
-        }
-
-
-        private void ShowError(string title, Exception ex)
-        {
-            MessageBox.Show($"{title}:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void btn_close_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void txt_search_TextChanged(object sender, EventArgs e)
-        {
-            dgv_sales.Rows.Clear();
-            try
-            {
-                using (var conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"
-                SELECT o.order_id, o.order_date, SUM(od.quantity * od.price_at_time) AS total_sale, 
-                       p.payment_method, p.payment_date
-                FROM `orders_tb` o
-                JOIN `order_details_tb` od ON o.order_id = od.order_id
-                JOIN `payments_tb` p ON o.order_id = p.order_id
-                WHERE o.status != 'Canceled'
-                AND (o.order_id LIKE @searchText OR p.payment_method LIKE @searchText)
-                GROUP BY o.order_id, o.order_date, p.payment_method, p.payment_date
-                ORDER BY o.order_date DESC";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@searchText", "%" + txt_search.Text + "%");
+                    cmd.Parameters.AddWithValue("@offset", (currentPageIndex - 1) * PageSize);
+                    cmd.Parameters.AddWithValue("@pageSize", PageSize);
 
                     using (MySqlDataReader dr = cmd.ExecuteReader())
                     {
+                        if (!dr.HasRows)
+                        {
+                            MessageBox.Show("No records found for this page.", "No Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
                         while (dr.Read())
                         {
                             dgv_sales.Rows.Add(
@@ -226,6 +214,21 @@ namespace POS_SYSTEM
             {
                 ShowError("Error", ex);
             }
+        }
+        private void ShowError(string title, Exception ex)
+        {
+            MessageBox.Show($"{title}:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadSalesReport(txt_search.Text);
         }
 
 
@@ -257,30 +260,40 @@ namespace POS_SYSTEM
                 {
                     if (!dgvRow.IsNewRow)
                     {
-                        ws.Cell(row, 1).Value = dgvRow.Cells["order_id"].Value.ToString();
-                        ws.Cell(row, 2).Value = dgvRow.Cells["order_date"].Value.ToString();
-                        ws.Cell(row, 3).Value = decimal.TryParse(dgvRow.Cells["total_sale"].Value.ToString(), out decimal totalSale) ? totalSale : 0;
-                        ws.Cell(row, 4).Value = dgvRow.Cells["payment_method"].Value.ToString();
-                        ws.Cell(row, 5).Value = dgvRow.Cells["payment_date"].Value.ToString();
+                        ws.Cell(row, 1).Value = dgvRow.Cells["order_id"].Value?.ToString() ?? string.Empty;
+                        ws.Cell(row, 2).Value = dgvRow.Cells["order_date"].Value?.ToString() ?? string.Empty;
+
+                        if (decimal.TryParse(dgvRow.Cells["total_sale"].Value?.ToString(), out decimal totalSale))
+                        {
+                            ws.Cell(row, 3).Value = totalSale;
+                        }
+                        else
+                        {
+                            ws.Cell(row, 3).Value = 0;
+                        }
+
+                        ws.Cell(row, 4).Value = dgvRow.Cells["payment_method"].Value?.ToString() ?? string.Empty;
+                        ws.Cell(row, 5).Value = dgvRow.Cells["payment_date"].Value?.ToString() ?? string.Empty;
                         row++;
                     }
                 }
 
-                SaveFileDialog saveFileDialog = new SaveFileDialog
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Filter = "Excel Files|*.xlsx",
                     FileName = "Sales_Report.xlsx"
-                };
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                })
                 {
-                    wb.SaveAs(saveFileDialog.FileName);
-                    MessageBox.Show("Sales Report has been exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        wb.SaveAs(saveFileDialog.FileName);
+                        MessageBox.Show("Sales Report has been exported to Excel.", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ShowError("Error exporting sales report to Excel", ex);
+                MessageBox.Show($"Error exporting sales report to Excel: {ex.Message}", "Export Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -294,29 +307,34 @@ namespace POS_SYSTEM
                     PdfDocument pdf = new PdfDocument(writer);
                     Document document = new Document(pdf);
 
-                    document.Add(new Paragraph("Sales Report").SetFontSize(18));
+                    document.Add(new Paragraph("Sales Report").SetFontSize(18).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
 
                     float[] columnWidths = { 1, 2, 2, 2, 2 };
                     Table table = new Table(columnWidths)
-                        .AddHeaderCell("Order ID")
-                        .AddHeaderCell("Order Date")
-                        .AddHeaderCell("Total Sale")
-                        .AddHeaderCell("Payment Method")
-                        .AddHeaderCell("Payment Date");
+                        .AddHeaderCell(new Cell().Add(new Paragraph("Order ID")))
+                        .AddHeaderCell(new Cell().Add(new Paragraph("Order Date")))
+                        .AddHeaderCell(new Cell().Add(new Paragraph("Total Sale")))
+                        .AddHeaderCell(new Cell().Add(new Paragraph("Payment Method")))
+                        .AddHeaderCell(new Cell().Add(new Paragraph("Payment Date")));
 
                     foreach (DataGridViewRow row in dgv_sales.Rows)
                     {
                         if (!row.IsNewRow)
                         {
-                            table.AddCell(row.Cells["order_id"].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells["order_date"].Value?.ToString() ?? "No Data");
-                            table.AddCell(decimal.TryParse(row.Cells["total_sale"].Value?.ToString(), out decimal totalSale) ? totalSale.ToString("0.00") : "0.00");
-                            table.AddCell(row.Cells["payment_method"].Value?.ToString() ?? "No Data");
-                            table.AddCell(row.Cells["payment_date"].Value?.ToString() ?? "No Data");
+                            table.AddCell(new Cell().Add(new Paragraph(row.Cells["order_id"].Value?.ToString() ?? "No Data")));
+                            table.AddCell(new Cell().Add(new Paragraph(row.Cells["order_date"].Value?.ToString() ?? "No Data")));
+                            table.AddCell(new Cell().Add(new Paragraph(decimal.TryParse(row.Cells["total_sale"].Value?.ToString(), out decimal totalSale) ? totalSale.ToString("0.00") : "0.00")));
+                            table.AddCell(new Cell().Add(new Paragraph(row.Cells["payment_method"].Value?.ToString() ?? "No Data")));
+                            table.AddCell(new Cell().Add(new Paragraph(row.Cells["payment_date"].Value?.ToString() ?? "No Data")));
                         }
                     }
 
                     document.Add(table);
+
+                    document.Add(new Paragraph("\nExported by Admin")
+                        .SetFontSize(12)
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT));
+
                     document.Close();
 
                     SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -337,50 +355,40 @@ namespace POS_SYSTEM
                 ShowError("Error exporting sales report to PDF", ex);
             }
         }
-
         private void filter_dtp_ValueChanged(object sender, EventArgs e)
         {
-            dgv_sales.Rows.Clear();
-            try
+            currentPageIndex = 1;
+            LoadSalesReport("", filter_dtp.Value.Date);
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadSalesReport();
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
             {
-                using (var conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string query = @"
-                SELECT o.order_id, o.order_date, 
-                       SUM(od.quantity * od.price_at_time) AS total_sale, 
-                       p.payment_method, p.payment_date
-                FROM `orders_tb` o
-                JOIN `order_details_tb` od ON o.order_id = od.order_id
-                JOIN `payments_tb` p ON o.order_id = p.order_id
-                WHERE o.status != 'Canceled'
-                AND DATE(o.order_date) = @orderDate
-                GROUP BY o.order_id, o.order_date, p.payment_method, p.payment_date
-                ORDER BY o.order_date DESC";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@orderDate", filter_dtp.Value.Date);
-
-                    using (MySqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            dgv_sales.Rows.Add(
-                                dr["order_id"],
-                                dr["order_date"],
-                                dr["total_sale"],
-                                dr["payment_method"],
-                                dr["payment_date"]
-                            );
-                        }
-                    }
-                }
+                currentPageIndex--;
+                LoadSalesReport();
             }
-            catch (MySqlException ex)
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPages)
             {
-                MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                currentPageIndex++;
+                LoadSalesReport();
             }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = totalPages;
+            LoadSalesReport();
         }
     }
 }

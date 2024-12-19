@@ -62,9 +62,19 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txt_transid = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblTotalPage = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblCurrentPage = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnFirst = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrev = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_transact)).BeginInit();
             this.panel12.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv_transact
@@ -128,7 +138,7 @@
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
             this.dgv_transact.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgv_transact.RowTemplate.Height = 24;
-            this.dgv_transact.Size = new System.Drawing.Size(857, 861);
+            this.dgv_transact.Size = new System.Drawing.Size(1029, 784);
             this.dgv_transact.TabIndex = 36;
             // 
             // transaction_id
@@ -228,7 +238,7 @@
             // 
             // btn_unarchive
             // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_unarchive.FlatAppearance.BorderSize = 0;
             this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -244,7 +254,7 @@
             // 
             // btn_archive
             // 
-            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_archive.FlatAppearance.BorderSize = 0;
             this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -260,7 +270,7 @@
             // 
             // btn_edit
             // 
-            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_edit.FlatAppearance.BorderSize = 0;
             this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -276,7 +286,7 @@
             // 
             // btn_clear
             // 
-            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_clear.FlatAppearance.BorderSize = 0;
             this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -292,7 +302,7 @@
             // 
             // btn_save
             // 
-            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_save.FlatAppearance.BorderSize = 0;
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -443,18 +453,146 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Transactions";
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FloralWhite;
+            this.panel2.Controls.Add(this.lblTotalPage);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.lblCurrentPage);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.btnFirst);
+            this.panel2.Controls.Add(this.btnLast);
+            this.panel2.Controls.Add(this.btnNext);
+            this.panel2.Controls.Add(this.btnPrev);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(470, 784);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1029, 77);
+            this.panel2.TabIndex = 39;
+            // 
+            // lblTotalPage
+            // 
+            this.lblTotalPage.AutoSize = true;
+            this.lblTotalPage.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.lblTotalPage.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblTotalPage.Location = new System.Drawing.Point(166, 10);
+            this.lblTotalPage.Name = "lblTotalPage";
+            this.lblTotalPage.Size = new System.Drawing.Size(29, 35);
+            this.lblTotalPage.TabIndex = 16;
+            this.lblTotalPage.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label9.ForeColor = System.Drawing.Color.DarkRed;
+            this.label9.Location = new System.Drawing.Point(118, 10);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 35);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Of";
+            // 
+            // lblCurrentPage
+            // 
+            this.lblCurrentPage.AutoSize = true;
+            this.lblCurrentPage.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.lblCurrentPage.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblCurrentPage.Location = new System.Drawing.Point(82, 10);
+            this.lblCurrentPage.Name = "lblCurrentPage";
+            this.lblCurrentPage.Size = new System.Drawing.Size(29, 35);
+            this.lblCurrentPage.TabIndex = 14;
+            this.lblCurrentPage.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label11.ForeColor = System.Drawing.Color.DarkRed;
+            this.label11.Location = new System.Drawing.Point(12, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(70, 35);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Page";
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnFirst.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFirst.FlatAppearance.BorderSize = 0;
+            this.btnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFirst.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnFirst.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnFirst.Location = new System.Drawing.Point(445, 23);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(90, 36);
+            this.btnFirst.TabIndex = 11;
+            this.btnFirst.Text = "FIRST";
+            this.btnFirst.UseVisualStyleBackColor = false;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnLast.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLast.FlatAppearance.BorderSize = 0;
+            this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLast.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnLast.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnLast.Location = new System.Drawing.Point(785, 23);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(90, 36);
+            this.btnLast.TabIndex = 10;
+            this.btnLast.Text = "LAST";
+            this.btnLast.UseVisualStyleBackColor = false;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnNext.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnNext.Location = new System.Drawing.Point(671, 23);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(90, 36);
+            this.btnNext.TabIndex = 9;
+            this.btnNext.Text = "NEXT";
+            this.btnNext.UseVisualStyleBackColor = false;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnPrev.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPrev.FlatAppearance.BorderSize = 0;
+            this.btnPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrev.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnPrev.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnPrev.Location = new System.Drawing.Point(557, 23);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(90, 36);
+            this.btnPrev.TabIndex = 8;
+            this.btnPrev.Text = "PREV";
+            this.btnPrev.UseVisualStyleBackColor = false;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+            // 
             // inventory_transactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgv_transact);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel12);
             this.Name = "inventory_transactions";
-            this.Size = new System.Drawing.Size(1327, 861);
+            this.Size = new System.Drawing.Size(1499, 861);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_transact)).EndInit();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -488,5 +626,14 @@
         private System.Windows.Forms.Button btn_edit;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblTotalPage;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblCurrentPage;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnFirst;
+        private System.Windows.Forms.Button btnLast;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrev;
     }
 }

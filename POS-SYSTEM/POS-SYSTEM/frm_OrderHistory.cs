@@ -13,6 +13,10 @@ namespace POS_SYSTEM
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private DataTable orderHistoryTable;
         private Employee _currentEmployee;
+        private const int PageSize = 15;
+        private int currentPageIndex = 1;
+        private int totalPages = 0;
+        private int totalRows = 0;
 
         public frm_OrderHistory(Employee currentEmployee)
         {
@@ -27,72 +31,43 @@ namespace POS_SYSTEM
             LoadOrderHistory();
         }
 
-        private void LoadOrderHistory()
+
+        private bool ValidateAdminPassword(string inputPassword)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                if (conn.State == ConnectionState.Open)
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM employee_tb WHERE role = 'Admin' AND password = @password";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@password", HashPassword(inputPassword));
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    return result > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error validating admin password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                finally
+                {
                     conn.Close();
-
-                conn.Open();
-
-                string query = @"
-        SELECT 
-            o.orderNo AS 'Order No',
-            IFNULL(t.table_number, 'Takeout') AS 'Table Number',
-            e.username AS 'Employee',
-            o.total_price AS 'Total Price',
-            o.status AS 'Status',
-            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-        FROM 
-            orders_tb o
-        LEFT JOIN 
-            tables_tb t ON o.table_id = t.table_id
-        INNER JOIN 
-            employee_tb e ON o.employee_id = e.employee_id
-        ORDER BY 
-            o.order_date DESC;";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                dgv_orderHist.Rows.Clear();
-
-                while (reader.Read())
-                {
-                    dgv_orderHist.Rows.Add(
-                        reader["Order No"],
-                        reader["Table Number"],
-                        reader["Employee"],
-                        reader["Total Price"],
-                        reader["Status"],
-                        reader["Order Date"]
-                    );
                 }
+            }
+        }
 
-                if (!dgv_orderHist.Columns.Contains("Cancel"))
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
                 {
-                    DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
-                    {
-                        Name = "Cancel",
-                        HeaderText = "Action",
-                        Text = "Cancel",
-                        UseColumnTextForButtonValue = true
-                    };
-                    dgv_orderHist.Columns.Add(cancelButtonColumn);
+                    builder.Append(b.ToString("x2"));
                 }
-
-                dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv_orderHist.ReadOnly = false;
-                dgv_orderHist.AllowUserToAddRows = false;
-                dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Error loading order history: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
+                return builder.ToString();
             }
         }
 
@@ -133,8 +108,6 @@ namespace POS_SYSTEM
                 }
             }
         }
-
-
         private void CancelOrder(string orderNo)
         {
             MySqlTransaction transaction = null;
@@ -193,110 +166,6 @@ namespace POS_SYSTEM
             }
         }
 
-        private void txt_search_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (conn.State == ConnectionState.Open)
-                    conn.Close();
-
-                conn.Open();
-
-                string searchText = txt_search.Text.Trim();
-                string query = @"
-                SELECT 
-                    o.orderNo AS 'Order No',
-                    t.table_number AS 'Table Number',
-                    e.username AS 'Employee',
-                    o.total_price AS 'Total Price',
-                    o.status AS 'Status',
-                    DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
-                FROM 
-                    orders_tb o
-                INNER JOIN 
-                    tables_tb t ON o.table_id = t.table_id
-                INNER JOIN 
-                    employee_tb e ON o.employee_id = e.employee_id
-                WHERE 
-                    o.orderNo LIKE @searchText OR
-                    t.table_number LIKE @searchText OR
-                    e.username LIKE @searchText OR
-                    o.status LIKE @searchText OR
-                    DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') LIKE @searchText
-                ORDER BY 
-                    o.order_date DESC;";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-
-                MySqlDataReader reader = cmd.ExecuteReader();
-                dgv_orderHist.Rows.Clear();
-
-                while (reader.Read())
-                {
-                    dgv_orderHist.Rows.Add(
-                        reader["Order No"],
-                        reader["Table Number"],
-                        reader["Employee"],
-                        reader["Total Price"],
-                        reader["Status"],
-                        reader["Order Date"]
-                    );
-                }
-
-                dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv_orderHist.ReadOnly = true;
-                dgv_orderHist.AllowUserToAddRows = false;
-                dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Error performing search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        private bool ValidateAdminPassword(string inputPassword)
-        {
-            using (var conn = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT COUNT(*) FROM employee_tb WHERE role = 'Admin' AND password = @password";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@password", HashPassword(inputPassword));
-                    int result = Convert.ToInt32(cmd.ExecuteScalar());
-                    return result > 0;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error validating admin password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
-        }
-
-        private string HashPassword(string password)
-        {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
-            {
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (byte b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
         private void DeactivateTable(int orderId, MySqlTransaction transaction)
         {
             try
@@ -383,9 +252,193 @@ namespace POS_SYSTEM
                 throw new Exception($"Error returning ingredients to stock: {ex.Message}");
             }
         }
+
+        private void LoadOrderHistory()
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
+                conn.Open();
+
+                string countQuery = @"
+        SELECT COUNT(*) 
+        FROM orders_tb o
+        LEFT JOIN tables_tb t ON o.table_id = t.table_id
+        INNER JOIN employee_tb e ON o.employee_id = e.employee_id;";
+
+                MySqlCommand countCmd = new MySqlCommand(countQuery, conn);
+                totalRows = Convert.ToInt32(countCmd.ExecuteScalar());
+                totalPages = (int)Math.Ceiling((double)totalRows / PageSize);
+
+                lblCurrentPage.Text = currentPageIndex.ToString();
+                lblTotalPage.Text = totalPages.ToString();
+
+                string query = $@"
+        SELECT 
+            o.orderNo AS 'Order No',
+            IFNULL(t.table_number, 'Takeout') AS 'Table Number',
+            e.username AS 'Employee',
+            o.total_price AS 'Total Price',
+            o.status AS 'Status',
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+        FROM 
+            orders_tb o
+        LEFT JOIN 
+            tables_tb t ON o.table_id = t.table_id
+        INNER JOIN 
+            employee_tb e ON o.employee_id = e.employee_id
+        ORDER BY 
+            o.order_date DESC
+        LIMIT @PageSize OFFSET @Offset;";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.AddWithValue("@Offset", (currentPageIndex - 1) * PageSize);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                dgv_orderHist.Rows.Clear();
+
+                while (reader.Read())
+                {
+                    dgv_orderHist.Rows.Add(
+                        reader["Order No"],
+                        reader["Table Number"],
+                        reader["Employee"],
+                        reader["Total Price"],
+                        reader["Status"],
+                        reader["Order Date"]
+                    );
+                }
+
+                if (!dgv_orderHist.Columns.Contains("Cancel"))
+                {
+                    DataGridViewButtonColumn cancelButtonColumn = new DataGridViewButtonColumn
+                    {
+                        Name = "Cancel",
+                        HeaderText = "Action",
+                        Text = "Cancel",
+                        UseColumnTextForButtonValue = true
+                    };
+                    dgv_orderHist.Columns.Add(cancelButtonColumn);
+                }
+
+                dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv_orderHist.ReadOnly = false;
+                dgv_orderHist.AllowUserToAddRows = false;
+                dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error loading order history: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Open)
+                    conn.Close();
+
+                conn.Open();
+
+                string searchText = txt_search.Text.Trim();
+                string query = $@"
+        SELECT 
+            o.orderNo AS 'Order No',
+            t.table_number AS 'Table Number',
+            e.username AS 'Employee',
+            o.total_price AS 'Total Price',
+            o.status AS 'Status',
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') AS 'Order Date'
+        FROM 
+            orders_tb o
+        INNER JOIN 
+            tables_tb t ON o.table_id = t.table_id
+        INNER JOIN 
+            employee_tb e ON o.employee_id = e.employee_id
+        WHERE 
+            o.orderNo LIKE @searchText OR
+            t.table_number LIKE @searchText OR
+            e.username LIKE @searchText OR
+            o.status LIKE @searchText OR
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i:%s') LIKE @searchText
+        ORDER BY 
+            o.order_date DESC
+        LIMIT @PageSize OFFSET @Offset;";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+                cmd.Parameters.AddWithValue("@PageSize", PageSize);
+                cmd.Parameters.AddWithValue("@Offset", (currentPageIndex - 1) * PageSize);
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                dgv_orderHist.Rows.Clear();
+
+                while (reader.Read())
+                {
+                    dgv_orderHist.Rows.Add(
+                        reader["Order No"],
+                        reader["Table Number"],
+                        reader["Employee"],
+                        reader["Total Price"],
+                        reader["Status"],
+                        reader["Order Date"]
+                    );
+                }
+
+                dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgv_orderHist.ReadOnly = true;
+                dgv_orderHist.AllowUserToAddRows = false;
+                dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error performing search: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         private void btn_close_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadOrderHistory();
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadOrderHistory();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPages)
+            {
+                currentPageIndex++;
+                LoadOrderHistory();
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = totalPages;
+            LoadOrderHistory();
         }
     }
 }

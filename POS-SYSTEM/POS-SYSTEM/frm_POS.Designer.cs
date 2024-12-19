@@ -79,8 +79,6 @@
             this.panel9 = new System.Windows.Forms.Panel();
             this.txt_discount = new System.Windows.Forms.TextBox();
             this.lbl_subtotal = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.txt_tax = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -183,7 +181,7 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
-            this.label2.ForeColor = System.Drawing.Color.DarkRed;
+            this.label2.ForeColor = System.Drawing.Color.FloralWhite;
             this.label2.Location = new System.Drawing.Point(714, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(173, 46);
@@ -205,7 +203,7 @@
             this.txt_transactNo.BackColor = System.Drawing.Color.BurlyWood;
             this.txt_transactNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_transactNo.Font = new System.Drawing.Font("Segoe UI Semibold", 20F);
-            this.txt_transactNo.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_transactNo.ForeColor = System.Drawing.Color.FloralWhite;
             this.txt_transactNo.Location = new System.Drawing.Point(904, 46);
             this.txt_transactNo.Name = "txt_transactNo";
             this.txt_transactNo.ReadOnly = true;
@@ -236,7 +234,7 @@
             // 
             this.lbl_time.AutoSize = true;
             this.lbl_time.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.lbl_time.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_time.ForeColor = System.Drawing.Color.FloralWhite;
             this.lbl_time.Location = new System.Drawing.Point(82, 71);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(71, 35);
@@ -247,7 +245,7 @@
             // 
             this.lbl_date.AutoSize = true;
             this.lbl_date.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.lbl_date.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_date.ForeColor = System.Drawing.Color.FloralWhite;
             this.lbl_date.Location = new System.Drawing.Point(82, 14);
             this.lbl_date.Name = "lbl_date";
             this.lbl_date.Size = new System.Drawing.Size(68, 35);
@@ -273,7 +271,7 @@
             this.btn_history.FlatAppearance.BorderSize = 0;
             this.btn_history.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_history.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_history.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_history.ForeColor = System.Drawing.Color.FloralWhite;
             this.btn_history.Location = new System.Drawing.Point(364, 38);
             this.btn_history.Name = "btn_history";
             this.btn_history.Size = new System.Drawing.Size(230, 59);
@@ -284,11 +282,11 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.BackColor = System.Drawing.Color.OrangeRed;
+            this.btn_exit.BackColor = System.Drawing.Color.Peru;
             this.btn_exit.FlatAppearance.BorderSize = 0;
             this.btn_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_exit.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_exit.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_exit.ForeColor = System.Drawing.Color.FloralWhite;
             this.btn_exit.Location = new System.Drawing.Point(88, 38);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(189, 59);
@@ -303,7 +301,7 @@
             this.btn_newOrder.FlatAppearance.BorderSize = 0;
             this.btn_newOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_newOrder.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_newOrder.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_newOrder.ForeColor = System.Drawing.Color.FloralWhite;
             this.btn_newOrder.Location = new System.Drawing.Point(696, 38);
             this.btn_newOrder.Name = "btn_newOrder";
             this.btn_newOrder.Size = new System.Drawing.Size(222, 59);
@@ -314,11 +312,11 @@
             // 
             // btn_confirm
             // 
-            this.btn_confirm.BackColor = System.Drawing.Color.OliveDrab;
+            this.btn_confirm.BackColor = System.Drawing.Color.Peru;
             this.btn_confirm.FlatAppearance.BorderSize = 0;
             this.btn_confirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_confirm.Font = new System.Drawing.Font("Segoe UI Semibold", 18F);
-            this.btn_confirm.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btn_confirm.ForeColor = System.Drawing.Color.FloralWhite;
             this.btn_confirm.Location = new System.Drawing.Point(1015, 38);
             this.btn_confirm.Name = "btn_confirm";
             this.btn_confirm.Size = new System.Drawing.Size(261, 59);
@@ -382,7 +380,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label6.ForeColor = System.Drawing.Color.DarkRed;
+            this.label6.ForeColor = System.Drawing.Color.FloralWhite;
             this.label6.Location = new System.Drawing.Point(64, 910);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 28);
@@ -408,7 +406,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label5.ForeColor = System.Drawing.Color.DarkRed;
+            this.label5.ForeColor = System.Drawing.Color.FloralWhite;
             this.label5.Location = new System.Drawing.Point(64, 967);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 28);
@@ -421,7 +419,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label4.ForeColor = System.Drawing.Color.DarkRed;
+            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
             this.label4.Location = new System.Drawing.Point(63, 856);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 28);
@@ -434,7 +432,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label3.ForeColor = System.Drawing.Color.DarkRed;
+            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
             this.label3.Location = new System.Drawing.Point(63, 806);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 28);
@@ -445,7 +443,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
-            this.label7.ForeColor = System.Drawing.Color.DarkRed;
+            this.label7.ForeColor = System.Drawing.Color.FloralWhite;
             this.label7.Location = new System.Drawing.Point(201, 14);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(165, 35);
@@ -467,7 +465,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txt_change.AutoSize = true;
             this.txt_change.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_change.ForeColor = System.Drawing.Color.DarkRed;
+            this.txt_change.ForeColor = System.Drawing.Color.FloralWhite;
             this.txt_change.Location = new System.Drawing.Point(353, 856);
             this.txt_change.Name = "txt_change";
             this.txt_change.Size = new System.Drawing.Size(49, 28);
@@ -481,6 +479,7 @@
             this.txt_cash.BackColor = System.Drawing.Color.BurlyWood;
             this.txt_cash.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txt_cash.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txt_cash.ForeColor = System.Drawing.Color.FloralWhite;
             this.txt_cash.Location = new System.Drawing.Point(335, 804);
             this.txt_cash.Name = "txt_cash";
             this.txt_cash.Size = new System.Drawing.Size(143, 27);
@@ -628,7 +627,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label1.ForeColor = System.Drawing.Color.DarkRed;
+            this.label1.ForeColor = System.Drawing.Color.FloralWhite;
             this.label1.Location = new System.Drawing.Point(64, 1017);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(162, 28);
@@ -662,15 +661,13 @@
             this.pnl_bgCash.Controls.Add(this.panel9);
             this.pnl_bgCash.Controls.Add(this.txt_discount);
             this.pnl_bgCash.Controls.Add(this.lbl_subtotal);
-            this.pnl_bgCash.Controls.Add(this.panel3);
-            this.pnl_bgCash.Controls.Add(this.txt_tax);
             this.pnl_bgCash.Controls.Add(this.label15);
             this.pnl_bgCash.Controls.Add(this.label14);
             this.pnl_bgCash.Controls.Add(this.label13);
             this.pnl_bgCash.Controls.Add(this.lbl_order);
             this.pnl_bgCash.Controls.Add(this.pnl_totalBG);
             this.pnl_bgCash.Controls.Add(this.Discount);
-            this.pnl_bgCash.Location = new System.Drawing.Point(10, 530);
+            this.pnl_bgCash.Location = new System.Drawing.Point(10, 520);
             this.pnl_bgCash.Name = "pnl_bgCash";
             this.pnl_bgCash.Size = new System.Drawing.Size(515, 265);
             this.pnl_bgCash.TabIndex = 0;
@@ -720,29 +717,6 @@
             this.lbl_subtotal.TabIndex = 24;
             this.lbl_subtotal.Text = "0.00";
             // 
-            // panel3
-            // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.panel3.Location = new System.Drawing.Point(93, 177);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(50, 1);
-            this.panel3.TabIndex = 23;
-            // 
-            // txt_tax
-            // 
-            this.txt_tax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_tax.BackColor = System.Drawing.Color.Bisque;
-            this.txt_tax.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_tax.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txt_tax.ForeColor = System.Drawing.Color.Crimson;
-            this.txt_tax.Location = new System.Drawing.Point(93, 149);
-            this.txt_tax.Name = "txt_tax";
-            this.txt_tax.Size = new System.Drawing.Size(50, 27);
-            this.txt_tax.TabIndex = 0;
-            this.txt_tax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -750,9 +724,9 @@
             this.label15.ForeColor = System.Drawing.Color.DarkRed;
             this.label15.Location = new System.Drawing.Point(53, 148);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(39, 28);
+            this.label15.Size = new System.Drawing.Size(94, 28);
             this.label15.TabIndex = 7;
-            this.label15.Text = "Tax";
+            this.label15.Text = "Tax (12%)";
             // 
             // label14
             // 
@@ -789,7 +763,7 @@
             // 
             // pnl_totalBG
             // 
-            this.pnl_totalBG.BackColor = System.Drawing.Color.Linen;
+            this.pnl_totalBG.BackColor = System.Drawing.Color.FloralWhite;
             this.pnl_totalBG.Controls.Add(this.lbl_total);
             this.pnl_totalBG.Controls.Add(this.Total);
             this.pnl_totalBG.Location = new System.Drawing.Point(27, 198);
@@ -927,8 +901,6 @@
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.TextBox txt_discount;
         private System.Windows.Forms.Label lbl_subtotal;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox txt_tax;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;

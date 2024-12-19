@@ -244,7 +244,7 @@ namespace POS_SYSTEM
             foreach (var product in products)
             {
                 totalDiscount += product.Discount;
-                totalTax += product.Tax;
+                totalTax += (product.Subtotal - product.Discount) * 0.12m;
             }
 
             g.DrawString($"Discount: {totalDiscount:C}", footerFont, Brushes.Black, 10, height);
@@ -259,16 +259,18 @@ namespace POS_SYSTEM
                 new StringFormat { Alignment = StringAlignment.Center });
         }
 
-
         private void SumPrice()
         {
             grandTotal = 0;
             foreach (var product in products)
             {
-                decimal finalPrice = product.Subtotal - product.Discount + product.Tax;
+                decimal finalPrice = product.Subtotal - product.Discount;
+                finalPrice += finalPrice * 0.12m;
+
                 grandTotal += finalPrice;
             }
         }
+
 
         private void ShowError(string message)
         {

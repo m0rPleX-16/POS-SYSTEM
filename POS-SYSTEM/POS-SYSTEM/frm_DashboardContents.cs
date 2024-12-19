@@ -59,17 +59,19 @@ namespace POS_SYSTEM
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Daily Total'
-            FROM 
-                `orders_tb` o
-            JOIN 
-                `order_details_tb` od ON o.order_id = od.order_id
-            WHERE 
-                DATE(o.order_date) = CURDATE()
-                AND o.status != 'Canceled'";
+        SELECT 
+            SUM((od.quantity * od.price_at_time) - od.discount + ((od.quantity * od.price_at_time - od.discount) * 0.12)) AS 'Daily Total'
+        FROM 
+            `orders_tb` o
+        JOIN 
+            `order_details_tb` od ON o.order_id = od.order_id
+        WHERE 
+            DATE(o.order_date) = @date
+            AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@date", DateTime.Now.Date);
+
                 object result = cmd.ExecuteScalar();
                 lbl_daily.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
             }
@@ -89,18 +91,21 @@ namespace POS_SYSTEM
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Monthly Total'
-            FROM 
-                `orders_tb` o
-            JOIN 
-                `order_details_tb` od ON o.order_id = od.order_id
-            WHERE 
-                MONTH(o.order_date) = MONTH(CURDATE()) 
-                AND YEAR(o.order_date) = YEAR(CURDATE())
-                AND o.status != 'Canceled'";
+        SELECT 
+            SUM((od.quantity * od.price_at_time) - od.discount + ((od.quantity * od.price_at_time - od.discount) * 0.12)) AS 'Monthly Total'
+        FROM 
+            `orders_tb` o
+        JOIN 
+            `order_details_tb` od ON o.order_id = od.order_id
+        WHERE 
+            MONTH(o.order_date) = @month 
+            AND YEAR(o.order_date) = @year
+            AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@month", DateTime.Now.Month);
+                cmd.Parameters.AddWithValue("@year", DateTime.Now.Year);
+
                 object result = cmd.ExecuteScalar();
                 lbl_monthly.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
             }
@@ -119,17 +124,19 @@ namespace POS_SYSTEM
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                SUM((od.quantity * od.price_at_time) - od.discount + od.tax) AS 'Annual Total'
-            FROM 
-                `orders_tb` o
-            JOIN 
-                `order_details_tb` od ON o.order_id = od.order_id
-            WHERE 
-                YEAR(o.order_date) = YEAR(CURDATE())
-                AND o.status != 'Canceled'";
+        SELECT 
+            SUM((od.quantity * od.price_at_time) - od.discount + ((od.quantity * od.price_at_time - od.discount) * 0.12)) AS 'Annual Total'
+        FROM 
+            `orders_tb` o
+        JOIN 
+            `order_details_tb` od ON o.order_id = od.order_id
+        WHERE 
+            YEAR(o.order_date) = @year
+            AND o.status != 'Canceled'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@year", DateTime.Now.Year);
+
                 object result = cmd.ExecuteScalar();
                 lbl_annual.Text = $"₱{(result != DBNull.Value ? Convert.ToDecimal(result) : 0):N2}";
             }
@@ -395,6 +402,8 @@ namespace POS_SYSTEM
             }
         }
 
+        private DataTable orderHistoryTable = new DataTable();
+
         private void LoadOrderHistory()
         {
             try
@@ -422,30 +431,12 @@ namespace POS_SYSTEM
             o.order_date DESC;";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                dgv_orderHist.Rows.Clear();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 
-                if (!reader.HasRows)
-                {
-                    MessageBox.Show("No data found in the order history.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                orderHistoryTable.Clear();
+                adapter.Fill(orderHistoryTable);
 
-                while (reader.Read())
-                {
-                    dgv_orderHist.Rows.Add(
-                        reader["Order No"],
-                        reader["Table Number"],
-                        reader["Employee"],
-                        reader["Total Price"],
-                        reader["Status"],
-                        reader["Order Date"]
-                    );
-                }
-
-                dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dgv_orderHist.ReadOnly = true;
-                dgv_orderHist.AllowUserToAddRows = false;
-                dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                UpdateOrderHistoryGrid(10);
             }
             catch (MySqlException ex)
             {
@@ -456,5 +447,41 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
+        private void UpdateOrderHistoryGrid(int rowCount)
+        {
+            dgv_orderHist.Rows.Clear();
+
+            for (int i = 0; i < Math.Min(rowCount, orderHistoryTable.Rows.Count); i++)
+            {
+                DataRow row = orderHistoryTable.Rows[i];
+                dgv_orderHist.Rows.Add(
+                    row["Order No"],
+                    row["Table Number"],
+                    row["Employee"],
+                    row["Total Price"],
+                    row["Status"],
+                    row["Order Date"]
+                );
+            }
+
+            dgv_orderHist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_orderHist.ReadOnly = true;
+            dgv_orderHist.AllowUserToAddRows = false;
+            dgv_orderHist.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void cmb_rowView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(cmb_rowView.SelectedItem.ToString(), out int selectedRowCount))
+            {
+                UpdateOrderHistoryGrid(selectedRowCount);
+            }
+            else
+            {
+                MessageBox.Show("Invalid row count selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

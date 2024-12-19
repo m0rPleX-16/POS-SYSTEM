@@ -290,7 +290,7 @@
             // 
             // btn_unarchive
             // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_unarchive.FlatAppearance.BorderSize = 0;
             this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -306,7 +306,7 @@
             // 
             // btn_respassword
             // 
-            this.btn_respassword.BackColor = System.Drawing.Color.Sienna;
+            this.btn_respassword.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_respassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_respassword.FlatAppearance.BorderSize = 0;
             this.btn_respassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -322,7 +322,7 @@
             // 
             // btn_archive
             // 
-            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_archive.FlatAppearance.BorderSize = 0;
             this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -338,7 +338,7 @@
             // 
             // btn_edit
             // 
-            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_edit.FlatAppearance.BorderSize = 0;
             this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -354,7 +354,7 @@
             // 
             // btn_clear
             // 
-            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_clear.FlatAppearance.BorderSize = 0;
             this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -370,7 +370,7 @@
             // 
             // btn_save
             // 
-            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_save.FlatAppearance.BorderSize = 0;
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

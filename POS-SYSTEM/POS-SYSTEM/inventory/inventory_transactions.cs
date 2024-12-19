@@ -16,6 +16,12 @@ namespace POS_SYSTEM
         private readonly MySqlConnection conn = new MySqlConnection("server=localhost;userid=root;password=;database=posresto_db");
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private Employee _currentEmployee;
+        private const int PageSize = 25;
+        private int currentPageIndex = 1;
+        private int totalPages = 0;
+        private int totalRows = 0;
+
+
         public inventory_transactions(Employee currentEmployee)
         {
             InitializeComponent();
@@ -89,6 +95,19 @@ namespace POS_SYSTEM
                     conn.Close();
 
                 conn.Open();
+
+                string countQuery = @"
+            SELECT COUNT(*) 
+            FROM inventory_transactions_tb t
+            JOIN ingredients_tb ing ON t.ingredient_id = ing.ingredient_id";
+
+                MySqlCommand countCmd = new MySqlCommand(countQuery, conn);
+                totalRows = Convert.ToInt32(countCmd.ExecuteScalar());
+                totalPages = (int)Math.Ceiling((double)totalRows / PageSize);
+
+                lblCurrentPage.Text = currentPageIndex.ToString();
+                lblTotalPage.Text = totalPages.ToString();
+
                 string query = @"
             SELECT 
                 t.transaction_id,
@@ -98,9 +117,13 @@ namespace POS_SYSTEM
                 t.transaction_date,
                 t.note
             FROM inventory_transactions_tb t
-            JOIN ingredients_tb ing ON t.ingredient_id = ing.ingredient_id";
+            JOIN ingredients_tb ing ON t.ingredient_id = ing.ingredient_id
+            LIMIT @offset, @pageSize";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@offset", (currentPageIndex - 1) * PageSize);
+                cmd.Parameters.AddWithValue("@pageSize", PageSize);
+
                 MySqlDataReader reader = cmd.ExecuteReader();
                 dgv_transact.Rows.Clear();
 
@@ -130,6 +153,7 @@ namespace POS_SYSTEM
                 conn.Close();
             }
         }
+
         private void DgvInventoryTransact_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgv_transact.CurrentRow != null)
@@ -349,6 +373,36 @@ namespace POS_SYSTEM
         private void btn_unarchive_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadDataGridView();
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPages)
+            {
+                currentPageIndex++;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = totalPages;
+            LoadDataGridView();
         }
     }
 }

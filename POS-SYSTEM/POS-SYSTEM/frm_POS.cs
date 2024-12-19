@@ -24,7 +24,6 @@ namespace POS_SYSTEM
             LoadCategory();
             txt_cash.TextChanged += TxtCash_TextChanged;
             txt_discount.TextChanged += (s, e) => UpdateTotal();
-            txt_tax.TextChanged += (s, e) => UpdateTotal();
             LoadComboBoxes();
         }
         private void InitializeTimer()
@@ -528,6 +527,7 @@ namespace POS_SYSTEM
         }
         private void UpdateTotal()
         {
+            const decimal TAX_PERCENTAGE = 12m;
             decimal totalAmount = 0;
 
             foreach (Control control in flp_billDetails.Controls)
@@ -543,12 +543,12 @@ namespace POS_SYSTEM
                         int.TryParse(lblQuantity.Text, out int quantity) &&
                         decimal.TryParse(lblPrice.Text.Replace("₱", ""), out decimal price))
                     {
-                        totalAmount += quantity * price; 
+                        totalAmount += quantity * price;
                     }
                 }
             }
 
-            lbl_subtotal.Text = $"₱{totalAmount:F2}"; 
+            lbl_subtotal.Text = $"₱{totalAmount:F2}";
 
             decimal discountPercentage = 0;
             if (!string.IsNullOrEmpty(txt_discount.Text) && decimal.TryParse(txt_discount.Text, out decimal discountInput))
@@ -565,19 +565,7 @@ namespace POS_SYSTEM
             decimal discountAmount = totalAmount * (discountPercentage / 100);
             decimal discountedTotal = totalAmount - discountAmount;
 
-            decimal taxPercentage = 0;
-            if (!string.IsNullOrEmpty(txt_tax.Text) && decimal.TryParse(txt_tax.Text, out decimal taxInput))
-            {
-                taxPercentage = taxInput;
-            }
-
-            if (taxPercentage < 0)
-            {
-                MessageBox.Show("Tax percentage cannot be negative.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                taxPercentage = 0; 
-            }
-
-            decimal taxAmount = discountedTotal * (taxPercentage / 100);
+            decimal taxAmount = discountedTotal * (TAX_PERCENTAGE / 100);
             lbl_tax.Text = $"₱{taxAmount:F2}";
 
             decimal finalTotal = discountedTotal + taxAmount;

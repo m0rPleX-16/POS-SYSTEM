@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_unarchive = new System.Windows.Forms.Button();
@@ -59,10 +59,20 @@
             this.ingredient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity_required = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.is_archived = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblTotalPage = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblCurrentPage = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnFirst = new System.Windows.Forms.Button();
+            this.btnLast = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrev = new System.Windows.Forms.Button();
             this.panel12.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_recipe)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel12
@@ -98,7 +108,7 @@
             // 
             // btn_unarchive
             // 
-            this.btn_unarchive.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_unarchive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_unarchive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_unarchive.FlatAppearance.BorderSize = 0;
             this.btn_unarchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -114,7 +124,7 @@
             // 
             // btn_archive
             // 
-            this.btn_archive.BackColor = System.Drawing.Color.Orange;
+            this.btn_archive.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_archive.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_archive.FlatAppearance.BorderSize = 0;
             this.btn_archive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -130,7 +140,7 @@
             // 
             // btn_edit
             // 
-            this.btn_edit.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btn_edit.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_edit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_edit.FlatAppearance.BorderSize = 0;
             this.btn_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -146,7 +156,7 @@
             // 
             // btn_clear
             // 
-            this.btn_clear.BackColor = System.Drawing.Color.SlateGray;
+            this.btn_clear.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_clear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_clear.FlatAppearance.BorderSize = 0;
             this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -162,7 +172,7 @@
             // 
             // btn_save
             // 
-            this.btn_save.BackColor = System.Drawing.Color.ForestGreen;
+            this.btn_save.BackColor = System.Drawing.Color.NavajoWhite;
             this.btn_save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_save.FlatAppearance.BorderSize = 0;
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -279,6 +289,7 @@
             // 
             this.panel13.BackColor = System.Drawing.Color.DarkSlateGray;
             this.panel13.Controls.Add(this.dgv_recipe);
+            this.panel13.Controls.Add(this.panel2);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(470, 0);
             this.panel13.Name = "panel13";
@@ -289,24 +300,24 @@
             // 
             this.dgv_recipe.AllowUserToAddRows = false;
             this.dgv_recipe.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle33;
             this.dgv_recipe.BackgroundColor = System.Drawing.Color.BurlyWood;
             this.dgv_recipe.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgv_recipe.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             this.dgv_recipe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_recipe.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.recipe_id,
@@ -314,48 +325,48 @@
             this.ingredient_id,
             this.quantity_required,
             this.is_archived});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_recipe.DefaultCellStyle = dataGridViewCellStyle38;
             this.dgv_recipe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_recipe.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
             this.dgv_recipe.Location = new System.Drawing.Point(0, 0);
             this.dgv_recipe.Name = "dgv_recipe";
             this.dgv_recipe.ReadOnly = true;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_recipe.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
             this.dgv_recipe.RowHeadersVisible = false;
             this.dgv_recipe.RowHeadersWidth = 51;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.White;
-            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            dataGridViewCellStyle40.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.Color.White;
+            this.dgv_recipe.RowsDefaultCellStyle = dataGridViewCellStyle40;
             this.dgv_recipe.RowTemplate.Height = 24;
-            this.dgv_recipe.Size = new System.Drawing.Size(819, 798);
+            this.dgv_recipe.Size = new System.Drawing.Size(819, 721);
             this.dgv_recipe.TabIndex = 2;
             // 
             // recipe_id
             // 
             this.recipe_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
-            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.Color.White;
+            this.recipe_id.DefaultCellStyle = dataGridViewCellStyle35;
             this.recipe_id.HeaderText = "RECIPE NO.";
             this.recipe_id.MinimumWidth = 6;
             this.recipe_id.Name = "recipe_id";
@@ -366,10 +377,10 @@
             // category_name
             // 
             this.category_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.DarkRed;
-            this.category_name.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Segoe UI Semibold", 12F);
+            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.Color.DarkRed;
+            this.category_name.DefaultCellStyle = dataGridViewCellStyle36;
             this.category_name.HeaderText = "ITEM NAME";
             this.category_name.MinimumWidth = 6;
             this.category_name.Name = "category_name";
@@ -379,12 +390,12 @@
             // ingredient_id
             // 
             this.ingredient_id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.White;
-            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle37.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.Color.White;
+            this.ingredient_id.DefaultCellStyle = dataGridViewCellStyle37;
             this.ingredient_id.HeaderText = "INGREDIENT NAME";
             this.ingredient_id.MinimumWidth = 6;
             this.ingredient_id.Name = "ingredient_id";
@@ -408,6 +419,131 @@
             this.is_archived.ReadOnly = true;
             this.is_archived.Width = 136;
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FloralWhite;
+            this.panel2.Controls.Add(this.lblTotalPage);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.lblCurrentPage);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.btnFirst);
+            this.panel2.Controls.Add(this.btnLast);
+            this.panel2.Controls.Add(this.btnNext);
+            this.panel2.Controls.Add(this.btnPrev);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 721);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(819, 77);
+            this.panel2.TabIndex = 40;
+            // 
+            // lblTotalPage
+            // 
+            this.lblTotalPage.AutoSize = true;
+            this.lblTotalPage.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.lblTotalPage.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblTotalPage.Location = new System.Drawing.Point(166, 10);
+            this.lblTotalPage.Name = "lblTotalPage";
+            this.lblTotalPage.Size = new System.Drawing.Size(29, 35);
+            this.lblTotalPage.TabIndex = 16;
+            this.lblTotalPage.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label9.ForeColor = System.Drawing.Color.DarkRed;
+            this.label9.Location = new System.Drawing.Point(117, 10);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 35);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Of";
+            // 
+            // lblCurrentPage
+            // 
+            this.lblCurrentPage.AutoSize = true;
+            this.lblCurrentPage.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.lblCurrentPage.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblCurrentPage.Location = new System.Drawing.Point(82, 10);
+            this.lblCurrentPage.Name = "lblCurrentPage";
+            this.lblCurrentPage.Size = new System.Drawing.Size(29, 35);
+            this.lblCurrentPage.TabIndex = 14;
+            this.lblCurrentPage.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 15F);
+            this.label11.ForeColor = System.Drawing.Color.DarkRed;
+            this.label11.Location = new System.Drawing.Point(12, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(70, 35);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Page";
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnFirst.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFirst.FlatAppearance.BorderSize = 0;
+            this.btnFirst.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFirst.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnFirst.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnFirst.Location = new System.Drawing.Point(445, 23);
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(90, 36);
+            this.btnFirst.TabIndex = 11;
+            this.btnFirst.Text = "FIRST";
+            this.btnFirst.UseVisualStyleBackColor = false;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnLast.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLast.FlatAppearance.BorderSize = 0;
+            this.btnLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLast.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnLast.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnLast.Location = new System.Drawing.Point(785, 23);
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(90, 36);
+            this.btnLast.TabIndex = 10;
+            this.btnLast.Text = "LAST";
+            this.btnLast.UseVisualStyleBackColor = false;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnNext.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnNext.Location = new System.Drawing.Point(671, 23);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(90, 36);
+            this.btnNext.TabIndex = 9;
+            this.btnNext.Text = "NEXT";
+            this.btnNext.UseVisualStyleBackColor = false;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnPrev.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPrev.FlatAppearance.BorderSize = 0;
+            this.btnPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrev.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.btnPrev.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnPrev.Location = new System.Drawing.Point(557, 23);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(90, 36);
+            this.btnPrev.TabIndex = 8;
+            this.btnPrev.Text = "PREV";
+            this.btnPrev.UseVisualStyleBackColor = false;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+            // 
             // inventory_recipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -421,6 +557,8 @@
             this.panel1.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_recipe)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -450,5 +588,14 @@
         private System.Windows.Forms.Button btn_edit;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_save;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblTotalPage;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblCurrentPage;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnFirst;
+        private System.Windows.Forms.Button btnLast;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrev;
     }
 }

@@ -17,6 +17,11 @@ namespace POS_SYSTEM
         private readonly MySqlConnection conn = new MySqlConnection("server=localhost;userid=root;password=;database=posresto_db");
         private readonly string _connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private Employee _currentEmployee;
+        private const int PageSize = 12;
+        private int currentPageIndex = 1;
+        private int totalPages = 0;
+        private int totalRows = 0;
+
         public inventory_items(Employee currentEmployee)
         {
             InitializeComponent();
@@ -103,53 +108,75 @@ namespace POS_SYSTEM
         }
         private void LoadDataGridView()
         {
-            const string query = @"
-SELECT 
-    m.*, 
-    c.category_name, 
-    CASE 
-        WHEN m.is_archived = 1 THEN 'Archived' 
-        ELSE 'Unarchived' 
-    END AS archive_status
-FROM menu_items_tb m
-JOIN categories_tb c ON m.category_id = c.category_id
-ORDER BY m.date_added DESC";
-
-            dgv_items.Rows.Clear();
-
-            using (var conn = new MySqlConnection(_connectionString))
+            try
             {
-                using (var cmd = new MySqlCommand(query, conn))
+                using (var conn = new MySqlConnection(_connectionString))
                 {
                     conn.Open();
-                    using (var reader = cmd.ExecuteReader())
+
+                    string countQuery = "SELECT COUNT(*) FROM menu_items_tb m JOIN categories_tb c ON m.category_id = c.category_id";
+                    using (var countCmd = new MySqlCommand(countQuery, conn))
                     {
-                        if (!reader.HasRows)
-                        {
-                            MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
+                        totalRows = Convert.ToInt32(countCmd.ExecuteScalar());
+                    }
 
-                        while (reader.Read())
-                        {
-                            Image productImage = LoadImageFromBase64(reader["image_base64"]);
+                    totalPages = (int)Math.Ceiling((double)totalRows / PageSize);
 
-                            dgv_items.Rows.Add(
-                                productImage,
-                                reader["item_id"],
-                                reader["item_name"],
-                                reader["category_name"],
-                                reader["price"],
-                                reader["date_added"],
-                                reader.GetBoolean("is_available") ? "Active" : "Inactive",
-                                reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
-                            );
+                    lblCurrentPage.Text = currentPageIndex.ToString();
+                    lblTotalPage.Text = totalPages.ToString();
+
+                    string query = @"
+                SELECT 
+                    m.*, 
+                    c.category_name, 
+                    CASE 
+                        WHEN m.is_archived = 1 THEN 'Archived' 
+                        ELSE 'Unarchived' 
+                    END AS archive_status
+                FROM menu_items_tb m
+                JOIN categories_tb c ON m.category_id = c.category_id
+                ORDER BY m.date_added DESC
+                LIMIT @offset, @pageSize";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@offset", (currentPageIndex - 1) * PageSize);
+                        cmd.Parameters.AddWithValue("@pageSize", PageSize);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            dgv_items.Rows.Clear();
+
+                            if (!reader.HasRows)
+                            {
+                                MessageBox.Show("No data found in the items table.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
+
+                            while (reader.Read())
+                            {
+                                Image productImage = LoadImageFromBase64(reader["image_base64"]);
+
+                                dgv_items.Rows.Add(
+                                    productImage,
+                                    reader["item_id"],
+                                    reader["item_name"],
+                                    reader["category_name"],
+                                    reader["price"],
+                                    reader["date_added"],
+                                    reader.GetBoolean("is_available") ? "Active" : "Inactive",
+                                    reader.GetBoolean("is_archived") ? "Archived" : "Unarchived"
+                                );
+                            }
                         }
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Error loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
         private Image LoadImageFromBase64(object base64Data)
         {
             if (base64Data == DBNull.Value) return null;
@@ -533,5 +560,34 @@ ORDER BY m.date_added DESC";
             return true;
         }
 
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadDataGridView();
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPages)
+            {
+                currentPageIndex++;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = totalPages;
+            LoadDataGridView();
+        }
     }
 }

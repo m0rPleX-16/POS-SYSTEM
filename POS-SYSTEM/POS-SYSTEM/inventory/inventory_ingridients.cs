@@ -12,6 +12,10 @@ namespace POS_SYSTEM.inventory
         private readonly MySqlConnection conn = new MySqlConnection("server=localhost;userid=root;password=;database=posresto_db");
         private readonly string connectionString = "server=localhost;userid=root;password=;database=posresto_db";
         private Employee _currentEmployee;
+        private const int PageSize = 25;
+        private int currentPageIndex = 1;
+        private int totalPages = 0;
+        private int totalRows = 0;
 
         public inventory_ingridients(Employee currentEmployee)
         {
@@ -32,7 +36,23 @@ namespace POS_SYSTEM.inventory
                     conn.Close();
 
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients_tb", conn);
+
+                string countQuery = "SELECT COUNT(*) FROM ingredients_tb";
+                MySqlCommand countCmd = new MySqlCommand(countQuery, conn);
+                totalRows = Convert.ToInt32(countCmd.ExecuteScalar());
+                totalPages = (int)Math.Ceiling((double)totalRows / PageSize);
+
+                lblCurrentPage.Text = currentPageIndex.ToString();
+                lblTotalPage.Text = totalPages.ToString();
+
+                string query = @"
+            SELECT * FROM ingredients_tb
+            LIMIT @offset, @pageSize";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@offset", (currentPageIndex - 1) * PageSize);
+                cmd.Parameters.AddWithValue("@pageSize", PageSize);
+
                 MySqlDataReader reader = cmd.ExecuteReader();
                 dgv_ingridients.Rows.Clear();
                 blinkingRows.Clear();
@@ -63,13 +83,13 @@ namespace POS_SYSTEM.inventory
                     if (stockQuantity <= minimumQuantity || expirationDate <= DateTime.Now.AddDays(3))
                     {
                         blinkingRows.Add(rowIndex);
-                        dgv_ingridients.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red; 
+                        dgv_ingridients.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red;
                     }
                 }
 
                 if (blinkingRows.Count > 0)
                 {
-                    blinkTimer.Interval = 500; 
+                    blinkTimer.Interval = 500;
                     blinkTimer.Tick += BlinkTimer_Tick;
                     blinkTimer.Start();
                 }
@@ -385,6 +405,36 @@ namespace POS_SYSTEM.inventory
             {
                 conn.Close();
             }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = 1;
+            LoadDataGridView();
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex > 1)
+            {
+                currentPageIndex--;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPageIndex < totalPages)
+            {
+                currentPageIndex++;
+                LoadDataGridView();
+            }
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            currentPageIndex = totalPages;
+            LoadDataGridView();
         }
     }
 }
